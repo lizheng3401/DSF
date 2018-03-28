@@ -67,7 +67,42 @@
     },
     methods: {
       setOptions: function ({ cate, expectedData, actualData, time } = {}) {
-        this.chart.setOption();
+        this.chart.setOption({
+          title: {
+            text: "实时的睡眠数据"
+          },
+          tooltip: {
+              trigger: 'axis',
+              formatter: function (params) {
+                  params = params[0];
+                  var date = new Date(params.name);
+                  return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+              },
+              axisPointer: {
+                  animation: false
+              }
+          },
+          xAxis: {
+              type: 'time',
+              splitLine: {
+                  show: false
+              }
+          },
+          yAxis: {
+              type: 'value',
+              boundaryGap: [0, '100%'],
+              splitLine: {
+                  show: false
+              }
+          },
+          series: [{
+              name: '模拟数据',
+              type: 'line',
+              showSymbol: false,
+              hoverAnimation: false,
+              data: data
+          }]
+        });
       },
       initChart: function () {
         this.chart = echarts.init(this.$el);

@@ -19,7 +19,7 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-button type="danger" size="mini" style="width: 100%">待处理</el-button>
+          <el-button type="danger" size="mini" style="width: 100%" @click="handlException(user)">待处理</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -59,7 +59,14 @@ export default {
           });
         });
       this.loading = false;
-    }
+    },
+    handlException(user){
+      this.users.splice(0,1)
+      this.$message({
+        message: user.login+"处理成功",
+        type: "success"
+      })
+    },
   },
   created: function() {
     this.fetchData();
