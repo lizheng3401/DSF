@@ -28,7 +28,7 @@
         menu: [
           {
             icon: 'el-icon-setting',
-            index: '/index/overview',
+            index: '/live',
             title: '实时监控'
           },
           {
