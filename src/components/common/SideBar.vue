@@ -2,7 +2,7 @@
   <div class="sidebar">
     <el-menu default-active="1" theme="dark" class="el-menu-vertical-demo"
              unique-opened router
-             background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+             background-color="#242f42" text-color="#fff" active-text-color="#ffd04b">
       <template v-for="(menuItem,index) in menu">
         <el-submenu v-if="menuItem.subs" :index="menuItem.index" :key="index">
           <span slot="title"><i :class="menuItem.icon"></i>{{menuItem.title}}</span>
@@ -26,7 +26,7 @@
         menu: [
           {
             icon: 'el-icon-setting',
-            index: '/index/overview',
+            index: '/live',
             title: '实时监控'
           },
           {
@@ -79,11 +79,10 @@
   .sidebar{
     display: block;
     position: absolute;
-    width: 250px;
+    width: 200px;
     left: 0;
     top: 70px;
     bottom:0;
-    background: #242f42;
   }
   .sidebar > ul {
     height:100%;
