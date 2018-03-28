@@ -2,7 +2,7 @@
   <div class="sidebar">
     <el-menu default-active="1" theme="dark" class="el-menu-vertical-demo"
              unique-opened router
-             background-color="#242f42" text-color="#fff" active-text-color="#ffd04b">
+             background-color="#242F42" text-color="#fff" active-text-color="#ffd04b">
       <template v-for="(menuItem,index) in menu">
         <el-submenu v-if="menuItem.subs" :index="menuItem.index" :key="index">
           <span slot="title"><i :class="menuItem.icon"></i>{{menuItem.title}}</span>
@@ -35,38 +35,38 @@
             title: '后台信息一览表',
             subs: [
               {
-                index: '/index/info/users',
+                index: '',
                 title: '用户信息'
               },
               {
-                index: '/index/info/devices',
+                index: '',
                 title: '设备信息'
               }
             ]
           },
           {
             icon: 'el-icon-date',
-            index: '/index/abnormal',
+            index: '',
             title: '异常信息',
             subs: [
               {
-                index: '/index/abnormal/users/new',
+                index: '',
                 title: '新增异常名单'
               },
               {
-                index: '/index/abnormal/users/old',
+                index: '',
                 title: '已有异常名单'
               }
             ]
           },
           {
             icon: 'el-icon-star-on',
-            index: '/index/history',
+            index: '',
             title: '历史数据'
           },
           {
             icon: 'el-icon-upload2',
-            index: '/index/yesterday',
+            index: '',
             title: '昨晚睡眠情况'
           }
         ]

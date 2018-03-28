@@ -3,7 +3,7 @@
     <el-col class="carousel" :span="20">
       <el-carousel :interval="5000" arrow="always" height="555px">
         <el-carousel-item v-for="item in 4" :key="item">
-          <single-line :chart-data="{}"></single-line>
+          <!-- <single-line :chart-data="{}"></single-line> -->
         </el-carousel-item>
       </el-carousel>
     </el-col>
@@ -15,12 +15,12 @@
 
 <script>
   import scorllBar from '../../components/parts/bar/scrollBar.vue'
-  import SingleLine from '../../components/parts/charts/SingleLine.vue'
+  // import SingleLine from '../../components/parts/charts/SingleLine.vue'
   export default {
     name: 'live',
     components:{
       scorllBar,
-      SingleLine
+      // SingleLine
     },
     data(){
       return {
