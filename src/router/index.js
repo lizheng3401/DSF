@@ -4,6 +4,7 @@ import Home from '../components/common/Home.vue'
 import live from '../view/live/live.vue'
 import test from '../components/test/test.vue'
 import personal from '../view/personal/personal.vue'
+import login from '../view/login/login.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -30,5 +31,10 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    }
   ]
 })
