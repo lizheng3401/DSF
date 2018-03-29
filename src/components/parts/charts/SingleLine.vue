@@ -16,7 +16,7 @@
       },
       width: {
         type: String,
-        default: '100%'
+        default: '900px'
       },
       height: {
         type: String,
@@ -27,7 +27,7 @@
         default: true
       },
       chartData: {
-        type: Object
+        type: Array
       }
     },
     data: function () {
@@ -42,7 +42,7 @@
           if (this.chart){
             this.chart.resize();
           }
-        }, 100);
+        }, 10);
         window.addEventListener('resize', this.__resizeHanlder)
       }
     },
@@ -66,43 +66,43 @@
       }
     },
     methods: {
-      setOptions: function ({ cate, expectedData, actualData, time } = {}) {
+      setOptions: function (data) {
         this.chart.setOption({
           title: {
-            text: "实时的睡眠数据"
+            text: '动态数据 + 时间坐标轴'
           },
           tooltip: {
-              trigger: 'axis',
-              formatter: function (params) {
-                  params = params[0];
-                  var date = new Date(params.name);
-                  return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-              },
-              axisPointer: {
-                  animation: false
-              }
+            trigger: 'axis',
+            formatter: function (params) {
+              params = params[0];
+              var date = new Date(params.name);
+              return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+            },
+            axisPointer: {
+              animation: false
+            }
           },
           xAxis: {
-              type: 'time',
-              splitLine: {
-                  show: false
-              }
+            type: 'time',
+            splitLine: {
+              show: false
+            }
           },
           yAxis: {
-              type: 'value',
-              boundaryGap: [0, '100%'],
-              splitLine: {
-                  show: false
-              }
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+              show: false
+            }
           },
           series: [{
-              name: '模拟数据',
-              type: 'line',
-              showSymbol: false,
-              hoverAnimation: false,
-              data: data
+            name: '模拟数据',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: data,
           }]
-        });
+        })
       },
       initChart: function () {
         this.chart = echarts.init(this.$el);

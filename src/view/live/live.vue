@@ -1,9 +1,11 @@
 <template>
   <div>
-    <el-col class="carousel" :span="20">
-      <el-carousel :interval="5000" arrow="always" height="555px">
+    <el-col class="carousel" :span="20" >
+      <el-carousel :interval="5000" height="555px" :initial-index="0">
         <el-carousel-item v-for="item in 4" :key="item">
-          <!-- <single-line :chart-data="{}"></single-line> -->
+          <template slot-scope="scope">
+            <single-line :chartData="chartData"></single-line>
+          </template>
         </el-carousel-item>
       </el-carousel>
     </el-col>
@@ -15,39 +17,59 @@
 
 <script>
   import scorllBar from '../../components/parts/bar/scrollBar.vue'
-  // import SingleLine from '../../components/parts/charts/SingleLine.vue'
+  import SingleLine from '../../components/parts/charts/SingleLine.vue'
   export default {
     name: 'live',
     components:{
       scorllBar,
-      // SingleLine
+      SingleLine
     },
     data(){
       return {
-        users: []
+        users: [],
+        chartData: []
       }
     },
-    
+    methods: {
+     
+      fetchData(){
+
+      }
+    },
     created(){
-      
+      const self = this
+      function randomData() {
+          now = new Date(+now + oneDay);
+          value = value + Math.random() * 21 - 10;
+          return {
+              name: now.toString(),
+              value: [
+                  [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                  Math.round(value)
+              ]
+          }
+      }
+      var data = [];
+      var now = +new Date(1997, 9, 3);
+      var oneDay = 24 * 3600 * 1000;
+      var value = Math.random() * 1000;
+      for (var i = 0; i < 100; i++) {
+          data.push(randomData());
+      }
+
+      setInterval(function () {
+        for (var i = 0; i < 5; i++) {
+            data.shift();
+            data.push(randomData());
+        }
+        self.chartData = data
+      }, 1000);
     }
   };
 </script>
 
 <style scoped>
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
-  }
-  
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-  
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+  canvas{
+    width:500px
   }
 </style>

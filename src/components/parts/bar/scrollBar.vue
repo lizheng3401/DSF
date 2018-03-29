@@ -46,16 +46,16 @@ export default {
       this.$http({
         url: "https://api.github.com/users",
         methods: "get"
-      })
-        .then(resp => {
+      }).then(resp => {
           for (let i = 0; i < 7; i++) {
             self.users.push(resp.data[i]);
           }
-        })
-        .catch(function(err) {
+      }).catch(function(err) {
           self.$message({
+            showClose: true,
+            center: true,
             message: err,
-            type: "danger"
+            type: "error"
           });
         });
       this.loading = false;
