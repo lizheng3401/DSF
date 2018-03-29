@@ -8,7 +8,7 @@
   import {debounce} from '../../../utils/index'
 
   export default {
-    name: "single-line",
+    name: "stackBar",
     props: {
       className: {
         type: String,
@@ -27,7 +27,7 @@
         default: true
       },
       chartData: {
-        type: Array
+        type: Object
       }
     },
     data: function () {

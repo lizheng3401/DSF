@@ -3,8 +3,12 @@
     <el-row :gutter="10">
       <div class="top-input">
         <el-input placeholder="请输入用户名" style="width: 500px"> 
-          <template slot="prepend"><i></i></template>
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <template slot="prepend">
+            <icon name="user" :scale="3"></icon>
+          </template>
+          <template slot="append">
+            <el-button icon="el-icon-search" type="primary"></el-button>
+          </template>
         </el-input>
       </div>
     </el-row>
@@ -27,7 +31,7 @@
           </el-date-picker>
         </el-col>
         <el-col :span="10">
-          <el-button type="primary" icon="el-icon-search" plain size="small">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" size="small">查询</el-button>
         </el-col>
       </el-row>
       <el-row></el-row>

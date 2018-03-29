@@ -8,9 +8,12 @@ import axios from 'axios'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+// svg图标
+import Icon from 'vue-svg-icon/Icon.vue';
 
 Vue.use(Vuex);
 Vue.use(ElementUI);
+Vue.component('icon', Icon);  
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false

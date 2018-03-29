@@ -3,18 +3,18 @@
     <el-card v-for="(user,index) in users" :key="index" :body-style="{padding: '5px'}" v-if="users.length > 0">
       <el-row>
         <el-col :span="10">
-          <strong>{{ user.login }}</strong>
+          <strong style="line-height: 20px">{{ user.login }}</strong>
         </el-col>
-        <el-col :span="5" :offset="4">
-          <i class="el-icon-star-on">75</i>
+        <el-col :span="5" :offset="3">
+          <icon name="heart" :scale="2"></icon>75
         </el-col>
-        <el-col :span="5">
-          <i class="el-icon-news">16</i>
+        <el-col :span="5" :offset="1">
+          <icon name="breath" :scale="2"></icon>16
         </el-col>
       </el-row>
       <el-row>
         <el-col>
-          <p>异常原因<i class="el-icon-warning"></i>心率不齐</p>
+          <p><i class="el-icon-warning"></i>心率不齐</p>
         </el-col>
       </el-row>
       <el-row>
