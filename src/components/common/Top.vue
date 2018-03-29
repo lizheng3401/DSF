@@ -32,9 +32,9 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    height: 70px;
+    height: 50px;
     font-size: 22px;
-    line-height: 70px;
+    line-height: 50px;
     color: #fff;
     background-color: #242f42;
   }

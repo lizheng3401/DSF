@@ -1,50 +1,81 @@
 <template>
-  <div class="scroll-bar">
-    <div class="users" v-if="users.length > 0">
-        <div v-for="(user,index) in users" :key="index">
-          <img :src="user.avatar_url" height="40" alt="">
-          <span>{{ user.login }}</span>
-        </div>
-    </div>
-    <mugen-scroll :handler="fetchData" :should-handle="!loading">
-      loading...
-    </mugen-scroll>
+  <div class="scroll-bar" ref="noCharge">
+    <el-card v-for="(user,index) in users" :key="index" :body-style="{padding: '5px'}" v-if="users.length > 0">
+      <el-row>
+        <el-col :span="10">
+          <strong>{{ user.login }}</strong>
+        </el-col>
+        <el-col :span="5" :offset="4">
+          <i class="el-icon-star-on">75</i>
+        </el-col>
+        <el-col :span="5">
+          <i class="el-icon-news">16</i>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col>
+          <p>异常原因<i class="el-icon-warning"></i>心率不齐</p>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-button type="danger" size="mini" style="width: 100%" @click="handlException(user)">待处理</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
 <script>
-  import MugenScroll from 'vue-mugen-scroll'
-  export default {
-    name: "scrll-bar",
-    data: function() {
-      return {
-        users: undefined,
-        loading: false
-      }
+import MugenScroll from "vue-mugen-scroll";
+export default {
+  name: "scrll-bar",
+  data: function() {
+    return {
+      users: [],
+      loading: false
+    };
+  },
+  components: {
+    MugenScroll
+  },
+  methods: {
+    fetchData() {
+      const self = this;
+      this.loading = true;
+      this.$http({
+        url: "https://api.github.com/users",
+        methods: "get"
+      }).then(resp => {
+          for (let i = 0; i < 7; i++) {
+            self.users.push(resp.data[i]);
+          }
+      }).catch(function(err) {
+          self.$message({
+            showClose: true,
+            center: true,
+            message: err,
+            type: "error"
+          });
+        });
+      this.loading = false;
     },
-    methods: {
-       fetchData() {
-        const self = this
-        this.loading = true
-        this.$http({
-          url: 'https://api.github.com/users',
-          methods: 'get',
-        }).then( resp => {
-          self.users = resp.data
-        }).catch( function (err) {
-          self.$message("error");
-        })
-        this.loading = false
-      }
+    handlException(user){
+      this.users.splice(0,1)
+      this.$message({
+        message: user.login+"处理成功",
+        type: "success"
+      })
     },
-    created: function() {
-      this.fetchData()
-    }
-  };
+  },
+  created: function() {
+    this.fetchData();
+  }
+};
 </script>
 
 <style scoped>
-  .users{
-    height:100%
-  }
+.scroll-bar {
+  height: 300px;
+}
 </style>

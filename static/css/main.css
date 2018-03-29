@@ -10,9 +10,9 @@ body{
 .content{
   background: none repeat scroll 0 0 #fff;
   position: absolute;
-  left: 250px;
+  left: 200px;
   right: 0;
-  top: 70px;
+  top: 50px;
   bottom:0;
   width: auto;
   padding:10px;
@@ -23,3 +23,4 @@ body{
 a{
   text-decoration: none;
 }
+li{list-style-type:none;}
