@@ -69,7 +69,8 @@
       setOptions: function (data) {
         this.chart.setOption({
           title: {
-            text: '动态数据 + 时间坐标轴'
+            text: '动态数据 + 时间坐标轴',
+            left: 'center'
           },
           tooltip: {
             trigger: 'axis',
@@ -98,6 +99,7 @@
           series: [{
             name: '模拟数据',
             type: 'line',
+            smooth: true,
             showSymbol: false,
             hoverAnimation: false,
             data: data,

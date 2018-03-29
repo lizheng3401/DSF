@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '../components/common/Home.vue'
 import live from '../view/live/live.vue'
 import test from '../components/test/test.vue'
-
+import personal from '../view/personal/personal.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -14,7 +14,7 @@ export default new Router({
       component: Home,
       children:[
         {
-          path: '/live',
+          path: 'live',
           name: 'live',
           component: live
         },
@@ -22,6 +22,11 @@ export default new Router({
           path: 'test',
           name: 'test',
           component: test
+        },
+        {
+          path: 'personal',
+          name: 'personal',
+          component: personal
         }
       ]
     },

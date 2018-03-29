@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-bar" ref="noCharge">
-    <el-card v-for="(user,index) in users" :key="index" class="box-card" :body-style="{padding: '5px'}" v-if="users.length > 0">
+    <el-card v-for="(user,index) in users" :key="index" :body-style="{padding: '5px'}" v-if="users.length > 0">
       <el-row>
         <el-col :span="10">
           <strong>{{ user.login }}</strong>
@@ -77,8 +77,5 @@ export default {
 <style scoped>
 .scroll-bar {
   height: 300px;
-}
-.box-card {
-  padding: 0px;
 }
 </style>

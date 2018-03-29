@@ -68,6 +68,11 @@
             icon: 'el-icon-upload2',
             index: '',
             title: '昨晚睡眠情况'
+          },
+          {
+            icon: 'el-icon-edit-outline',
+            index: '/test',
+            title: 'test'
           }
         ]
       }
@@ -81,7 +86,7 @@
     position: absolute;
     width: 200px;
     left: 0;
-    top: 70px;
+    top: 50px;
     bottom:0;
   }
   .sidebar > ul {
