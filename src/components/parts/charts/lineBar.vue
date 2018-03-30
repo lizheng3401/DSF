@@ -16,11 +16,11 @@ export default {
     },
     width: {
       type: String,
-      default: "900px"
+      default: "100%"
     },
     height: {
       type: String,
-      default: "555px"
+      default: "300px"
     },
     autoResize: {
       type: Boolean,
@@ -66,40 +66,32 @@ export default {
     }
   },
   methods: {
-    setOptions: function(data) {
+    setOptions: function({time, data} = {}) {
       this.chart.setOption({
         tooltip: {
-          trigger: "axis"
-        },
-        legend: {
-          data: ["降水量", "折线"]
+          trigger: 'axis',
+          axisPointer: {
+              type: 'cross',
+              animation: false,
+              label: {
+                backgroundColor: '#505765'
+              }
+          }
         },
         xAxis: [
           {
             type: "category",
-            data: [
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月"
-            ]
+            data: time
           }
         ],
+        legend: {
+
+        },
         yAxis: [
           {
             type: "value",
-            name: "水量/ml",
-            min: 0,
-            max: 250,
-            interval: 50,
+            name: "人数",
+            // interval: 50,
             axisLabel: {
               formatter: "{value} "
             }
@@ -107,7 +99,7 @@ export default {
         ],
         series: [
           {
-            name: "降水量",
+            name: "入睡人数",
             type: "bar",
             /*itemStyle: {
                                 normal: {
@@ -139,22 +131,23 @@ export default {
                 label: {
                   show: true,
                   position: "top",
-                  formatter: "{b}\n{c}"
+                  formatter: "{c}"
                 }
               }
             },
-            data: [50, 75, 100, 150, 200, 250, 150, 100, 95, 160, 50, 45]
+            data: data
           },
           {
             name: "折线",
             type: "line",
+            smooth: true,
             itemStyle: {
               /*设置折线颜色*/
               normal: {
                 /* color:'#c4cddc'*/
               }
             },
-            data: [50, 75, 100, 150, 200, 250, 150, 100, 95, 160, 50, 45]
+            data: data
           }
         ]
       });

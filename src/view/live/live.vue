@@ -1,14 +1,33 @@
 <template>
   <div>
     <el-col class="carousel" :span="20">
-      <span>已睡：789</span>
-      <span>未睡：24</span>
-      <el-progress :text-inside="true" :stroke-width="18" :percentage="80" status="success"></el-progress>
-      <el-carousel :interval="5000" height="555px" :initial-index="0" @change="show">
+      <el-row>
+        <el-col :span="4"><el-tag size="small">已睡：789</el-tag> <el-tag size="small">未睡：24</el-tag></el-col>
+        <el-col :span="16">
+          <el-progress :text-inside="true" :stroke-width="18" :percentage="45"></el-progress>
+        </el-col>
+      </el-row>
+      <!-- <el-carousel :interval="5000" height="555px" :initial-index="0" @change="show">
         <el-carousel-item v-for="item in 4" :key="item">
           <single-line :chartData="chartData" v-if="item === isShow"></single-line>
         </el-carousel-item>
-      </el-carousel>
+      </el-carousel> -->
+      <el-row> 
+        <el-col :span="12">
+          <single-line :chartData="chartData" height="300px"></single-line>
+        </el-col>
+        <el-col :span="12">
+          <single-line :chartData="chartData" height="300px"></single-line>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <single-line :chartData="chartData" height="300px"></single-line>
+        </el-col>
+        <el-col :span="12">
+          <single-line :chartData="chartData" height="300px"></single-line>
+        </el-col>
+      </el-row>
     </el-col>
     <el-col :span="4">
      <scorll-bar></scorll-bar>
@@ -80,6 +99,6 @@ canvas {
 .el-progress {
   position: absolute;
   height: 10px;
-  width: 200px;
+  width: 83%;
 }
 </style>

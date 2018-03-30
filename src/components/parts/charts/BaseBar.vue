@@ -1,0 +1,123 @@
+<template>
+  <div :class="className" :style="{height:height,width:width}"></div>
+</template>
+
+<script>
+  import echarts from 'echarts'
+  require('echarts/theme/dark')
+  import {debounce} from '../../../utils/index'
+
+  export default {
+    name: "base-bar",
+    props: {
+      className: {
+        type: String,
+        default: 'chart'
+      },
+      width: {
+        type: String,
+        default: '100%'
+      },
+      height: {
+        type: String,
+        default: '300px'
+      },
+      autoResize: {
+        type: Boolean,
+        default: true
+      },
+      chartData: {
+        type: Object
+      }
+    },
+    data: function () {
+      return {
+        chart: null
+      }
+    },
+    mounted: function () {
+      this.initChart();
+      if(this.autoResize){
+        this.__resizeHanlder = debounce( () => {
+          if (this.chart){
+            this.chart.resize();
+          }
+        }, 10);
+        window.addEventListener('resize', this.__resizeHanlder)
+      }
+    },
+    beforeDestroy: function () {
+      if(!this.chart){
+        return
+      }
+      if(this.autoResize){
+        window.removeEventListener('resize', this.__resizeHanlder)
+      }
+
+      this.chart.dispose();
+      this.chart = null
+    },
+    watch: {
+      chartData: {
+        deep: true,
+        handler: function (val) {
+          this.setOptions(val);
+        }
+      }
+    },
+    methods: {
+      resize(){
+        if(this.chart)
+        {
+          console.log(this)
+          this.chart.resize()
+        }
+        
+      },
+      setOptions: function ({ time, data } = {}) {
+        this.chart.setOption({
+          title: {
+            text: ''
+          },
+          grid: {
+            top: '5%',
+            left: '5%',
+            right: '5%',
+          },
+          tooltip : {
+            trigger: 'axis',
+          },
+          xAxis: {
+            type: 'category',
+            data: ['1','2','3','4','5','6','7','8']
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: {
+            name: '心率',
+            type: 'bar',
+            data:  [45,78,56,75,45,78,56,75],
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  position: "top",
+                  formatter: "{c}"
+                }
+              }
+            },
+          }
+        })
+      },
+      initChart: function () {
+        this.chart = echarts.init(this.$el);
+        this.setOptions(this.chartData)
+      }
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>
