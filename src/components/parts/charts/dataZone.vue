@@ -66,16 +66,13 @@ export default {
     }
   },
   methods: {
-    setOptions: function(data) {
+    setOptions: function({ time, data } = {}) {
       this.chart.setOption({
         title : {
-            text: '雨量流量关系图',
+            text: '异常人数',
             subtext: '数据来自西安兰特水电测控技术有限公司',
             x: 'center',
             align: 'right'
-        },
-        grid: {
-            bottom: 80
         },
         toolbox: {
             feature: {
@@ -83,7 +80,6 @@ export default {
                     yAxisIndex: 'none'
                 },
                 restore: {},
-                saveAsImage: {}
             }
         },
         tooltip : {
@@ -96,21 +92,21 @@ export default {
                 }
             }
         },
-        legend: {
-            data:['流量'],
-            x: 'left'
-        },
         dataZoom: {
           show: true,
           realtime: true,
-          start: 65,
-          end: 85
+          start: 20,
+          end: 50
+        },
+        grid: {
+          top: '5%',
+          left: '5%',
+          right: '5%'
         },
         xAxis : {
           type : 'category',
           boundaryGap : false,
-          axisLine: {onZero: false},
-          data :[1,2,3,4,5,6,7,8,9,10]
+          data: time
         },
         yAxis: {
           name: '人数',
@@ -120,6 +116,7 @@ export default {
             {
                 name:'异常人数',
                 type:'line',
+                smooth: true,
                 animation: true,
                 areaStyle: {
                     normal: {}
@@ -129,7 +126,7 @@ export default {
                         width: 2
                     }
                 },
-                data:[10,9,8,7,6,5,4,3,2,1]
+                data:data
             }
         ]
       });

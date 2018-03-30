@@ -4,11 +4,9 @@
       <span>已睡：789</span>
       <span>未睡：24</span>
       <el-progress :text-inside="true" :stroke-width="18" :percentage="80" status="success"></el-progress>
-      <el-carousel :interval="5000" height="555px" :initial-index="0" @change="show(prev,next)">
+      <el-carousel :interval="5000" height="555px" :initial-index="0" @change="show">
         <el-carousel-item v-for="item in 4" :key="item">
-          <template slot-scope="scope">
-            <single-line :chartData="chartData" ></single-line>
-          </template>
+          <single-line :chartData="chartData" v-if="item === isShow"></single-line>
         </el-carousel-item>
       </el-carousel>
     </el-col>
@@ -30,13 +28,14 @@ export default {
   data() {
     return {
       users: [],
-      chartData: []
+      chartData: [],
+      isShow: 0
     };
   },
   methods: {
     fetchData() {},
     show(prev,next){
-      console.log(prev,next)
+      this.isShow = prev+1
     }
   },
   created() {
@@ -66,6 +65,10 @@ export default {
       }
       self.chartData = data;
     }, 1000);
+
+    setTimeout(function(){
+      self.isShow = 1
+    }, 100)
   }
 };
 </script>
