@@ -38,18 +38,18 @@
           </el-card>
         </el-row>
         <el-row>
-          <el-tabs type="card">
+          <el-tabs type="card" v-model="tabItem">
             <el-tab-pane name="heart">
               <span slot="label"><icon name="heart" scale="2"></icon>心率</span>
-              <baseline :chartData="{}"></baseline>
+              <baseline ref="heart" :chartData="{}" v-if="'heart' === tabItem"></baseline>
             </el-tab-pane>
             <el-tab-pane name="breath">
-               <span slot="label"><icon name="breath" scale="2"></icon>呼吸</span>
-              <baseline :chartData="{}"></baseline>
+              <span slot="label"><icon name="breath" scale="2"></icon>呼吸</span>
+              <baseline ref="breath" :chartData="{}" v-if="'breath' === tabItem"></baseline>
             </el-tab-pane>
-            <el-tab-pane label="体动" name="third">
+            <el-tab-pane label="体动" name="move">
               <span slot="label"><icon name="move" scale="2"></icon>体动</span>
-              <baseline :chartData="{}"></baseline>
+              <baseline ref="move" :chartData="{}" v-if="'move' === tabItem"></baseline>
             </el-tab-pane>
           </el-tabs>
         </el-row>
@@ -74,20 +74,24 @@ export default {
   name: "personal",
   data() {
     return {
-      time: new Date() - 1
+      time: new Date() - 1,
+      tabItem: 'heart',
     };
   },
   components: {
     radar,
     Baseline,
   },
-  methods: {},
-  created() {}
+  methods: {
+    
+  },
+  created() {
+  }
 };
 </script>
 
 <style>
-.el-row {
+.el-row { 
   margin-bottom: 10px;
   &:last-child {
     margin-bottom: 0;

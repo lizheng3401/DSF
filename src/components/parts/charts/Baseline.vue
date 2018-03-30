@@ -66,6 +66,14 @@
       }
     },
     methods: {
+      resize(){
+        if(this.chart)
+        {
+          console.log(this)
+          this.chart.resize()
+        }
+        
+      },
       setOptions: function ({ time, data } = {}) {
         this.chart.setOption({
           title: {

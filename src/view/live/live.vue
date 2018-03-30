@@ -4,7 +4,7 @@
       <span>已睡：789</span>
       <span>未睡：24</span>
       <el-progress :text-inside="true" :stroke-width="18" :percentage="80" status="success"></el-progress>
-      <el-carousel :interval="5000" height="555px" :initial-index="0">
+      <el-carousel :interval="5000" height="555px" :initial-index="0" @change="show(prev,next)">
         <el-carousel-item v-for="item in 4" :key="item">
           <template slot-scope="scope">
             <single-line :chartData="chartData" ></single-line>
@@ -34,7 +34,10 @@ export default {
     };
   },
   methods: {
-    fetchData() {}
+    fetchData() {},
+    show(prev,next){
+      console.log(prev,next)
+    }
   },
   created() {
     const self = this;
