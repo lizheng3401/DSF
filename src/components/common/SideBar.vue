@@ -61,7 +61,7 @@
           },
           {
             icon: 'el-icon-star-on',
-            index: '',
+            index: '/history',
             title: '历史数据'
           },
           {

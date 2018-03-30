@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: "300px"
+      default: "250px"
     },
     autoResize: {
       type: Boolean,
@@ -69,7 +69,8 @@ export default {
     setOptions: function(data) {
       this.chart.setOption({
         title: {
-          text: '评分雷达图',
+          text: '',
+          left: 'center'
         },
         tooltip: {},
         radar: {
@@ -94,12 +95,10 @@ export default {
             name: '睡眠评分',
             type: 'radar',
             areaStyle: {color: '#666'},
-            data : [
-                {
-                    value : [78, 16, 50, 2.5, 2, 1],
-                    name : '评分'
-                }
-            ]
+            data : {
+              value : [78, 16, 50, 2.5, 2, 1],
+              name : '评分'
+            }
         }]
       });
     },

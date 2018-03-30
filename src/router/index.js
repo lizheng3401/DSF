@@ -5,6 +5,7 @@ import live from '../view/live/live.vue'
 import test from '../components/test/test.vue'
 import personal from '../view/personal/personal.vue'
 import login from '../view/login/login.vue'
+import history from '../view/history/history'
 Vue.use(Router)
 
 export default new Router({
@@ -31,6 +32,11 @@ export default new Router({
           path: 'personal',
           name: 'personal',
           component: personal
+        },
+        {
+          path: 'history',
+          name: 'history',
+          component: history
         }
       ]
     },
