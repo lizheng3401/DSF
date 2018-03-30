@@ -4,7 +4,7 @@
       <el-carousel :interval="5000" height="555px" :initial-index="0">
         <el-carousel-item v-for="item in 4" :key="item">
           <template slot-scope="scope">
-            <single-line :chartData="chartData"></single-line>
+            <single-line :chartData="chartData" ></single-line>
           </template>
         </el-carousel-item>
       </el-carousel>
@@ -56,7 +56,6 @@
       for (var i = 0; i < 100; i++) {
           data.push(randomData());
       }
-
       setInterval(function () {
         for (var i = 0; i < 5; i++) {
             data.shift();

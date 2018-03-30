@@ -8,7 +8,7 @@ require("echarts/theme/dark");
 import { debounce } from "../../../utils/index";
 
 export default {
-  name: "single-line",
+  name: "radar",
   props: {
     className: {
       type: String,
