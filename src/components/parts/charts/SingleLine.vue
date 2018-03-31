@@ -20,7 +20,7 @@
       },
       height: {
         type: String,
-        default: '555px'
+        default: '300px'
       },
       autoResize: {
         type: Boolean,
@@ -82,6 +82,11 @@
             axisPointer: {
               animation: false
             }
+          },
+          grid: {
+            top: '5%',
+            left: '8%',
+            right: '8%',
           },
           xAxis: {
             type: 'time',

@@ -99,9 +99,9 @@ export default {
           end: 50
         },
         grid: {
-          top: '5%',
-          left: '5%',
-          right: '5%'
+            top: '5%',
+            left: '8%',
+            right: '8%',
         },
         xAxis : {
           type : 'category',

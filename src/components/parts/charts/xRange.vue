@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: "555px"
+      default: "300px"
     },
     autoResize: {
       type: Boolean,
@@ -116,17 +116,19 @@ export default {
           };
       }
       this.chart.setOption({
-       tooltip: {
+        tooltip: {
             formatter: function (params) {
                 return params.marker + params.name + ': ' + params.value[3] + ' s';
             }
         },
-        title: {
-            text: 'Profile',
-            left: 'center'
-        },
+        // title: {
+        //     text: '',
+        //     left: 'center'
+        // },
         grid: {
-            height:100
+            top: '5%',
+            left: '8%',
+            right: '8%',
         },
         xAxis: {
             name: '时间',

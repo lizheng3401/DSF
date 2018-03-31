@@ -35,21 +35,48 @@
               <el-col :span="6">睡眠时长： 9.5小时</el-col>
               <el-col :span="6">深睡时长： 2.5小时</el-col>
             </el-row>
+            <el-row :gutter="5">
+              <el-col :span="6">平均深睡时间： 11:29</el-col>
+              <el-col :span="6">平均浅睡时间： 08:29</el-col>
+              <el-col :span="6">平均心率： 9.5小时</el-col>
+              <el-col :span="6">平均呼吸率： 2.5小时</el-col>
+            </el-row>
           </el-card>
         </el-row>
         <el-row>
-          <el-tabs type="card" v-model="tabItem">
+          <el-tabs type="card" v-model="tabItem" v-if="live">
+            <el-tab-pane name="heartLive">
+              <span slot="label">
+                <icon name="heart" scale="2"></icon>实时心率
+              </span>
+              <single-line ref="heartLive" :chartData="[]" v-if="'heartLive' === tabItem"></single-line>
+            </el-tab-pane>
+            <el-tab-pane name="breathLive">
+              <span slot="label">
+                <icon name="breath" scale="2"></icon>实时呼吸率
+              </span>
+              <single-line ref="breathLive" :chartData="[]" v-if="'breathLive' === tabItem"></single-line>
+            </el-tab-pane>
             <el-tab-pane name="heart">
-              <span slot="label"><icon name="heart" scale="2"></icon>心率</span>
+              <span slot="label">
+                <icon name="heart" scale="2"></icon>心率
+              </span>
               <baseline ref="heart" :chartData="{}" v-if="'heart' === tabItem"></baseline>
             </el-tab-pane>
             <el-tab-pane name="breath">
-              <span slot="label"><icon name="breath" scale="2"></icon>呼吸</span>
+              <span slot="label">
+                <icon name="breath" scale="2"></icon>呼吸
+              </span>
               <baseline ref="breath" :chartData="{}" v-if="'breath' === tabItem"></baseline>
             </el-tab-pane>
-            <el-tab-pane label="体动" name="move">
+            <el-tab-pane name="move">
               <span slot="label"><icon name="move" scale="2"></icon>体动</span>
               <baseline ref="move" :chartData="{}" v-if="'move' === tabItem"></baseline>
+            </el-tab-pane>
+            <el-tab-pane name="period">
+              <span slot="label"><icon name="period" scale="2"></icon>睡眠分期</span>
+              <xRange ref="period" :chartData="{}" v-if="'period' === tabItem" height="150px"></xRange>
+              <stackBar ref="period" :chartData="{}" v-if="'period' === tabItem" height="150px"></stackBar>
             </el-tab-pane>
           </el-tabs>
         </el-row>
@@ -69,21 +96,28 @@
 
 <script>
 import Baseline from '../../components/parts/charts/Baseline'
-import radar from "../../components/parts/charts/radar";
+import radar from "../../components/parts/charts/radar"
+import xRange from "../../components/parts/charts/xRange"
+import stackBar from "../../components/parts/charts/stackBar"
+import SingleLine from "../../components/parts/charts/SingleLine"
 export default {
   name: "personal",
   data() {
     return {
       time: new Date() - 1,
       tabItem: 'heart',
+      live: true,
     };
   },
   components: {
     radar,
     Baseline,
+    xRange,
+    stackBar,
+    SingleLine
   },
   methods: {
-    
+   
   },
   created() {
   }

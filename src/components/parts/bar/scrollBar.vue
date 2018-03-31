@@ -18,8 +18,11 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24">
-          <el-button type="danger" size="mini" style="width: 100%" @click="handlException(user)">待处理</el-button>
+        <el-col :span="12">
+          <el-tag type="danger" size="medium" style="width: 100%; text-aligin: center;">状态：危险</el-tag>
+        </el-col>
+        <el-col :span="12">
+          <el-button type="danger" size="mini" @click="handlException(user)" style="width: 100%;">待处理</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -69,7 +72,12 @@ export default {
     },
   },
   created: function() {
+    const self = this
     this.fetchData();
+    setInterval( function () {
+      self.users.unshift({login: 'abcd'})
+      self.users.pop()
+    }, 1000)
   }
 };
 </script>

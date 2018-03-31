@@ -16,11 +16,11 @@
       },
       width: {
         type: String,
-        default: '900px'
+        default: '100%'
       },
       height: {
         type: String,
-        default: '555px'
+        default: '300px'
       },
       autoResize: {
         type: Boolean,
@@ -75,24 +75,24 @@
               }
           },
           legend: {
-              data: ['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎']
+              data: null
           },
           grid: {
-              left: '3%',
-              right: '4%',
-              bottom: '3%',
-              containLabel: true
+            top: '5%',
+            left: '8%',
+            right: '8%',
           },
           xAxis:  {
-              type: 'value'
+              type: 'value',
+              name: '小时'
           },
           yAxis: {
               type: 'category',
-              data: ['周一','周二','周三','周四','周五','周六','周日']
+              data: ['']
           },
           series: [
               {
-                  name: '直接访问',
+                  // name: '直接访问',
                   type: 'bar',
                   stack: '总量',
                   label: {
@@ -101,10 +101,10 @@
                           position: 'insideRight'
                       }
                   },
-                  data: [320, 302, 301, 334, 390, 330, 320]
+                  data: [320]
               },
               {
-                  name: '邮件营销',
+                  // name: '邮件营销',
                   type: 'bar',
                   stack: '总量',
                   label: {
@@ -113,10 +113,10 @@
                           position: 'insideRight'
                       }
                   },
-                  data: [120, 132, 101, 134, 90, 230, 210]
+                  data: [120]
               },
               {
-                  name: '联盟广告',
+                  // name: '联盟广告',
                   type: 'bar',
                   stack: '总量',
                   label: {
@@ -125,10 +125,10 @@
                           position: 'insideRight'
                       }
                   },
-                  data: [220, 182, 191, 234, 290, 330, 310]
+                  data: [220]
               },
               {
-                  name: '视频广告',
+                  // name: '视频广告',
                   type: 'bar',
                   stack: '总量',
                   label: {
@@ -137,10 +137,10 @@
                           position: 'insideRight'
                       }
                   },
-                  data: [150, 212, 201, 154, 190, 330, 410]
+                  data: [150]
               },
               {
-                  name: '搜索引擎',
+                  // name: '搜索引擎',
                   type: 'bar',
                   stack: '总量',
                   label: {
@@ -149,7 +149,7 @@
                           position: 'insideRight'
                       }
                   },
-                  data: [820, 832, 901, 934, 1290, 1330, 1320]
+                  data: [820]
               }
           ]
         })
