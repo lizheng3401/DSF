@@ -20,26 +20,26 @@
         <el-row>
           <el-card :body-style="{ padding: '10px' }">
             <el-row :gutter="5">
-              <el-col :span="6">姓名：默认姓名</el-col>
-              <el-col :span="6">年龄：默认年龄</el-col>
-              <el-col :span="6">性别：默认性别</el-col>
-              <el-col :span="6">床位：默认床位</el-col>
+              <el-col :span="6">姓名：{{ name }}</el-col>
+              <el-col :span="6">年龄：{{ret.userInfo.age}}</el-col>
+              <el-col :span="6">性别：{{ret.userInfo.sex}}</el-col>
+              <el-col :span="6">床位：{{ret.userInfo.bed}}</el-col>
             </el-row>
             <el-row :gutter="5">
-              <el-col :span="10">紧急联系人： 默认联系人</el-col>
-              <el-col :span="10" :offset="2">联系电话： 默认联系电话</el-col>
+              <el-col :span="10">紧急联系人： {{ret.userInfo.person}}</el-col>
+              <el-col :span="10" :offset="2">联系电话： {{ret.userInfo.phone}}</el-col>
             </el-row>
             <el-row :gutter="5">
-              <el-col :span="6">入睡时间： 11:29</el-col>
-              <el-col :span="6">苏醒时间： 08:29</el-col>
-              <el-col :span="6">睡眠时长： 9.5小时</el-col>
-              <el-col :span="6">深睡时长： 2.5小时</el-col>
+              <el-col :span="6">入睡时间： {{ret.userInfo.begin}}</el-col>
+              <el-col :span="6">苏醒时间： {{ret.userInfo.end}}</el-col>
+              <el-col :span="6">睡眠时长： {{ret.userInfo.total}}</el-col>
+              <el-col :span="6">深睡时长： {{ret.userInfo.deep}}</el-col>
             </el-row>
             <el-row :gutter="5">
-              <el-col :span="6">平均深睡时间： 11:29</el-col>
-              <el-col :span="6">平均浅睡时间： 08:29</el-col>
-              <el-col :span="6">平均心率： 9.5小时</el-col>
-              <el-col :span="6">平均呼吸率： 2.5小时</el-col>
+              <el-col :span="6">平均深睡时间： {{ret.userInfo.avgDeep}}</el-col>
+              <el-col :span="6">平均浅睡时间：{{ret.userInfo.avgShallow}}</el-col>
+              <el-col :span="6">平均心率： {{ret.userInfo.avgHeart}}小时</el-col>
+              <el-col :span="6">平均呼吸率： {{ret.userInfo.avgBreath}}小时</el-col>
             </el-row>
           </el-card>
         </el-row>
@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import {detailPeople} from '../../api/api'
 import Baseline from '../../components/parts/charts/Baseline'
 import radar from "../../components/parts/charts/radar"
 import xRange from "../../components/parts/charts/xRange"
@@ -107,6 +108,8 @@ export default {
       time: new Date() - 1,
       tabItem: 'heart',
       live: true,
+      name: '',
+      ret: {},
     };
   },
   components: {
@@ -117,9 +120,22 @@ export default {
     SingleLine
   },
   methods: {
-   
+    fectchData(){
+      const self = this
+      detailPeople({}).then( resp => {
+        this.ret = resp.data
+        console.log(resp.data)
+      }).catch( function(error){
+        self.$message({
+          type: 'danger',
+          message: error
+        })
+      })
+    }
   },
   created() {
+    this.name = this.$route.params.name 
+    this.fectchData()
   }
 };
 </script>

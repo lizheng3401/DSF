@@ -3,8 +3,8 @@ import axios from 'axios';
 
 let host = 'http://api.deepsleeping.tech';
 
-//login
-export const login = params => { return axios.post(`api/Login/`, params)}
+// new unhealth people
+export const newUnhealthPeople = params => { return axios.get(`api/newUnhealthPeople`, params)}
 
 // history of unhealth people number
 
@@ -17,3 +17,8 @@ export const sleepPeople = params => { return axios.get(`api/history/sleepPeople
 // history of sleep peroid number
 
 export const periodPeople = params => { return axios.get(`api/history/periodPeople`, params)}
+
+// personal
+
+export const detailPeople = params => { return axios.get(`api/detail/people`, params)}
+

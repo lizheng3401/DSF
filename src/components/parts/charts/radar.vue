@@ -27,7 +27,7 @@ export default {
       default: true
     },
     chartData: {
-      type: Object
+      type: Array
     }
   },
   data: function() {
@@ -68,10 +68,6 @@ export default {
   methods: {
     setOptions: function(data) {
       this.chart.setOption({
-        title: {
-          text: '',
-          left: 'center'
-        },
         tooltip: {},
         radar: {
             name: {
@@ -96,7 +92,7 @@ export default {
             type: 'radar',
             areaStyle: {color: '#666'},
             data : {
-              value : [78, 16, 50, 2.5, 2, 1],
+              value : data,
               name : '评分'
             }
         }]

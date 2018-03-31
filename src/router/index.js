@@ -34,6 +34,11 @@ export default new Router({
           component: personal
         },
         {
+          path: 'personal/:name',
+          name: 'personal',
+          component: personal
+        },
+        {
           path: 'history',
           name: 'history',
           component: history
