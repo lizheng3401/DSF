@@ -78,74 +78,33 @@ export default {
               }
           }
         },
-        xAxis: [
-          {
-            type: "category",
-            data: time
-          }
-        ],
-        legend: {
-
+        grid: {
+            top: '5%',
+            left: '5%',
+            right: '5%',
+          },
+        dataZoom: {
+            show: true,
+            realtime: true,
+            start: 20,
+            end: 50
         },
-        yAxis: [
-          {
+        xAxis: {
+          type: "category",
+          boundaryGap : false,
+          data: time
+        },
+        yAxis: {
             type: "value",
-            name: "人数",
-            // interval: 50,
-            axisLabel: {
-              formatter: "{value} "
-            }
-          }
-        ],
+            name: "人数"
+        },
         series: [
           {
-            name: "入睡人数",
-            type: "bar",
-            /*itemStyle: {
-                                normal: {
-                                    color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: '#fe6262'},
-                                            {offset: 0.5, color: '#fe4141'},
-                                            {offset: 1, color: '#fe1818'}
-                                        ]
-                                    ),
-                                },
-                                emphasis: {
-                                    color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: '#fe6262'},
-                                            {offset: 0.5, color: '#fe4141'},
-                                            {offset: 1, color: '#fe1818'}
-                                        ]
-                                    )
-                                }
-                            },*/
-
-            /*设置柱状图颜色*/
-            itemStyle: {
-              normal: {
-                /*信息显示方式*/
-                label: {
-                  show: true,
-                  position: "top",
-                  formatter: "{c}"
-                }
-              }
-            },
-            data: data
-          },
-          {
-            name: "折线",
+            name: '入睡人数',
             type: "line",
             smooth: true,
-            itemStyle: {
-              /*设置折线颜色*/
-              normal: {
-                /* color:'#c4cddc'*/
-              }
+            areaStyle: {
+              normal: {}
             },
             data: data
           }

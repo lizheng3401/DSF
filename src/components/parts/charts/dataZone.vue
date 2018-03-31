@@ -68,12 +68,6 @@ export default {
   methods: {
     setOptions: function({ time, data } = {}) {
       this.chart.setOption({
-        title : {
-            text: '异常人数',
-            subtext: '数据来自西安兰特水电测控技术有限公司',
-            x: 'center',
-            align: 'right'
-        },
         toolbox: {
             feature: {
                 dataZoom: {
@@ -98,11 +92,11 @@ export default {
           start: 20,
           end: 50
         },
-        grid: {
+       grid: {
             top: '5%',
-            left: '8%',
-            right: '8%',
-        },
+            left: '5%',
+            right: '5%',
+          },
         xAxis : {
           type : 'category',
           boundaryGap : false,

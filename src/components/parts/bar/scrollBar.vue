@@ -1,6 +1,12 @@
 <template>
-  <div class="scroll-bar" ref="noCharge">
-    <el-card v-for="(user,index) in users" :key="index" :body-style="{padding: '5px'}" v-if="users.length > 0">
+  <div class="scroll-bar">
+    <transition-group name="list-complete" >
+    <el-card 
+      v-for="(user,index) in users" 
+      :key="index" 
+      :body-style="{padding: '5px'}" 
+      v-if="users.length > 0" 
+      class="list-complete-item">
       <el-row>
         <el-col :span="10">
           <strong style="line-height: 20px">{{ user.login }}</strong>
@@ -26,11 +32,12 @@
         </el-col>
       </el-row>
     </el-card>
+    </transition-group>
   </div>
 </template>
 
 <script>
-import MugenScroll from "vue-mugen-scroll";
+// import MugenScroll from "vue-mugen-scroll";
 export default {
   name: "scrll-bar",
   data: function() {
@@ -40,7 +47,7 @@ export default {
     };
   },
   components: {
-    MugenScroll
+    // MugenScroll
   },
   methods: {
     fetchData() {
@@ -84,6 +91,6 @@ export default {
 
 <style scoped>
 .scroll-bar {
-  height: 300px;
+  height: 555px;
 }
 </style>

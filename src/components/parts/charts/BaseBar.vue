@@ -74,11 +74,8 @@
         }
         
       },
-      setOptions: function ({ time, data } = {}) {
+      setOptions: function ({ time, peroid } = {}) {
         this.chart.setOption({
-          title: {
-            text: ''
-          },
           grid: {
             top: '5%',
             left: '5%',
@@ -87,27 +84,35 @@
           tooltip : {
             trigger: 'axis',
           },
+          dataZoom: {
+            show: true,
+            realtime: true,
+            start: 20,
+            end: 50
+          },
+          legend:{
+            data: ['浅睡', '深睡', '睡眠时长']
+          },
           xAxis: {
             type: 'category',
-            data: ['1','2','3','4','5','6','7','8']
+            data: time
           },
           yAxis: {
             type: 'value',
           },
-          series: {
-            name: '心率',
+          series: [{
+            name: '浅睡',
             type: 'bar',
-            data:  [45,78,56,75,45,78,56,75],
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true,
-                  position: "top",
-                  formatter: "{c}"
-                }
-              }
-            },
-          }
+            data:  peroid.shallow,
+          },{
+            name: '深睡',
+            type: 'bar',
+            data:  peroid.deep
+          },{
+            name: '睡眠时长',
+            type: 'bar',
+            data:  peroid.total,
+          }]
         })
       },
       initChart: function () {
