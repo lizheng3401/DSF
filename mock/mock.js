@@ -206,6 +206,26 @@ const peroid = function () {
   }
 }
 
+var date = new Date()
+const liveNow = function () {
+  let data = []
+  for(let i = 0; i < 5; i++){
+    date = new Date(date.valueOf() + 1000)
+    let temp = {
+      name: date.toString(),
+      value: [
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+        Random.natural(30,100)
+      ]
+    }
+    data.push(temp)
+  }
+  
+  return {
+    title: '心率',
+    data,
+  }
+}
 
 // scrollbar
 Mock.mock('api/newUnhealthPeople', 'get', newUnhealthPeople)
@@ -222,3 +242,6 @@ Mock.mock(`api/live/heartBreath`, 'get', live)
 Mock.mock(`api/yesterday/heartBreath`, 'get', heartBreath)
 Mock.mock(`api/yesterday/move`, 'get', move)
 Mock.mock(`api/yesterday/period`, 'get', peroid)
+
+
+Mock.mock(`api/now/live`, 'get', liveNow)

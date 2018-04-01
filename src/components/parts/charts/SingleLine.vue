@@ -27,7 +27,7 @@
         default: true
       },
       chartData: {
-        type: Array
+        type: Object
       }
     },
     data: function () {
@@ -69,45 +69,38 @@
       setOptions: function (data) {
         this.chart.setOption({
           title: {
-            text: '动态数据 + 时间坐标轴',
-            left: 'center'
+              text: '动态数据 + 时间坐标轴'
           },
           tooltip: {
-            trigger: 'axis',
-            formatter: function (params) {
-              params = params[0];
-              var date = new Date(params.name);
-              return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-            },
-            axisPointer: {
-              animation: false
-            }
-          },
-          grid: {
-            top: '5%',
-            left: '8%',
-            right: '8%',
+              trigger: 'axis',
+              formatter: function (params) {
+                  params = params[0];
+                  var date = new Date(params.name);
+                  return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+              },
+              axisPointer: {
+                  animation: false
+              }
           },
           xAxis: {
-            type: 'time',
-            splitLine: {
-              show: false
-            }
+              type: 'time',
+              splitLine: {
+                  show: false
+              }
           },
           yAxis: {
-            type: 'value',
-            boundaryGap: [0, '100%'],
-            splitLine: {
-              show: false
-            }
+              type: 'value',
+              boundaryGap: [0, '100%'],
+              splitLine: {
+                  show: false
+              }
           },
           series: [{
-            name: '模拟数据',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            hoverAnimation: false,
-            data: data,
+              name: '模拟数据',
+              type: 'line',
+              showSymbol: false,
+              hoverAnimation: false,
+              data: data.data
           }]
         })
       },

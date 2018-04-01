@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {live} from "../../api/api"
 import scorllBar from "../../components/parts/bar/scrollBar.vue";
 import SingleLine from "../../components/parts/charts/SingleLine.vue";
 export default {
@@ -42,44 +43,30 @@ export default {
   data() {
     return {
       users: [],
-      chartData: [],
+      chartData: {},
       isShow: 0
     };
   },
   methods: {
-    fetchData() {},
+    fetchData() {
+      const self = this
+      live({}).then( resp => {
+        self.chartData = resp.data
+        console.log(JSON.stringify(self.chartData, null, 2))
+      }).catch( function (error) {
+        self.$message({
+          type: 'danger',
+          message: error,
+        })
+      })
+    },
     show(prev,next){
       this.isShow = prev+1
     }
   },
   created() {
-    const self = this;
-    function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
-      return {
-        name: now.toString(),
-        value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(value)
-        ]
-      };
-    }
-    var data = [];
-    var now = +new Date(1997, 9, 3);
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-    for (var i = 0; i < 100; i++) {
-      data.push(randomData());
-    }
-    setInterval(function() {
-      for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
-      }
-      self.chartData = data;
-    }, 1000);
-
+    this.fetchData()
+    console.log(JSON.stringify(this.chartData.data, null, 2))
     setTimeout(function(){
       self.isShow = 1
     }, 100)

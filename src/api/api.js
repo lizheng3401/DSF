@@ -36,3 +36,7 @@ export const move = params => { return axios.get(`api/yesterday/move`, params)}
 
 export const peroid = params => { return axios.get(`api/yesterday/period`, params) }
 
+//  live all 
+
+export const live = params => { return axios.get(`api/now/live`, params) }
+
