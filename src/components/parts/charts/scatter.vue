@@ -8,7 +8,7 @@
   import {debounce} from '../../../utils/index'
 
   export default {
-    name: "base-line",
+    name: "single-line",
     props: {
       className: {
         type: String,
@@ -27,7 +27,7 @@
         default: true
       },
       chartData: {
-        type: Object
+        type: Array
       }
     },
     data: function () {
@@ -66,32 +66,17 @@
       }
     },
     methods: {
-      resize(){
-        if(this.chart)
-        {
-          console.log(this)
-          this.chart.resize()
-        }
-        
-      },
-      setOptions: function ({title, time, data} = {}) {
+      setOptions: function (data){
+        console.log(data)
+        console.log(typeof(data))
         this.chart.setOption({
-          title: {
-            text: ''
+          tooltip: {
+            trigger: 'axis',
           },
           grid: {
             top: '5%',
-            left: '5%',
-            right: '5%',
-          },
-          tooltip : {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
-              }
+            left: '8%',
+            right: '8%',
           },
           toolbox: {
             feature: {
@@ -106,19 +91,16 @@
           },
           xAxis: {
             type: 'category',
-            boundaryGap: false,
-            min: 'dataMin',
-            data: time
           },
           yAxis: {
-            type: 'value',
+            min: 0.5
           },
-          series: {
-            name: title,
-            type: 'line',
-            smooth: true,
-            data:  data,
-          }
+          series: [{
+              name: '体动次数',
+              type: 'scatter',
+              symbolSize: 10,
+              data: data,
+          }]
         })
       },
       initChart: function () {

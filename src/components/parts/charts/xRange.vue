@@ -66,36 +66,10 @@ export default {
     }
   },
   methods: {
-    setOptions: function(data) {
-      var data = [];
-      var startTime = +new Date();
-      var categories = ['categoryA'];
-      var types = [
-          {name: '觉醒期', color: '#7b9ce1'},
-          {name: '浅睡I期', color: '#bd6d6c'},
-          {name: '浅睡II期', color: '#75d874'},
-          {name: '深睡期', color: '#e0bc78'},
-      ];
-      var baseTime = startTime;
-      for (var i = 0; i < 10; i++) {
-        var typeItem = types[i%4];
-        var duration = Math.round(Math.random() * 10000);
-        data.push({
-          name: typeItem.name,
-          value: [
-                0,
-                baseTime,
-                baseTime += duration,
-                duration
-          ],
-          itemStyle: {
-              normal: {
-                color: typeItem.color
-              }
-          }
-        });
-      }
+    setOptions: function({ startTime, data }={}) {
+      
       function renderItem(params, api) {
+        console.log(JSON.stringify(params, null, 2))
           var start = api.coord([api.value(1), 0]);
           var end = api.coord([api.value(2), 0]);
           var height = api.size([0, 1])[1] * 2;
@@ -115,28 +89,29 @@ export default {
               style: api.style()
           };
       }
+      console.log(JSON.stringify(data[0], null, 2))
       this.chart.setOption({
         tooltip: {
             formatter: function (params) {
                 return params.marker + params.name + ': ' + params.value[3] + ' s';
             }
         },
-        // title: {
-        //     text: '',
-        //     left: 'center'
-        // },
         grid: {
             top: '5%',
-            left: '8%',
-            right: '8%',
+            left: '5%',
+            right: '5%',
         },
         xAxis: {
+            type: 'category',
             name: '时间',
             min: startTime,
             scale: true,
             axisLabel: {
                 formatter: function (val) {
-                    return Math.max(0, val - startTime) + ' ms';
+                  let date = new Date(val)              
+                  console.log(startTime)
+                  console.log(date)
+                  return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                 }
             }
         },

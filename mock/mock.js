@@ -15,6 +15,7 @@ const unhealthPeople = function (opt) {
     data
   }
 }
+
 const sleepPeople = function (){
   let data = []
   let time = []
@@ -114,6 +115,98 @@ const detailPeople = function (){
     data,
   }
 }
+
+const live = function () {
+  let date = new Date()
+  let heart = Random.natural(30, 100)
+  let breath = Random.natural(10, 30)
+  let time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+  return {
+    time,
+    heart,
+    breath
+  }
+}
+
+const heartBreath = function () {
+  let date = new Date(new Date() - 1)
+  let time = []
+  let heart = []
+  let breath = []
+  for(let i = 0; i < 480; i++){
+    time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
+    date = new Date(date.valueOf() + 60*1000)
+    heart.push(Random.natural(30, 100))
+    breath.push(Random.natural(10, 30))
+  }
+  return {
+    heart: {
+      title: '心率',
+      time,
+      data: heart,
+    },
+    breath: {
+      title: '呼吸率',
+      time,
+      data: breath
+    }
+  }
+}
+
+const move = function () {
+  let date = new Date(new Date() - 1)
+  let data = []
+  for(let i = 0; i < 48; i++){
+    if(Random.boolean())
+    {
+      data.push([
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+        Random.natural(1, 10)
+      ])
+    }
+    date = new Date(date.valueOf() + 60*1000*10)
+  }
+  return {
+    data,
+  }
+}
+
+const peroid = function () {
+  var data = [];
+  var startTime = new Date();
+  var categories = ['categoryA'];
+  var types = [
+    { name: '觉醒期', color: '#7b9ce1' },
+    { name: '浅睡I期', color: '#bd6d6c' },
+    { name: '浅睡II期', color: '#75d874' },
+    { name: '深睡期', color: '#e0bc78' },
+  ];
+  var baseTime = startTime.getTime();
+  for (var i = 0; i < Random.natural(5,10); i++) {
+    var typeItem = types[i % 4];
+    var duration = Math.round(Math.random() * 10000);
+    data.push({
+      name: typeItem.name,
+      value: [
+        0,
+        baseTime,
+        baseTime += duration,
+        duration
+      ],
+      itemStyle: {
+        normal: {
+          color: typeItem.color
+        }
+      }
+    });
+  }
+  return {
+    startTime,
+    data
+  }
+}
+
+
 // scrollbar
 Mock.mock('api/newUnhealthPeople', 'get', newUnhealthPeople)
 
@@ -125,3 +218,7 @@ Mock.mock('api/history/periodPeople', 'get', periodPeople)
 // personal
 
 Mock.mock('api/detail/people', 'get', detailPeople)
+Mock.mock(`api/live/heartBreath`, 'get', live)
+Mock.mock(`api/yesterday/heartBreath`, 'get', heartBreath)
+Mock.mock(`api/yesterday/move`, 'get', move)
+Mock.mock(`api/yesterday/period`, 'get', peroid)

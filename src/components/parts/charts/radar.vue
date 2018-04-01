@@ -90,11 +90,11 @@ export default {
         series: [{
             name: '睡眠评分',
             type: 'radar',
-            areaStyle: {color: '#666'},
-            data : {
-              value : data,
-              name : '评分'
-            }
+            areaStyle: {normal: {color: '#666'}},
+            data : [{
+              value: data,
+              name: '评分'
+            }]
         }]
       });
     },

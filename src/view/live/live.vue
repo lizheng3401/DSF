@@ -7,11 +7,6 @@
           <el-progress :text-inside="true" :stroke-width="18" :percentage="45"></el-progress>
         </el-col>
       </el-row>
-      <!-- <el-carousel :interval="5000" height="555px" :initial-index="0" @change="show">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <single-line :chartData="chartData" v-if="item === isShow"></single-line>
-        </el-carousel-item>
-      </el-carousel> -->
       <el-row> 
         <el-col :span="12">
           <single-line :chartData="chartData" height="300px"></single-line>

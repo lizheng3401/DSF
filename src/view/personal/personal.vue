@@ -32,14 +32,14 @@
             <el-row :gutter="5">
               <el-col :span="6">入睡时间： {{ret.userInfo.begin}}</el-col>
               <el-col :span="6">苏醒时间： {{ret.userInfo.end}}</el-col>
-              <el-col :span="6">睡眠时长： {{ret.userInfo.total}}</el-col>
-              <el-col :span="6">深睡时长： {{ret.userInfo.deep}}</el-col>
+              <el-col :span="6">睡眠时长： {{ret.userInfo.total}}小时</el-col>
+              <el-col :span="6">深睡时长： {{ret.userInfo.deep}}小时</el-col>
             </el-row>
             <el-row :gutter="5">
-              <el-col :span="6">平均深睡时间： {{ret.userInfo.avgDeep}}</el-col>
-              <el-col :span="6">平均浅睡时间：{{ret.userInfo.avgShallow}}</el-col>
-              <el-col :span="6">平均心率： {{ret.userInfo.avgHeart}}小时</el-col>
-              <el-col :span="6">平均呼吸率： {{ret.userInfo.avgBreath}}小时</el-col>
+              <el-col :span="6">平均深睡时间： {{ret.userInfo.avgDeep}}小时</el-col>
+              <el-col :span="6">平均浅睡时间：{{ret.userInfo.avgShallow}}小时</el-col>
+              <el-col :span="6">平均心率： {{ret.userInfo.avgHeart}}</el-col>
+              <el-col :span="6">平均呼吸率： {{ret.userInfo.avgBreath}}</el-col>
             </el-row>
           </el-card>
         </el-row>
@@ -61,28 +61,28 @@
               <span slot="label">
                 <icon name="heart" scale="2"></icon>心率
               </span>
-              <baseline ref="heart" :chartData="{}" v-if="'heart' === tabItem"></baseline>
+              <baseline ref="heart" :chartData="yesterdayData.heart" v-if="'heart' === tabItem"></baseline>
             </el-tab-pane>
             <el-tab-pane name="breath">
               <span slot="label">
                 <icon name="breath" scale="2"></icon>呼吸
               </span>
-              <baseline ref="breath" :chartData="{}" v-if="'breath' === tabItem"></baseline>
+              <baseline ref="breath" :chartData="yesterdayData.breath" v-if="'breath' === tabItem"></baseline>
             </el-tab-pane>
             <el-tab-pane name="move">
               <span slot="label"><icon name="move" scale="2"></icon>体动</span>
-              <baseline ref="move" :chartData="{}" v-if="'move' === tabItem"></baseline>
+              <scatter ref="move" :chartData="moveData.data" v-if="'move' === tabItem"></scatter>
             </el-tab-pane>
             <el-tab-pane name="period">
               <span slot="label"><icon name="period" scale="2"></icon>睡眠分期</span>
-              <xRange ref="period" :chartData="{}" v-if="'period' === tabItem" height="150px"></xRange>
+              <xRange ref="period" :chartData="periodData" v-if="'period' === tabItem" height="150px"></xRange>
               <stackBar ref="period" :chartData="{}" v-if="'period' === tabItem" height="150px"></stackBar>
             </el-tab-pane>
           </el-tabs>
         </el-row>
       </el-col>
       <el-col :span="8">
-        <radar></radar>
+        <radar :chartData="ret.data.radar"></radar>
       </el-col>
     </el-row>
     <el-row :gutter="10">
@@ -95,12 +95,15 @@
 </template>
 
 <script>
-import {detailPeople} from '../../api/api'
+
+import {detailPeople, heartBreath, move, peroid} from '../../api/api'
 import Baseline from '../../components/parts/charts/Baseline'
 import radar from "../../components/parts/charts/radar"
 import xRange from "../../components/parts/charts/xRange"
 import stackBar from "../../components/parts/charts/stackBar"
 import SingleLine from "../../components/parts/charts/SingleLine"
+import scatter from "../../components/parts/charts/scatter"
+
 export default {
   name: "personal",
   data() {
@@ -108,8 +111,11 @@ export default {
       time: new Date() - 1,
       tabItem: 'heart',
       live: true,
-      name: '',
+      name: '默认',
       ret: {},
+      liveData: {},
+      yesterdayData: {},
+      moveData: {}
     };
   },
   components: {
@@ -117,25 +123,68 @@ export default {
     Baseline,
     xRange,
     stackBar,
-    SingleLine
+    SingleLine,
+    scatter
   },
   methods: {
     fectchData(){
       const self = this
       detailPeople({}).then( resp => {
         this.ret = resp.data
-        console.log(resp.data)
       }).catch( function(error){
         self.$message({
           type: 'danger',
           message: error
         })
       })
-    }
+      heartBreath({}).then( resp => {
+        this.yesterdayData = resp.data
+      }).catch( function(error){
+        self.$message({
+          type: 'danger',
+          message: error
+        })
+      })
+      move({}).then( resp => {
+        this.moveData = resp.data
+      }).catch( function(error){
+        self.$message({
+          type: 'danger',
+          message: error
+        })
+      })
+      peroid({}).then( resp => {
+        this.periodData = resp.data
+      }).catch( function(error){
+        self.$message({
+          type: 'danger',
+          message: error
+        })
+      })
+    },
+    getLive(){
+      const self = this
+      heartBreathLive({}).then( resp => {
+        if(this.liveData > 30){
+          this.liveData.shift()
+          this.liveData.push(resp.data)
+        }
+        else{
+          this.liveData.push(resp.data)
+        }
+      }).catch( function (error) {
+        self.$message({
+          type: 'danger',
+          message: error 
+        })
+      })
+    },
   },
   created() {
+    const self = this
     this.name = this.$route.params.name 
     this.fectchData()
+    setInterval(self.heartBreathLive, 1000)
   }
 };
 </script>

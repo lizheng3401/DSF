@@ -19,6 +19,20 @@ export const sleepPeople = params => { return axios.get(`api/history/sleepPeople
 export const periodPeople = params => { return axios.get(`api/history/periodPeople`, params)}
 
 // personal
-
 export const detailPeople = params => { return axios.get(`api/detail/people`, params)}
+
+// live heart and breath
+export const heartBreathLive = params => { return axios.get(`api/live/heartBreath`, params)}
+
+// lastDay heart and breath
+
+export const heartBreath = params => { return axios.get(`api/yesterday/heartBreath`, params)}
+
+// move yesterday
+
+export const move = params => { return axios.get(`api/yesterday/move`, params)}
+
+// perid yesterday
+
+export const peroid = params => { return axios.get(`api/yesterday/period`, params) }
 
