@@ -208,22 +208,18 @@ const peroid = function () {
 
 var date = new Date()
 const liveNow = function () {
-  let data = []
+  let time = []
+  let heart = []
   for(let i = 0; i < 5; i++){
     date = new Date(date.valueOf() + 1000)
-    let temp = {
-      name: date.toString(),
-      value: [
-        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-        Random.natural(30,100)
-      ]
-    }
-    data.push(temp)
+    time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
+    heart.push(Random.natural(30,100))
   }
   
   return {
     title: '心率',
-    data,
+    time,
+    data:heart
   }
 }
 
