@@ -49,13 +49,13 @@
               <span slot="label">
                 <icon name="heart" scale="2"></icon>实时心率
               </span>
-              <single-line ref="heartLive" :chartData="[]" v-if="'heartLive' === tabItem"></single-line>
+              <single-line ref="heartLive" :chartData="chartData" v-if="'heartLive' === tabItem"></single-line>
             </el-tab-pane>
             <el-tab-pane name="breathLive">
               <span slot="label">
                 <icon name="breath" scale="2"></icon>实时呼吸率
               </span>
-              <single-line ref="breathLive" :chartData="[]" v-if="'breathLive' === tabItem"></single-line>
+              <single-line ref="breathLive" :chartData="chartData" v-if="'breathLive' === tabItem"></single-line>
             </el-tab-pane>
             <el-tab-pane name="heart">
               <span slot="label">
@@ -96,7 +96,7 @@
 
 <script>
 
-import {detailPeople, heartBreath, move, peroid} from '../../api/api'
+import {detailPeople, heartBreath, move, peroid, live} from '../../api/api'
 import Baseline from '../../components/parts/charts/Baseline'
 import radar from "../../components/parts/charts/radar"
 import xRange from "../../components/parts/charts/xRange"
@@ -115,7 +115,9 @@ export default {
       ret: {},
       liveData: {},
       yesterdayData: {},
-      moveData: {}
+      moveData: {},
+      chartData: {},
+      temp: {}
     };
   },
   components: {
@@ -161,30 +163,30 @@ export default {
           message: error
         })
       })
-    },
-    getLive(){
-      const self = this
-      heartBreathLive({}).then( resp => {
-        if(this.liveData > 30){
-          this.liveData.shift()
-          this.liveData.push(resp.data)
-        }
-        else{
-          this.liveData.push(resp.data)
-        }
+      live({}).then( resp => {
+        self.chartData = resp.data
+        self.temp = resp.data
       }).catch( function (error) {
         self.$message({
           type: 'danger',
-          message: error 
+          message: error,
         })
       })
-    },
+    }
   },
   created() {
     const self = this
     this.name = this.$route.params.name 
     this.fectchData()
     setInterval(self.heartBreathLive, 1000)
+    setInterval( function () {
+      let ti = new Date(new Date("2018/4/10 "+self.chartData.time[self.chartData.time.length - 1]).valueOf()+1000)
+      self.temp.time.shift()
+      self.temp.time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
+      self.temp.data.shift()
+      self.temp.data.push(Math.round(Math.random() * 100))
+      self.chartData = self.temp
+    }, 1000)
   }
 };
 </script>

@@ -2,9 +2,9 @@
   <div>
     <el-col class="carousel" :span="20">
       <el-row>
-        <el-col :span="4"><el-tag size="small">已睡：789</el-tag> <el-tag size="small">未睡：24</el-tag></el-col>
+        <el-col :span="4"><el-tag size="small">已睡：{{users[0]}}</el-tag> <el-tag size="small">未睡：{{users[1]}}</el-tag></el-col>
         <el-col :span="16">
-          <el-progress :text-inside="true" :stroke-width="18" :percentage="45"></el-progress>
+          <el-progress :text-inside="true" :stroke-width="18" :percentage="users[2]"></el-progress>
         </el-col>
       </el-row>
       <el-row> 
@@ -44,6 +44,7 @@ export default {
     return {
       users: [],
       chartData: {},
+      temp: {},
       isShow: 0
     };
   },
@@ -52,7 +53,7 @@ export default {
       const self = this
       live({}).then( resp => {
         self.chartData = resp.data
-        console.log(JSON.stringify(self.chartData, null, 2))
+        self.temp = resp.data
       }).catch( function (error) {
         self.$message({
           type: 'danger',
@@ -65,11 +66,24 @@ export default {
     }
   },
   created() {
+    const self = this
+    let people = Math.round(Math.random() * 1000)
+    this.users.push(people)
+    this.users.push(1000 - people)
+    this.users.push(people/10)
     this.fetchData()
-    console.log(JSON.stringify(this.chartData.data, null, 2))
+    setInterval( function () {
+      let ti = new Date(new Date("2018/4/10 "+self.chartData.time[self.chartData.time.length - 1]).valueOf()+1000)
+      self.temp.time.shift()
+      self.temp.time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
+      self.temp.data.shift()
+      self.temp.data.push(Math.round(Math.random() * 100))
+      self.chartData = self.temp
+    }, 1000)
     setTimeout(function(){
       self.isShow = 1
     }, 100)
+    
   }
 };
 </script>

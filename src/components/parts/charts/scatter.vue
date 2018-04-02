@@ -67,16 +67,14 @@
     },
     methods: {
       setOptions: function (data){
-        console.log(data)
-        console.log(typeof(data))
         this.chart.setOption({
           tooltip: {
             trigger: 'axis',
           },
           grid: {
             top: '5%',
-            left: '8%',
-            right: '8%',
+            left: '5%',
+            right: '5%',
           },
           toolbox: {
             feature: {

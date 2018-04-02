@@ -208,18 +208,18 @@ const peroid = function () {
 
 var date = new Date()
 const liveNow = function () {
+  let data = []
   let time = []
   let heart = []
-  for(let i = 0; i < 5; i++){
+  for(let i = 0; i < 100; i++){
     date = new Date(date.valueOf() + 1000)
     time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
-    heart.push(Random.natural(30,100))
+    heart.push(Random.natural(30, 100))
   }
-  
   return {
     title: '心率',
     time,
-    data:heart
+    data: heart
   }
 }
 
@@ -238,6 +238,5 @@ Mock.mock(`api/live/heartBreath`, 'get', live)
 Mock.mock(`api/yesterday/heartBreath`, 'get', heartBreath)
 Mock.mock(`api/yesterday/move`, 'get', move)
 Mock.mock(`api/yesterday/period`, 'get', peroid)
-
 
 Mock.mock(`api/now/live`, 'get', liveNow)
