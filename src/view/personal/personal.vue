@@ -81,7 +81,8 @@
         </el-row>
       </el-col>
       <el-col :span="6">
-          <radar :chartData="ret.data.radar"></radar>
+        <pie :chartData="{}"></pie>
+        <radar :chartData="ret.data.radar"></radar>
       </el-col>
     </el-row>
   </div>
@@ -96,7 +97,7 @@ import xRange from "../../components/parts/charts/xRange"
 import stackBar from "../../components/parts/charts/stackBar"
 import SingleLine from "../../components/parts/charts/SingleLine"
 import scatter from "../../components/parts/charts/scatter"
-
+import pie from "../../components/parts/charts/pie"
 export default {
   name: "personal",
   data() {
@@ -112,6 +113,7 @@ export default {
       chartData: {},
       temp: {},
       peroidTotal: {},
+      pie: []
     };
   },
   components: {
@@ -120,7 +122,8 @@ export default {
     xRange,
     stackBar,
     SingleLine,
-    scatter
+    scatter,
+    pie
   },
   methods: {
     fectchData(){

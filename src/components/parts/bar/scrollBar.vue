@@ -63,7 +63,7 @@ export default {
       })
     },
     handlException(user){
-      this.$router.push('/personal')
+      this.$router.push(`/personal/${user.name}`)
     },
   },
   created: function() {

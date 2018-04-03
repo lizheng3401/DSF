@@ -1,78 +1,103 @@
 <template>
   <div>
     <el-row>
-      <data-zone :chartData="topData" height="300px"></data-zone>
+      <el-col :span="1">
+        <span>历<br>史<br>异<br>常<br>人<br>数<br>变<br>化</span>
+      </el-col>
+      <el-col :span="23">
+        <data-zone :chartData="topData"></data-zone>
+      </el-col>
     </el-row>
     <el-row>
-      <line-bar :chartData="leftData"></line-bar>
+      <el-col :span="1">
+        <span>昨<br>晚<br>入<br>睡<br>趋<br>势<br>变<br>化</span>
+      </el-col>
+      <el-col :span="23">
+        <line-bar :chartData="leftData"></line-bar>
+      </el-col>
     </el-row>
     <el-row>
-      <base-bar :chartData="bottomData"></base-bar>
+      <el-col :span="1">
+        <span>平<br>均<br>睡<br>眠<br>时<br>长<br>变<br>化</span>
+      </el-col>
+      <el-col :span="23">
+        <base-bar :chartData="bottomData"></base-bar>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import {unhealthPeople, sleepPeople, periodPeople} from '../../api/api'
-import dataZone from '../../components/parts/charts/dataZone'
-import lineBar from '../../components/parts/charts/lineBar'
-import baseBar from '../../components/parts/charts/BaseBar'
+import { unhealthPeople, sleepPeople, periodPeople } from "../../api/api";
+import dataZone from "../../components/parts/charts/dataZone";
+import lineBar from "../../components/parts/charts/lineBar";
+import baseBar from "../../components/parts/charts/BaseBar";
 export default {
-  name: 'history',
-  data(){
+  name: "history",
+  data() {
     return {
       topData: {},
       leftData: {},
       bottomData: {}
-    }
+    };
   },
-  components:{
+  components: {
     dataZone,
     lineBar,
     baseBar
   },
-  methods:{
-    fetchData(){
-      const self = this
-      unhealthPeople({}).then( resp => {
-        this.topData = resp.data
-      }).catch( function (error) {
-        self.$message({
-          type: 'danger',
-          message: error
+  methods: {
+    fetchData() {
+      const self = this;
+      unhealthPeople({})
+        .then(resp => {
+          this.topData = resp.data;
         })
-      })
-      sleepPeople({}).then( resp => {
-        this.leftData = resp.data
-      }).catch( function (error) {
-        self.$message({
-          type: 'danger',
-          message: error
+        .catch(function(error) {
+          self.$message({
+            type: "danger",
+            message: error
+          });
+        });
+      sleepPeople({})
+        .then(resp => {
+          this.leftData = resp.data;
         })
-      })
-      periodPeople({}).then( resp => {
-        this.bottomData = resp.data
-      }).catch( function (error) {
-        self.$message({
-          type: 'danger',
-          message: error
+        .catch(function(error) {
+          self.$message({
+            type: "danger",
+            message: error
+          });
+        });
+      periodPeople({})
+        .then(resp => {
+          this.bottomData = resp.data;
         })
-      })
+        .catch(function(error) {
+          self.$message({
+            type: "danger",
+            message: error
+          });
+        });
     }
   },
-  created(){
+  created() {
     const loading = this.$loading({
       lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
+      text: "Loading",
+      spinner: "el-icon-loading",
+      background: "rgba(0, 0, 0, 0.7)"
     });
-    this.fetchData()
-    loading.close()
+    this.fetchData();
+    loading.close();
   }
-}
+};
 </script>
 
 <style scoped>
-
+span{
+  font-size:25px;
+  text-align:"center";
+  vertical-align: "center";
+}
 </style>

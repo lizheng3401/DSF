@@ -150,10 +150,41 @@
           });
       },
       handleSearch: function () {
-        this.listQuery.page = 1
-        this.getData()
-        this.listQuery.username = ''
+        let temp = []
+        for(let i = 0; i < this.Data.length; i++)
+        {
+          if(this.listQuery.status && this.listQuery.username){
+            if(this.Data[i].status === this.listQuery.status && this.Data[i].username === this.listQuery.username)
+            {
+              temp.push(this.Data[i])
+              continue
+            } 
+          }
+          else if(this.listQuery.status)
+          {
+            if(this.Data[i].status === this.listQuery.status){
+              temp.push(this.Data[i])
+              continue
+            }
+          }
+          else if(this.listQuery.username)
+          {
+            if(this.Data[i].username === this.listQuery.username)
+            {
+              temp.push(this.Data[i])
+              continue
+            }
+          }
+          else{
+            this.getData()
+            return 
+          }
+        }
+        
+        this.Data = temp
+        this.total = temp.length
         this.listQuery.status = ''
+        this.listQuery.username = ''
       },
       handleAdd: function () {
         this.dialogFormVisible = true;

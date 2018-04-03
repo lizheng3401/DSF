@@ -78,8 +78,8 @@
         this.chart.setOption({
           grid: {
             top: '5%',
-            left: '5%',
-            right: '5%',
+            left: '4%',
+            right: '4%',
           },
           tooltip : {
             trigger: 'axis',
@@ -90,9 +90,9 @@
             start: 20,
             end: 50
           },
-          legend:{
+          /* legend:{
             data: ['浅睡', '深睡', '睡眠时长']
-          },
+          }, */
           xAxis: {
             type: 'category',
             data: time

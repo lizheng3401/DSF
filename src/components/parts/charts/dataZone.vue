@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: "555px"
+      default: "300px"
     },
     autoResize: {
       type: Boolean,
@@ -94,8 +94,8 @@ export default {
         },
        grid: {
             top: '5%',
-            left: '5%',
-            right: '5%',
+            left: '4%',
+            right: '4%',
           },
         xAxis : {
           type : 'category',

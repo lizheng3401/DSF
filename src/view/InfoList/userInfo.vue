@@ -43,7 +43,7 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button type="info" size="small" @click="detailUser(scope.row.id)">详情</el-button>
+          <el-button type="info" size="small" @click="detailUser(scope.row.username)">详情</el-button>
           <el-button type="danger " size="small" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -87,21 +87,6 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogEditVisible = false">取 消</el-button>
         <el-button type="primary" @click="updateUser(updateForm)">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="查看用户" :visible.sync="dialogShowVisible" >
-      <ul style=" list-style:none;font-size: 20px; text-align: center">
-        <li>用户: {{userForm.username}}</li>
-        <li>入睡时间: 23:24:00</li>
-        <li>起床时间: 8:37:00</li>
-        <li>心率: 75</li>
-        <li>呼吸率: 19</li>
-        <li>体动: 40</li>
-        <li>评分: 86</li>
-      </ul>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogShowVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogShowVisible = false">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -170,15 +155,41 @@
       },
       handleSearch: function () {
         const self = this
-        this.listQuery.page = 1
-        this.getData()
-        console.log(JSON.stringify(this.listQuery, null, 2))
-        this.Data.forEach(function (element) {
-          console.log(element)
-          element.status = self.listQuery.status
-        })
-        this.listQuery.username = ''
+        let temp = []
+        for(let i = 0; i < this.Data.length; i++)
+        {
+          if(this.listQuery.status && this.listQuery.username){
+            if(this.Data[i].status === this.listQuery.status && this.Data[i].username === this.listQuery.username)
+            {
+              temp.push(this.Data[i])
+              continue
+            } 
+          }
+          else if(this.listQuery.status)
+          {
+            if(this.Data[i].status === this.listQuery.status){
+              temp.push(this.Data[i])
+              continue
+            }
+          }
+          else if(this.listQuery.username)
+          {
+            if(this.Data[i].username === this.listQuery.username)
+            {
+              temp.push(this.Data[i])
+              continue
+            }
+          }
+          else{
+            this.getData()
+            return 
+          }
+        }
+        
+        this.Data = temp
+        this.total = temp.length
         this.listQuery.status = ''
+        this.listQuery.username = ''
       },
       handleAdd: function () {
         this.dialogFormVisible = true;
@@ -301,9 +312,8 @@
           });
         })
       },
-      detailUser: function (userId) {
-        this.dialogShowVisible = true
-        this.userForm = this.Data[userId - 1]
+      detailUser: function (username) {
+        this.$router.push(`/personal/${username}`)
       },
       deleteUser: function (row) {
         const self = this
@@ -331,7 +341,7 @@
           for(let i = 0; i < resp.data.results.length; i++){
             let temp = []
             for(let j in filterVal){
-              temp.push(resp.data.results[i][filterVal[j]]+"")
+              temp.push(resp.data.results[i][filterVal[j]])
             }
             data.push(temp)
           }

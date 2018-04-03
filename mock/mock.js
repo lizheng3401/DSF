@@ -99,14 +99,17 @@ const detailPeople = function (){
     breath.push(Random.natural(0,20))
   }
   let data = {
-    radar: [
-      Random.natural(0,100),
-      Random.natural(0,20),
-      Random.natural(0,100),
-      Random.natural(0,5),
-      Random.natural(0,3),
-      Random.natural(0,2),
-    ],
+    radar: {
+      data: [
+        Random.natural(0, 100),
+        Random.natural(0, 20),
+        Random.natural(0, 100),
+        Random.natural(0, 5),
+        Random.natural(0, 3),
+        Random.natural(0, 2),
+      ],
+      score: Random.natural(0,100)
+    },
     heart,
   }
 
@@ -236,8 +239,8 @@ const totalUsers = function (opt) {
       'id': i + 1,
       'username': Random.cname(),
       'email': Random.email(),
-      'device': Random.id(),
-      'sleep': Random.id(),
+      'device': Random.guid(),
+      'sleep': Random.guid().split('-').join(''),
       'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
     };
     users.push(newObject);
@@ -259,8 +262,8 @@ const userData = function (opt) {
       'id': j,
       'username': Random.cname(),
       'email': Random.email(),
-      'device': Random.id(),
-      'sleep': Random.id(),
+      'device': Random.guid(),
+      'sleep': Random.guid().split('-').join(''),
       'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
     };
     j += 1
@@ -281,7 +284,7 @@ const totalDevices = function (opt) {
   let devices = []
   for (let i = 0; i < 100; i++) {
     let newObject = {
-      "id": Random.id(),
+      "id": Random.guid(),
       "createdTime": Random.datetime(),
       "username": Random.cname(),
       'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
@@ -298,7 +301,7 @@ const deviceData = function (opt) {
   let devices = []
   for (let i = 0; i < 10; i++) {
     let newObject = {
-      "id": Random.id(),
+      "id": Random.guid(),
       "createdTime": Random.datetime(),
       "username": Random.cname(),
       'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]

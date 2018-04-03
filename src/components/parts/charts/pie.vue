@@ -8,7 +8,7 @@ require("echarts/theme/dark");
 import { debounce } from "../../../utils/index";
 
 export default {
-  name: "radar",
+  name: "pie",
   props: {
     className: {
       type: String,
@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: "250px"
+      default: "300px"
     },
     autoResize: {
       type: Boolean,
@@ -66,36 +66,42 @@ export default {
     }
   },
   methods: {
-    setOptions: function({score, data} = {}) {
+    resize() {
+      if (this.chart) {
+        console.log(this);
+        this.chart.resize();
+      }
+    },
+    setOptions: function(data) {
       this.chart.setOption({
-        tooltip: {},
-        radar: {
-            name: {
-                textStyle: {
-                    color: '#fff',
-                    backgroundColor: '#999',
-                    borderRadius: 3,
-                    padding: [3, 5]
-              }
-            },
-            indicator: [
-              { name: '心率', max: 100},
-              { name: '呼吸率', max: 20},
-              { name: '体动', max: 100},
-              { name: '深睡眠时长', max: 5},
-              { name: '入睡时间', max: 3},
-              { name: '觉醒时间', max: 2}
-            ]
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        series: [{
-            name: '睡眠评分',
-            type: 'radar',
-            areaStyle: {normal: {color: '#666'}},
-            data : [{
-              value: data,
-              name: '评分: '+score
-            }]
-        }]
+        grid: {
+          top: '0',
+        },
+        series: [
+          {
+            name: "睡眠时期分布",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data:[
+              { value: Math.round(Math.random()*100), name: "深睡" },
+              { value: Math.round(Math.random()*100), name: "觉醒" },
+              { value: Math.round(Math.random()*100), name: "浅睡I" },
+              { value: Math.round(Math.random()*100), name: "浅睡II" },
+            ],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
       });
     },
     initChart: function() {
