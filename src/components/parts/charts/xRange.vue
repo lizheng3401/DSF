@@ -117,7 +117,7 @@ export default {
           }
         },
         yAxis: {
-          data: ["AB"]
+          data: ["睡\n眠\n分\n期"]
         },
         series: 
           {

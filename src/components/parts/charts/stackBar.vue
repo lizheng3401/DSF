@@ -85,7 +85,7 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: [""]
+          data: ["睡\n眠\n时\n长"]
         },
         series: [
           {

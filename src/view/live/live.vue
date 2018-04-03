@@ -8,20 +8,12 @@
         </el-col>
       </el-row>
       <el-row> 
-        <el-col :span="12">
-          <single-line :chartData="chartData[0]" height="300px"></single-line>
-        </el-col>
-        <el-col :span="12">
-          <single-line :chartData="chartData[1]" height="300px"></single-line>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <single-line :chartData="chartData[0]" height="300px"></single-line>
-        </el-col>
-        <el-col :span="12">
-          <single-line :chartData="chartData[1]" height="300px"></single-line>
-        </el-col>
+        <el-carousel height="550px" :interval="5000" @change="show" initial-index="0">
+          <el-carousel-item v-for="item in 4" :key="item">
+            <single-line :chartData="chartData[0]" height="300px" v-if="isShow == item"></single-line>
+            <single-line :chartData="chartData[1]" height="300px" v-if="isShow == item"></single-line>
+          </el-carousel-item>
+        </el-carousel>
       </el-row>
     </el-col>
     <el-col :span="4">

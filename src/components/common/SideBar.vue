@@ -45,29 +45,14 @@
             ]
           },
           {
-            icon: 'el-icon-date',
-            index: '',
-            title: '异常信息',
-            subs: [
-              {
-                index: '',
-                title: '新增异常名单'
-              },
-              {
-                index: '',
-                title: '已有异常名单'
-              }
-            ]
+            icon: 'el-icon-search',
+            index: '/personal',
+            title: '搜索'
           },
           {
             icon: 'el-icon-star-on',
             index: '/history',
             title: '历史数据'
-          },
-          {
-            icon: 'el-icon-upload2',
-            index: '',
-            title: '昨晚睡眠情况'
           },
           {
             icon: 'el-icon-edit-outline',

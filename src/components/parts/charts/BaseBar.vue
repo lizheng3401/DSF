@@ -98,7 +98,7 @@
             data: time
           },
           yAxis: {
-            type: 'value',
+            type: 'category',
           },
           series: [{
             name: '浅睡',
