@@ -35,11 +35,11 @@
             title: '后台信息一览表',
             subs: [
               {
-                index: '',
+                index: '/userInfo',
                 title: '用户信息'
               },
               {
-                index: '',
+                index: '/deviceInfo',
                 title: '设备信息'
               }
             ]

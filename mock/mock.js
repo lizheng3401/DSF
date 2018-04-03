@@ -223,6 +223,88 @@ const liveNow = function () {
   }
 }
 
+const totalUsers = function (opt) {
+  let users = [];
+  for (let i = 0; i < 100; i++) {
+    let newObject = {
+      'id': i + 1,
+      'username': Random.cname(),
+      'email': Random.email(),
+      'device': Random.id(),
+      'sleep': Random.id(),
+      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+    };
+    users.push(newObject);
+  }
+  return {
+    results: users,
+    total: 100
+  }
+}
+const userData = function (opt) {
+  key = opt.url.split('=')[1].split('&')[0]
+  query = opt.url.split('=')[2]
+  page = parseInt(opt.url.split('=')[1])
+  let j = page * 10 - 9
+  let users = [];
+  let total = 100
+  for (let i = 0; i < 10; i++) {
+    let newObject = {
+      'id': j,
+      'username': Random.cname(),
+      'email': Random.email(),
+      'device': Random.id(),
+      'sleep': Random.id(),
+      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+    };
+    j += 1
+    if (key === "status") {
+      if (!(newObject.status === query)) {
+        continue
+      }
+    }
+    users.push(newObject);
+  }
+  return {
+    results: users,
+    total: total
+  }
+};
+
+const totalDevices = function (opt) {
+  let devices = []
+  for (let i = 0; i < 100; i++) {
+    let newObject = {
+      "id": Random.id(),
+      "createdTime": Random.datetime(),
+      "username": Random.cname(),
+      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+    }
+    devices.push(newObject)
+  }
+  return {
+    results: devices,
+    total: 100
+  }
+}
+
+const deviceData = function (opt) {
+  let devices = []
+  for (let i = 0; i < 10; i++) {
+    let newObject = {
+      "id": Random.id(),
+      "createdTime": Random.datetime(),
+      "username": Random.cname(),
+      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+    }
+    devices.push(newObject)
+  }
+  return {
+    results: devices,
+    total: 100
+  }
+}
+
 // scrollbar
 Mock.mock('api/newUnhealthPeople', 'get', newUnhealthPeople)
 
@@ -240,3 +322,16 @@ Mock.mock(`api/yesterday/move`, 'get', move)
 Mock.mock(`api/yesterday/period`, 'get', peroid)
 
 Mock.mock(`api/now/live`, 'get', liveNow)
+
+
+Mock.mock('api/users/lists/', 'get', totalUsers)
+Mock.mock(RegExp('api/users/list/*'), 'get', userData)
+Mock.mock(RegExp('api/users/create/*'), 'post', 'success')
+Mock.mock(RegExp('api/users/update/*'), 'post', 'success')
+Mock.mock(RegExp('api/users/delete/*'), 'get', 'success')
+
+Mock.mock('api/users/lists/', 'get', totalDevices)
+Mock.mock(RegExp('api/devices/list/*'), 'get', deviceData)
+Mock.mock(RegExp('api/devices/create/*'), 'post', 'success')
+Mock.mock(RegExp('api/devices/update/*'), 'post', 'success')
+Mock.mock(RegExp('api/devices/delete/*'), 'get', 'success')

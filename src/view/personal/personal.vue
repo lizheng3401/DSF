@@ -54,12 +54,6 @@
                 <el-col :span="12"><single-line ref="breathLive" :chartData="chartData" v-if="'heartLive' === tabItem"></single-line></el-col>
               </el-row>
             </el-tab-pane>
-            <!-- <el-tab-pane name="breathLive">
-              <span slot="label">
-                <icon name="breath" scale="2"></icon>实时呼吸率
-              </span>
-              <single-line ref="breathLive" :chartData="chartData" v-if="'breathLive' === tabItem"></single-line>
-            </el-tab-pane> -->
             <el-tab-pane name="heart">
               <span slot="label">
                 <icon name="heart" scale="2"></icon>心率

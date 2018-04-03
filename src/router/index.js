@@ -6,6 +6,9 @@ import test from '../components/test/test.vue'
 import personal from '../view/personal/personal.vue'
 import login from '../view/login/login.vue'
 import history from '../view/history/history'
+import userInfo from "../view/InfoList/userInfo.vue"
+import deviceInfo from "../view/InfoList/DeviceInfo.vue"
+
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +25,14 @@ export default new Router({
           path: 'live',
           name: 'live',
           component: live
+        },
+        {
+          path: '/userInfo',
+          component: userInfo
+        },
+        {
+          path: '/deviceInfo',
+          component: deviceInfo
         },
         {
           path: 'test',
