@@ -8,7 +8,7 @@ require("echarts/theme/dark");
 import { debounce } from "../../../utils/index";
 
 export default {
-  name: "radar",
+  name: "dataZone",
   props: {
     className: {
       type: String,
@@ -20,14 +20,14 @@ export default {
     },
     height: {
       type: String,
-      default: "250px"
+      default: "555px"
     },
     autoResize: {
       type: Boolean,
       default: true
     },
     chartData: {
-      type: Array
+      type: Object
     }
   },
   data: function() {
@@ -66,36 +66,63 @@ export default {
     }
   },
   methods: {
-    setOptions: function(data) {
+    setOptions: function({ time, data } = {}) {
       this.chart.setOption({
-        tooltip: {},
-        radar: {
-            name: {
-                textStyle: {
-                    color: '#fff',
-                    backgroundColor: '#999',
-                    borderRadius: 3,
-                    padding: [3, 5]
-              }
-            },
-            indicator: [
-              { name: '心率', max: 100},
-              { name: '呼吸率', max: 20},
-              { name: '体动', max: 100},
-              { name: '深睡眠时长', max: 5},
-              { name: '入睡时间', max: 3},
-              { name: '觉醒时间', max: 2}
-            ]
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+            }
         },
-        series: [{
-            name: '睡眠评分',
-            type: 'radar',
-            areaStyle: {normal: {color: '#666'}},
-            data : [{
-              value: data,
-              name: '评分'
-            }]
-        }]
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                animation: false,
+                label: {
+                    backgroundColor: '#505765'
+                }
+            }
+        },
+        dataZoom: {
+          show: true,
+          realtime: true,
+          start: 20,
+          end: 50
+        },
+       grid: {
+            top: '5%',
+            left: '5%',
+            right: '5%',
+          },
+        xAxis : {
+          type : 'category',
+          boundaryGap : false,
+          data: time
+        },
+        yAxis: {
+          name: '人数',
+          type: 'value',
+        },
+        series: [
+            {
+                name:'异常人数',
+                type:'line',
+                smooth: true,
+                animation: true,
+                areaStyle: {
+                    normal: {}
+                },
+                lineStyle: {
+                    normal: {
+                        width: 2
+                    }
+                },
+                data:data
+            }
+        ]
       });
     },
     initChart: function() {

@@ -8,7 +8,7 @@ require("echarts/theme/dark");
 import { debounce } from "../../../utils/index";
 
 export default {
-  name: "single-line",
+  name: "lineBar",
   props: {
     className: {
       type: String,
@@ -16,11 +16,11 @@ export default {
     },
     width: {
       type: String,
-      default: "900px"
+      default: "100%"
     },
     height: {
       type: String,
-      default: "555px"
+      default: "300px"
     },
     autoResize: {
       type: Boolean,
@@ -66,95 +66,47 @@ export default {
     }
   },
   methods: {
-    setOptions: function(data) {
+    setOptions: function({time, data} = {}) {
       this.chart.setOption({
         tooltip: {
-          trigger: "axis"
-        },
-        legend: {
-          data: ["降水量", "折线"]
-        },
-        xAxis: [
-          {
-            type: "category",
-            data: [
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月"
-            ]
+          trigger: 'axis',
+          axisPointer: {
+              type: 'cross',
+              animation: false,
+              label: {
+                backgroundColor: '#505765'
+              }
           }
-        ],
-        yAxis: [
-          {
+        },
+        grid: {
+            top: '5%',
+            left: '5%',
+            right: '5%',
+          },
+        dataZoom: {
+            show: true,
+            realtime: true,
+            start: 20,
+            end: 50
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap : false,
+          data: time
+        },
+        yAxis: {
             type: "value",
-            name: "水量/ml",
-            min: 0,
-            max: 250,
-            interval: 50,
-            axisLabel: {
-              formatter: "{value} "
-            }
-          }
-        ],
+            name: "人数"
+        },
         series: [
           {
-            name: "降水量",
-            type: "bar",
-            /*itemStyle: {
-                                normal: {
-                                    color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: '#fe6262'},
-                                            {offset: 0.5, color: '#fe4141'},
-                                            {offset: 1, color: '#fe1818'}
-                                        ]
-                                    ),
-                                },
-                                emphasis: {
-                                    color: new echarts.graphic.LinearGradient(
-                                        0, 0, 0, 1,
-                                        [
-                                            {offset: 0, color: '#fe6262'},
-                                            {offset: 0.5, color: '#fe4141'},
-                                            {offset: 1, color: '#fe1818'}
-                                        ]
-                                    )
-                                }
-                            },*/
-
-            /*设置柱状图颜色*/
-            itemStyle: {
-              normal: {
-                /*信息显示方式*/
-                label: {
-                  show: true,
-                  position: "top",
-                  formatter: "{b}\n{c}"
-                }
-              }
-            },
-            data: [50, 75, 100, 150, 200, 250, 150, 100, 95, 160, 50, 45]
-          },
-          {
-            name: "折线",
+            name: '入睡人数',
             type: "line",
-            itemStyle: {
-              /*设置折线颜色*/
-              normal: {
-                /* color:'#c4cddc'*/
-              }
+            smooth: true,
+            areaStyle: {
+              normal: {}
             },
-            data: [50, 75, 100, 150, 200, 250, 150, 100, 95, 160, 50, 45]
+            data: data
           }
         ]
       });

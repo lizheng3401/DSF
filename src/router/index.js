@@ -5,19 +5,34 @@ import live from '../view/live/live.vue'
 import test from '../components/test/test.vue'
 import personal from '../view/personal/personal.vue'
 import login from '../view/login/login.vue'
+import history from '../view/history/history'
+import userInfo from "../view/InfoList/userInfo.vue"
+import deviceInfo from "../view/InfoList/DeviceInfo.vue"
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
       component: Home,
       children:[
+        {
+          path: '',
+          redirect: 'live'
+        },
         {
           path: 'live',
           name: 'live',
           component: live
+        },
+        {
+          path: '/userInfo',
+          component: userInfo
+        },
+        {
+          path: '/deviceInfo',
+          component: deviceInfo
         },
         {
           path: 'test',
@@ -28,6 +43,16 @@ export default new Router({
           path: 'personal',
           name: 'personal',
           component: personal
+        },
+        {
+          path: 'personal/:name',
+          name: 'personal',
+          component: personal
+        },
+        {
+          path: 'history',
+          name: 'history',
+          component: history
         }
       ]
     },

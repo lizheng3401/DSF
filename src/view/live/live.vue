@@ -1,13 +1,28 @@
 <template>
   <div>
-    <el-col class="carousel" :span="20" >
-      <el-carousel :interval="5000" height="555px" :initial-index="0">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <template slot-scope="scope">
-            <single-line :chartData="chartData"></single-line>
-          </template>
-        </el-carousel-item>
-      </el-carousel>
+    <el-col class="carousel" :span="20">
+      <el-row>
+        <el-col :span="4"><el-tag size="small">已睡：{{users[0]}}</el-tag> <el-tag size="small">未睡：{{users[1]}}</el-tag></el-col>
+        <el-col :span="16">
+          <el-progress :text-inside="true" :stroke-width="18" :percentage="users[2]"></el-progress>
+        </el-col>
+      </el-row>
+      <el-row> 
+        <el-col :span="12">
+          <single-line :chartData="chartData[0]" height="300px"></single-line>
+        </el-col>
+        <el-col :span="12">
+          <single-line :chartData="chartData[1]" height="300px"></single-line>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <single-line :chartData="chartData[0]" height="300px"></single-line>
+        </el-col>
+        <el-col :span="12">
+          <single-line :chartData="chartData[1]" height="300px"></single-line>
+        </el-col>
+      </el-row>
     </el-col>
     <el-col :span="4">
      <scorll-bar></scorll-bar>
@@ -16,60 +31,72 @@
 </template>
 
 <script>
-  import scorllBar from '../../components/parts/bar/scrollBar.vue'
-  import SingleLine from '../../components/parts/charts/SingleLine.vue'
-  export default {
-    name: 'live',
-    components:{
-      scorllBar,
-      SingleLine
-    },
-    data(){
-      return {
-        users: [],
-        chartData: []
-      }
-    },
-    methods: {
-     
-      fetchData(){
-
-      }
-    },
-    created(){
+import {live} from "../../api/api"
+import scorllBar from "../../components/parts/bar/scrollBar.vue";
+import SingleLine from "../../components/parts/charts/SingleLine.vue";
+export default {
+  name: "live",
+  components: {
+    scorllBar,
+    SingleLine
+  },
+  data() {
+    return {
+      users: [],
+      chartData: {},
+      temp: {},
+      isShow: 0
+    };
+  },
+  methods: {
+    fetchData() {
       const self = this
-      function randomData() {
-          now = new Date(+now + oneDay);
-          value = value + Math.random() * 21 - 10;
-          return {
-              name: now.toString(),
-              value: [
-                  [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                  Math.round(value)
-              ]
-          }
-      }
-      var data = [];
-      var now = +new Date(1997, 9, 3);
-      var oneDay = 24 * 3600 * 1000;
-      var value = Math.random() * 1000;
-      for (var i = 0; i < 100; i++) {
-          data.push(randomData());
-      }
-
-      setInterval(function () {
-        for (var i = 0; i < 5; i++) {
-            data.shift();
-            data.push(randomData());
-        }
-        self.chartData = data
-      }, 1000);
+      live({}).then( resp => {
+        self.chartData = resp.data
+        self.temp = resp.data
+      }).catch( function (error) {
+        self.$message({
+          type: 'danger',
+          message: error,
+        })
+      })
+    },
+    show(prev,next){
+      this.isShow = prev+1
     }
-  };
+  },
+  created() {
+    const self = this
+    let people = Math.round(Math.random() * 1000)
+    this.users.push(people)
+    this.users.push(1000 - people)
+    this.users.push(people/10)
+    this.fetchData()
+   setInterval( function () {
+      let ti = new Date(new Date("2018/4/10 "+self.chartData[0].time[self.chartData[0].time.length - 1]).valueOf()+1000)
+      for(let i = 0; i<2; i++){
+        self.temp[i].time.shift()
+        self.temp[i].time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
+        self.temp[i].data.shift()
+        self.temp[i].data.push(Math.round(Math.random() * 100))
+      }
+      self.chartData = self.temp
+    }, 1000)
+    setTimeout(function(){
+      self.isShow = 1
+    }, 100)
+    
+  }
+};
 </script>
 
 <style scoped>
-  canvas{
-    width:500px
-  }
+canvas {
+  width: 500px;
+}
+.el-progress {
+  position: absolute;
+  height: 10px;
+  width: 83%;
+}
 </style>
