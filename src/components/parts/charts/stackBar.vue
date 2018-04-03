@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    setOptions: function(data) {
+    setOptions: function({wake, I,II,deep} = {}) {
       this.chart.setOption({
         tooltip: {
           trigger: "axis",
@@ -81,7 +81,7 @@ export default {
         },
         xAxis: {
           type: "value",
-          name: "小时"
+          name: "分钟"
         },
         yAxis: {
           type: "category",
@@ -98,7 +98,7 @@ export default {
                 position: "insideRight"
               }
             },
-            data: [0.5]
+            data: wake
           },
           {
             name: "浅睡I期",
@@ -110,7 +110,7 @@ export default {
                 position: "insideRight"
               }
             },
-            data: [1.5]
+            data: I
           },
           {
             name: "浅睡II期",
@@ -122,7 +122,7 @@ export default {
                 position: "insideRight"
               }
             },
-            data: [1]
+            data: II
           },
           {
             name: "深睡期",
@@ -134,7 +134,7 @@ export default {
                 position: "insideRight"
               }
             },
-            data: [2]
+            data: deep
           }
         ]
       });

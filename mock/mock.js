@@ -174,7 +174,7 @@ const move = function () {
 const peroid = function () {
   var data = [];
   var startTime = new Date();
-  var categories = ['categoryA'];
+  var categories = ['AB'];
   var types = [
     { name: '觉醒期', color: '#7b9ce1' },
     { name: '浅睡I期', color: '#bd6d6c' },
@@ -182,9 +182,9 @@ const peroid = function () {
     { name: '深睡期', color: '#e0bc78' },
   ];
   var baseTime = startTime.getTime();
-  for (var i = 0; i < Random.natural(5,10); i++) {
+  for (var i = 0; i < 8; i++) {
     var typeItem = types[i % 4];
-    var duration = Math.round(Math.random() * 10000);
+    var duration = Math.round(Math.random() * 1000*60*100);
     data.push({
       name: typeItem.name,
       value: [
@@ -211,16 +211,22 @@ const liveNow = function () {
   let data = []
   let time = []
   let heart = []
+  let breath = []
   for(let i = 0; i < 100; i++){
     date = new Date(date.valueOf() + 1000)
     time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
     heart.push(Random.natural(30, 100))
+    breath.push(Random.natural(10,30))
   }
-  return {
+  return [{
     title: '心率',
     time,
     data: heart
-  }
+  },{
+    title: '呼吸率',
+    time,
+    data: breath
+  }]
 }
 
 const totalUsers = function (opt) {

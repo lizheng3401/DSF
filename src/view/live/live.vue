@@ -9,18 +9,18 @@
       </el-row>
       <el-row> 
         <el-col :span="12">
-          <single-line :chartData="chartData" height="300px"></single-line>
+          <single-line :chartData="chartData[0]" height="300px"></single-line>
         </el-col>
         <el-col :span="12">
-          <single-line :chartData="chartData" height="300px"></single-line>
+          <single-line :chartData="chartData[1]" height="300px"></single-line>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <single-line :chartData="chartData" height="300px"></single-line>
+          <single-line :chartData="chartData[0]" height="300px"></single-line>
         </el-col>
         <el-col :span="12">
-          <single-line :chartData="chartData" height="300px"></single-line>
+          <single-line :chartData="chartData[1]" height="300px"></single-line>
         </el-col>
       </el-row>
     </el-col>
@@ -72,12 +72,14 @@ export default {
     this.users.push(1000 - people)
     this.users.push(people/10)
     this.fetchData()
-    setInterval( function () {
-      let ti = new Date(new Date("2018/4/10 "+self.chartData.time[self.chartData.time.length - 1]).valueOf()+1000)
-      self.temp.time.shift()
-      self.temp.time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
-      self.temp.data.shift()
-      self.temp.data.push(Math.round(Math.random() * 100))
+   setInterval( function () {
+      let ti = new Date(new Date("2018/4/10 "+self.chartData[0].time[self.chartData[0].time.length - 1]).valueOf()+1000)
+      for(let i = 0; i<2; i++){
+        self.temp[i].time.shift()
+        self.temp[i].time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
+        self.temp[i].data.shift()
+        self.temp[i].data.push(Math.round(Math.random() * 100))
+      }
       self.chartData = self.temp
     }, 1000)
     setTimeout(function(){
