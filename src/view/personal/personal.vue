@@ -161,6 +161,8 @@ export default {
         })
       })
       live({}).then( resp => {
+        resp.data[0].title = "心率——"+this.$route.params.name
+        resp.data[1].title = "呼吸——"+this.$route.params.name
         self.chartData = resp.data
         self.temp = resp.data
       }).catch( function (error) {

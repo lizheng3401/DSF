@@ -54,7 +54,7 @@ export default {
     fetchData() {
       const self = this
       newUnhealthPeople({}).then( resp => {
-        self.users = resp.data
+        self.users.push(resp.data[1])
       }).catch( function (error) {
         self.$message({
           type: 'danger',

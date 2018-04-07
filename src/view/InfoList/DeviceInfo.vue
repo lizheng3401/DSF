@@ -138,8 +138,9 @@
           params: this.listQuery
         })
           .then(response => {
-            this.Data = response.data.results
-            this.total = response.data.total
+            this.Data.push(response.data.results[0])
+            // this.total = response.data.total
+            this.total = 1
           })
           .catch(function(error) {
             console.log(error)

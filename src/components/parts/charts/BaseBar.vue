@@ -90,15 +90,12 @@
             start: 20,
             end: 50
           },
-          /* legend:{
-            data: ['浅睡', '深睡', '睡眠时长']
-          }, */
           xAxis: {
             type: 'category',
             data: time
           },
           yAxis: {
-            type: 'category',
+            type: 'value',
           },
           series: [{
             name: '浅睡',

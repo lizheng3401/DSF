@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
+import store from './store/index'
 import router from './router'
 import axios from 'axios'
 import mock from '../mock/mock'
@@ -23,6 +24,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

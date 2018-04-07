@@ -8,10 +8,10 @@
         </el-col>
       </el-row>
       <el-row> 
-        <el-carousel height="550px" :interval="5000" @change="show" initial-index="0">
+        <el-carousel height="550px" :interval="5000" @change="show" :initial-index="0">
           <el-carousel-item v-for="item in 4" :key="item">
-            <single-line :chartData="chartData[0]" height="300px" v-if="isShow == item"></single-line>
-            <single-line :chartData="chartData[1]" height="300px" v-if="isShow == item"></single-line>
+            <single-line :chartData="item === 1? chartData[0]: {}" height="300px" v-if="isShow == item"></single-line>
+            <single-line :chartData="item === 1? chartData[1]: {}" height="300px" v-if="isShow == item"></single-line>
           </el-carousel-item>
         </el-carousel>
       </el-row>
@@ -64,7 +64,7 @@ export default {
     this.users.push(1000 - people)
     this.users.push(people/10)
     this.fetchData()
-   setInterval( function () {
+    setInterval( function () {
       let ti = new Date(new Date("2018/4/10 "+self.chartData[0].time[self.chartData[0].time.length - 1]).valueOf()+1000)
       for(let i = 0; i<2; i++){
         self.temp[i].time.shift()

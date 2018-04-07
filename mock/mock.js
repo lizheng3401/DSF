@@ -211,10 +211,12 @@ const peroid = function () {
 
 var date = new Date()
 const liveNow = function () {
+  
   let data = []
   let time = []
   let heart = []
   let breath = []
+  let name = Random.cname();
   for(let i = 0; i < 100; i++){
     date = new Date(date.valueOf() + 1000)
     time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
@@ -222,11 +224,11 @@ const liveNow = function () {
     breath.push(Random.natural(10,30))
   }
   return [{
-    title: '心率',
+    title: '心率——'+name,
     time,
     data: heart
   },{
-    title: '呼吸率',
+    title: '呼吸率——'+name,
     time,
     data: breath
   }]
@@ -313,7 +315,9 @@ const deviceData = function (opt) {
     total: 100
   }
 }
-
+const token = function(opt){
+  return ''
+}
 // scrollbar
 Mock.mock('api/newUnhealthPeople', 'get', newUnhealthPeople)
 
@@ -344,3 +348,5 @@ Mock.mock(RegExp('api/devices/list/*'), 'get', deviceData)
 Mock.mock(RegExp('api/devices/create/*'), 'post', 'success')
 Mock.mock(RegExp('api/devices/update/*'), 'post', 'success')
 Mock.mock(RegExp('api/devices/delete/*'), 'get', 'success')
+
+Mock.mock('api/login', 'post', token)

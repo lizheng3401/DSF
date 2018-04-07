@@ -3,6 +3,10 @@ import axios from 'axios';
 
 let host = 'http://api.deepsleeping.tech';
 
+
+//login
+export const login = params => { return axios.post(`api/login`, params)}
+
 // new unhealth people
 export const newUnhealthPeople = params => { return axios.get(`api/newUnhealthPeople`, params)}
 

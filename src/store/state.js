@@ -1,10 +1,12 @@
+import cookie from '../utils/cookie'
 
-const A = {
-
+const userInfo = {
+  name:cookie.getCookie('name')||'',
+  token:cookie.getCookie('token')||''
 }
 
 const state = {
-  A,
-}
+  userInfo
+};
 
 export default state
