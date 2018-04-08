@@ -106,7 +106,7 @@ export default {
           {
             name: title,
             type: "line",
-            smooth: true,
+            smooth: false,
             showSymbol: false,
             hoverAnimation: false,
             data: data

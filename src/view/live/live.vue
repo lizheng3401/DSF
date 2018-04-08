@@ -35,49 +35,66 @@ export default {
   data() {
     return {
       users: [],
-      chartData: {},
-      temp: {},
-      isShow: 0
+      chartData: undefined,
+      isShow: 0,
     };
   },
   methods: {
-    fetchData() {
-      const self = this
-      live({}).then( resp => {
-        self.chartData = resp.data
-        self.temp = resp.data
-      }).catch( function (error) {
-        self.$message({
-          type: 'danger',
-          message: error,
-        })
+    updateData(){
+      const self = this;
+      let time = []
+      let heart = []
+      let breath = []
+      this.$http({
+        url: '/api/RealTimeData?Phone=18081979297',
+        method: 'get'
+      }).then( resp => {
+       const temp = {
+         Timestamp: resp.data.Timestamp,
+         BreathRate: resp.data.BreathRate.replace('[', '').replace(']', '').split(','),
+         HeartRate: resp.data.HeartRate.replace('[', '').replace(']', '').split(','),
+       }
+       let date = new Date(temp.Timestamp*1000)
+       for(let i = 0; i < 10; i++){
+        time.push(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+        date = new Date(date.valueOf() + 1000)
+        heart.push(parseInt(temp.HeartRate[i]))
+        breath.push(parseInt(temp.BreathRate[i]))
+       }
       })
+      let H = {title: '心率'}
+      let B = {title: '呼吸率'}
+      if(true){
+        H.time = time;
+        H.data = heart;
+        B.time = time;
+        B.data = breath;
+        this.chartData = [H, B]
+        return 
+      }
+      if(this.chartData[0].time.length < 50){
+        H.time = this.chartData[0].time.concat(time);
+        H.data = this.chartData[0].data.concat(heart);
+        B.time = this.chartData[1].time.concat(time);
+        B.data = this.chartData[1].data.concat(breath);
+        console.log(JSON.stringify(H, null, 2))
+        this.chartData = [H, B]
+        return 
+      }
+      
     },
     show(prev,next){
       this.isShow = prev+1
-    }
+    },
   },
   created() {
     const self = this
+    this.updateData()
+    this.updateData()
     let people = Math.round(Math.random() * 1000)
     this.users.push(people)
     this.users.push(1000 - people)
     this.users.push(people/10)
-    this.fetchData()
-    setInterval( function () {
-      let ti = new Date(new Date("2018/4/10 "+self.chartData[0].time[self.chartData[0].time.length - 1]).valueOf()+1000)
-      for(let i = 0; i<2; i++){
-        self.temp[i].time.shift()
-        self.temp[i].time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
-        self.temp[i].data.shift()
-        self.temp[i].data.push(Math.round(Math.random() * 70 + 30))
-      }
-      self.chartData = self.temp
-    }, 1000)
-    setTimeout(function(){
-      self.isShow = 1
-    }, 100)
-    
   }
 };
 </script>
