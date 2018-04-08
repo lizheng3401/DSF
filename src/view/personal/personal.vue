@@ -4,7 +4,7 @@
       <el-col :span="18">
         <el-row :gutter="10">
           <el-col :span="10">
-            <el-input placeholder="请输入用户名"> 
+            <el-input placeholder="请输入用户名" v-model="username"> 
               <template slot="prepend">
                 <icon name="user" :scale="3"></icon>
               </template>
@@ -102,6 +102,7 @@ export default {
   name: "personal",
   data() {
     return {
+      username: '',
       time: new Date() - 1,
       tabItem: 'heart',
       live: true,

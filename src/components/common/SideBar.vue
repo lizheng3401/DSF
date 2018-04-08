@@ -46,7 +46,7 @@
           },
           {
             icon: 'el-icon-search',
-            index: '/personal',
+            index: '/search',
             title: '搜索'
           },
           {

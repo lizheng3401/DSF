@@ -8,7 +8,7 @@ import login from '../view/login/login.vue'
 import history from '../view/history/history'
 import userInfo from "../view/InfoList/userInfo.vue"
 import deviceInfo from "../view/InfoList/DeviceInfo.vue"
-
+import search from "../view/search/search.vue";
 Vue.use(Router)
 
 export default new Router({
@@ -40,9 +40,9 @@ export default new Router({
           component: test
         },
         {
-          path: 'personal',
-          name: 'personal',
-          component: personal
+          path: '/search',
+          name: 'search',
+          component: search
         },
         {
           path: 'personal/:name',

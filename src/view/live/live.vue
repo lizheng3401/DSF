@@ -70,7 +70,7 @@ export default {
         self.temp[i].time.shift()
         self.temp[i].time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
         self.temp[i].data.shift()
-        self.temp[i].data.push(Math.round(Math.random() * 100))
+        self.temp[i].data.push(Math.round(Math.random() * 70 + 30))
       }
       self.chartData = self.temp
     }, 1000)

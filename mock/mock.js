@@ -5,10 +5,10 @@ const unhealthPeople = function (opt) {
   let date = new Date()
   let time = []
   let data = []
-  for(let i = 0; i < 1000; i++){
+  for(let i = 0; i < 100; i++){
     date = new Date(date.valueOf() + 60*1000*60)
     time.push(date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes())
-    data.push(Random.natural(1,1000))
+    data.push(Random.natural(1,5))
   }
   return {
     time,
@@ -23,7 +23,7 @@ const sleepPeople = function (){
     for(let i = 0; i < 100; i++){
       date = new Date(date.valueOf() + 60*1000)
       time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
-      data.push(Random.natural(1,1000))
+      data.push(Random.natural(1,20))
     }
   return {
       time,
@@ -73,17 +73,17 @@ const newUnhealthPeople = function () {
 
 const detailPeople = function (){
   let userInfo = {
-    age: Random.natural(0,100),
+    age: Random.natural(60,80),
     sex: ['男', '女'][Random.natural(0,1)],
     bed: Random.natural(1,100),
     person: Random.cname(),
     phone: 18482065213,
     begin: Random.time(),
     end: Random.time(),
-    deep: Random.natural(0,3),
+    deep: Random.natural(1,3),
     total: Random.natural(3,8),
-    avgDeep: Random.natural(0,3),
-    avgShallow: Random.natural(0,3),
+    avgDeep: Random.natural(1,3),
+    avgShallow: Random.natural(1,3),
     avgHeart: Random.natural(50,100),
     avgBreath: Random.natural(10,30),
   }
