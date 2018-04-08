@@ -61,27 +61,29 @@ export default {
         heart.push(parseInt(temp.HeartRate[i]))
         breath.push(parseInt(temp.BreathRate[i]))
        }
+      }).catch( function (error) {
+        console.log(error)
       })
+      this.chartData = this.fetchData(time, heart, breath)
+    },
+    fetchData(time, heart, breath){
       let H = {title: '心率'}
       let B = {title: '呼吸率'}
-      if(true){
+      if(this.chartData === undefined){
         H.time = time;
         H.data = heart;
         B.time = time;
         B.data = breath;
-        this.chartData = [H, B]
-        return 
-      }
-      if(this.chartData[0].time.length < 50){
+        console.log('undefined')
+        return [H, B]
+      } else if(this.chartData[0].time.length < 50){
+        console.log('add',this.chartData[0].time.length)
         H.time = this.chartData[0].time.concat(time);
         H.data = this.chartData[0].data.concat(heart);
         B.time = this.chartData[1].time.concat(time);
         B.data = this.chartData[1].data.concat(breath);
-        console.log(JSON.stringify(H, null, 2))
-        this.chartData = [H, B]
-        return 
+        return [H, B]
       }
-      
     },
     show(prev,next){
       this.isShow = prev+1
@@ -90,7 +92,9 @@ export default {
   created() {
     const self = this
     this.updateData()
-    this.updateData()
+    setInterval(function () {
+      self.updateData()
+    }, 1000)
     let people = Math.round(Math.random() * 1000)
     this.users.push(people)
     this.users.push(1000 - people)
