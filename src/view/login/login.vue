@@ -58,7 +58,7 @@ export default {
               cookie.setCookie("name", this.ruleForm.username, 7);
               cookie.setCookie("token", response.data.Token, 7);
               this.$store.dispatch("setInfo");
-              this.$router.push("index");
+              this.$router.push("/");
             })
             .catch(function(error) {
               console.log(error);

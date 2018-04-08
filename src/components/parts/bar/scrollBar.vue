@@ -38,7 +38,6 @@
 
 <script>
 import {newUnhealthPeople} from '../../../api/api'
-// import MugenScroll from "vue-mugen-scroll";
 export default {
   name: "scrll-bar",
   data: function() {
@@ -46,9 +45,6 @@ export default {
       users: [],
       loading: false
     };
-  },
-  components: {
-    // MugenScroll
   },
   methods: {
     fetchData() {

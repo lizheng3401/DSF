@@ -88,10 +88,10 @@ export default {
             radius: "55%",
             center: ["50%", "60%"],
             data:[
-              { value: Math.round(Math.random()*100), name: "深睡" },
-              { value: Math.round(Math.random()*100), name: "觉醒" },
-              { value: Math.round(Math.random()*100), name: "浅睡I" },
-              { value: Math.round(Math.random()*100), name: "浅睡II" },
+              { value: 120, name: "深睡" },
+              { value: 36, name: "觉醒" },
+              { value: 180, name: "浅睡I" },
+              { value: 150, name: "浅睡II" },
             ],
             itemStyle: {
               emphasis: {

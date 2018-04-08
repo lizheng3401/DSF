@@ -61,11 +61,11 @@ const newUnhealthPeople = function () {
   for(let i = 0; i < Random.natural(2,10); i++){
     users.push({
       ID: Random.id,
-      name: Random.cname(),
-      heart: Random.natural(60, 100),
-      breath: Random.natural(13, 30),
+      name: "李正",
+      heart: Random.natural(70, 80),
+      breath: Random.natural(13, 20),
       status: ['danger', 'warning'][Random.natural(0,1)],
-      reason: Random.csentence()
+      reason: "心动过快"
     })
   }
   return users
@@ -73,19 +73,25 @@ const newUnhealthPeople = function () {
 
 const detailPeople = function (){
   let userInfo = {
-    age: Random.natural(60,80),
-    sex: ['男', '女'][Random.natural(0,1)],
+    // age: Random.natural(60,80),
+    // sex: ['男', '女'][Random.natural(0,1)],
+    age: 21,
+    sex: "男",
     bed: Random.natural(1,100),
     person: Random.cname(),
     phone: 18482065213,
-    begin: Random.time(),
-    end: Random.time(),
-    deep: Random.natural(1,3),
-    total: Random.natural(3,8),
+    // begin: Random.time(),
+    begin: "23:39:42",
+    // end: Random.time(),
+    end: "07:39:42",
+    // deep: Random.natural(1,3),
+    deep: 2,
+    // total: Random.natural(3,8),
+    total: 8,
     avgDeep: Random.natural(1,3),
     avgShallow: Random.natural(1,3),
-    avgHeart: Random.natural(50,100),
-    avgBreath: Random.natural(10,30),
+    avgHeart: Random.natural(60,70),
+    avgBreath: Random.natural(10,20),
   }
   let heart = []
   let breath = []
@@ -101,12 +107,12 @@ const detailPeople = function (){
   let data = {
     radar: {
       data: [
-        Random.natural(0, 100),
-        Random.natural(0, 20),
-        Random.natural(0, 100),
-        Random.natural(0, 5),
-        Random.natural(0, 3),
-        Random.natural(0, 2),
+        75,
+        15,
+        70,
+        2,
+        2.5,
+        1.5,
       ],
       score: Random.natural(0,100)
     },
@@ -132,15 +138,16 @@ const live = function () {
 }
 
 const heartBreath = function () {
-  let date = new Date(new Date() - 1)
+  // let date = new Date(new Date() - 1)
+  let date = new Date("2018/04/08 23:39:42")
   let time = []
   let heart = []
   let breath = []
-  for(let i = 0; i < 480; i++){
+  for(let i = 0; i < 960; i++){
     time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
     date = new Date(date.valueOf() + 60*1000)
-    heart.push(Random.natural(30, 100))
-    breath.push(Random.natural(10, 30))
+    heart.push(Random.natural(60, 75))
+    breath.push(Random.natural(13, 18))
   }
   return {
     heart: {
@@ -157,9 +164,10 @@ const heartBreath = function () {
 }
 
 const move = function () {
-  let date = new Date(new Date() - 1)
+  // let date = new Date(new Date() - 1)
+  let date = new Date("2018/04/08 23:39:42")
   let data = []
-  for(let i = 0; i < 48; i++){
+  for(let i = 0; i < 96; i++){
     if(Random.boolean())
     {
       data.push([
@@ -186,7 +194,7 @@ const peroid = function () {
   ];
   var baseTime = startTime.getTime();
   for (var i = 0; i < 8; i++) {
-    var typeItem = types[i % 4];
+    var typeItem = (i === 0)?types[0]:types[Random.natural(1,3)];
     var duration = Math.round(Math.random() * 1000*60*100);
     data.push({
       name: typeItem.name,
@@ -262,11 +270,14 @@ const userData = function (opt) {
   for (let i = 0; i < 10; i++) {
     let newObject = {
       'id': j,
-      'username': Random.cname(),
-      'email': Random.email(),
-      'device': Random.guid(),
+      // 'username': Random.cname(),
+      'username': '李正',
+      // 'email': Random.email(),
+      'email':'lizheng3401@gmail.com',
+      // 'device': Random.guid(),
+      'device': '64F04a01-4F2B-61AE-8e2A-b9B776767c6F',
       'sleep': Random.guid().split('-').join(''),
-      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+      'status': ['success', 'warning', 'danger'][0]
     };
     j += 1
     if (key === "status") {
@@ -303,10 +314,10 @@ const deviceData = function (opt) {
   let devices = []
   for (let i = 0; i < 10; i++) {
     let newObject = {
-      "id": Random.guid(),
-      "createdTime": Random.datetime(),
-      "username": Random.cname(),
-      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+      "id": '64F04a01-4F2B-61AE-8e2A-b9B776767c6F',
+      "createdTime": '2017-12-27',
+      "username": '李正',
+      'status': ['success', 'warning', 'danger'][0]
     }
     devices.push(newObject)
   }

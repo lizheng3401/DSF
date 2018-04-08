@@ -54,11 +54,11 @@
             index: '/history',
             title: '历史数据'
           },
-          {
+         /*  {
             icon: 'el-icon-edit-outline',
             index: '/test',
             title: 'test'
-          }
+          } */
         ]
       }
     }

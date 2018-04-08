@@ -14,7 +14,7 @@
             <el-date-picker v-model="time" type="date" placeholder="选择日期"></el-date-picker>
           </el-col>
           <el-col :span="4" :offset="3">
-            <el-button type="primary" icon="el-icon-search">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="search(username)">查询</el-button>
           </el-col>
         </el-row>
         <el-row :gutter="10">
@@ -111,7 +111,7 @@ export default {
       liveData: {},
       yesterdayData: {},
       moveData: {},
-      chartData: {},
+      chartData: [],
       temp: {},
       peroidTotal: {},
       pie: []
@@ -161,39 +161,87 @@ export default {
           message: "peroid: "+error
         })
       })
-      live({}).then( resp => {
-        resp.data[0].title = "心率——"+this.$route.params.name
-        resp.data[1].title = "呼吸——"+this.$route.params.name
-        self.chartData = resp.data
-        self.temp = resp.data
+    },
+    updateData(){
+      const self = this;
+      let time = []
+      let heart = []
+      let breath = []
+      this.$http({
+        url: '/api/RealTimeData?Phone=18081979297',
+        method: 'get'
+      }).then( resp => {
+        const temp = {
+          Timestamp: resp.data.Timestamp,
+          BreathRate: resp.data.BreathRate.replace('[', '').replace(']', '').split(','),
+          HeartRate: resp.data.HeartRate.replace('[', '').replace(']', '').split(','),
+        }
+        let date = new Date(temp.Timestamp*1000)
+        for(let i = 0; i < 10; i++){
+          time.push(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+          date = new Date(date.valueOf() + 1000)
+          heart.push(parseInt(temp.HeartRate[i]))
+          breath.push(parseInt(temp.BreathRate[i]))
+        }
+        self.chartData = self.fetchData2(time, heart, breath)
       }).catch( function (error) {
-        self.$message({
-          type: 'danger',
-          message: error,
-        })
+        console.log(error)
       })
+    },
+    fetchData2(time, heart, breath){
+      let H = {title: '心率'}
+      let B = {title: '呼吸率'}
+      
+      if(this.chartData.length === 0){
+        H.time = time;
+        H.data = heart;
+        B.time = time;
+        B.data = breath;
+        return [H, B]
+      } else if(this.chartData.length > 0 & this.chartData[0].data.length < 50){
+        H.time = this.chartData[0].time.concat(time);
+        H.data = this.chartData[0].data.concat(heart);
+        B.time = this.chartData[1].time.concat(time);
+        B.data = this.chartData[1].data.concat(breath);
+        return [H, B]
+      } else {
+        const temp = this.chartData
+        try {
+          for(let i = 0; i < 10; i++){
+            temp[0].time.shift();
+            temp[0].data.shift();
+            temp[1].time.shift();
+            temp[1].data.shift();
+            temp[0].time.push(time[i]);
+            temp[0].data.push(heart[i]);
+            temp[1].time.push(time[i]);
+            temp[1].data.push(breath[i]);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        return temp
+      }
+    },
+    search(username){
+      this.$router.push(`/personal/${username}`);
+      window.location.reload();
     }
   },
   created() {
     const self = this
     this.name = this.$route.params.name 
     this.fectchData()
-    setInterval( function () {
-      let ti = new Date(new Date("2018/4/10 "+self.chartData[0].time[self.chartData[0].time.length - 1]).valueOf()+1000)
-      for(let i = 0; i<2; i++){
-        self.temp[i].time.shift()
-        self.temp[i].time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
-        self.temp[i].data.shift()
-        self.temp[i].data.push(Math.round(Math.random() * 100))
-      }
-      self.chartData = self.temp
-    }, 1000)
+    this.updateData()
+    setInterval(function () {
+      self.updateData()
+    }, 10000)
 
     this.peroidTotal = {
-      wake: [Math.round(Math.random()* 100)],
-      I: [Math.round(Math.random()* 100)],
-      II: [Math.round(Math.random()* 100)],
-      deep: [Math.round(Math.random()* 100)],
+      wake: [36],
+      I: [180],
+      II: [150],
+      deep: [120],
     }
   }
 };

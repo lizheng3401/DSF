@@ -21,7 +21,7 @@
     name: "Top",
     data: function () {
       return {
-        username: 'ABC'
+        username: '杨树鑫'
       }
     },
   }
