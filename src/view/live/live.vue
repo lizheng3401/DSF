@@ -10,8 +10,8 @@
       <el-row> 
         <el-carousel height="550px" :interval="5000" @change="show" :initial-index="0">
           <el-carousel-item v-for="item in 4" :key="item">
-            <single-line :chartData="item === 1? chartData[0]: {}" height="300px" v-if="isShow == item"></single-line>
-            <single-line :chartData="item === 1? chartData[1]: {}" height="300px" v-if="isShow == item"></single-line>
+            <single-line :chartData="chartData[0]" height="300px" v-if="isShow == item"></single-line>
+            <single-line :chartData="chartData[1]" height="300px" v-if="isShow == item"></single-line>
           </el-carousel-item>
         </el-carousel>
       </el-row>
