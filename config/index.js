@@ -11,13 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+     /*  '/api': {
         target: 'http://api.deepsleeping.tech',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/api'
         }
-      }
+      } */
     },
 
     // Various Dev Server settings

@@ -42,5 +42,5 @@ export const peroid = params => { return axios.get(`api/yesterday/period`, param
 
 //  live all 
 
-export const live = params => { return axios.get(`api/now/live`, params) }
+export const live = params => { return axios.get(`http://api.deepsleeping.tech/api/now/live`, params) }
 

@@ -46,7 +46,7 @@ export default {
       let heart = []
       let breath = []
       this.$http({
-        url: '/api/RealTimeData?Phone=18081979297',
+        url: 'http://api.deepsleeping.tech/api/RealTimeData?Phone=18081979297',
         method: 'get'
       }).then( resp => {
         const temp = {
