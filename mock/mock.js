@@ -2,12 +2,12 @@ const Mock = require('mockjs')
 const Random = Mock.Random
 
 const unhealthPeople = function (opt) {
-  let date = new Date()
+  let date = new Date("2017/03/01")
   let time = []
   let data = []
-  for(let i = 0; i < 1000; i++){
-    date = new Date(date.valueOf() + 60*1000*60)
-    time.push(date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes())
+  for(let i = 0; i < 40; i++){
+    time.push(date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate())
+    date = new Date(date.valueOf() + 60*1000*60*24)
     data.push(Random.natural(1,5))
   }
   return {
@@ -19,9 +19,9 @@ const unhealthPeople = function (opt) {
 const sleepPeople = function (){
   let data = []
   let time = []
-  let date = new Date("2018/3/23 19:00")
-    for(let i = 0; i < 100; i++){
-      date = new Date(date.valueOf() + 60*1000)
+  let date = new Date("2018/04/10 19:00")
+    for(let i = 0; i < 160; i++){
+      date = new Date(date.valueOf() + 60*1000*5)
       time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
       data.push(Random.natural(1,20))
     }
@@ -36,10 +36,10 @@ const periodPeople = function (opt) {
   let deep = []
   let total = []
   let time = []
-  let date = new Date("2018/3/23 19:00")
-    for(let i = 0; i < 100; i++){
-      date = new Date(date.valueOf() + 60*1000)
+  let date = new Date("2017/03/01 19:00")
+    for(let i = 0; i < 40; i++){  
       time.push(date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate())
+      date = new Date(date.valueOf() + 60*1000*60*24)
       s  =Random.float(0,5,2,2)
       d = Random.float(0,5,2,2)
       shallow.push(s)
