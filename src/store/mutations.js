@@ -9,6 +9,12 @@ const mutations = {
     }
     console.log(state.userInfo);
   },
+  delInfo(state) {
+    state.userInfo = {
+      name: cookie.setCookie(null),
+      token: cookie.setCookie(null)
+    }
+  }
 };
 
 export default mutations

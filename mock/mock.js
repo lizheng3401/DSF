@@ -266,10 +266,8 @@ const userData = function (opt) {
   page = parseInt(opt.url.split('=')[1])
   let j = page * 10 - 9
   let users = [];
-  let total = 100
-  for (let i = 0; i < 10; i++) {
-    let newObject = {
-      'id': j,
+  users.push({
+    'id': 1,
       // 'username': Random.cname(),
       'username': '李正',
       // 'email': Random.email(),
@@ -278,6 +276,20 @@ const userData = function (opt) {
       'device': '64F04a01-4F2B-61AE-8e2A-b9B776767c6F',
       'sleep': Random.guid().split('-').join(''),
       'status': ['success', 'warning', 'danger'][0]
+  })
+  j = j+1
+  let total = 100
+  for (let i = 0; i < 9; i++) {
+    let newObject = {
+      'id': j,
+      'username': Random.cname(),
+      // 'username': '李正',
+      'email': Random.email(),
+      // 'email':'lizheng3401@gmail.com',
+      'device': Random.guid(),
+      // 'device': '64F04a01-4F2B-61AE-8e2A-b9B776767c6F',
+      'sleep': Random.guid().split('-').join(''),
+      'status': ['success', 'warning', 'danger'][Random.natural(0,1)]
     };
     j += 1
     if (key === "status") {
@@ -312,11 +324,17 @@ const totalDevices = function (opt) {
 
 const deviceData = function (opt) {
   let devices = []
-  for (let i = 0; i < 10; i++) {
+  devices.push( {
+    "id": '64F04a01-4F2B-61AE-8e2A-b9B776767c6F',
+    "createdTime": '2017-12-27 16:43:24',
+    "username": '李正',
+    'status': ['success', 'warning', 'danger'][0]
+  })
+  for (let i = 0; i < 9; i++) {
     let newObject = {
-      "id": '64F04a01-4F2B-61AE-8e2A-b9B776767c6F',
-      "createdTime": '2017-12-27',
-      "username": '李正',
+      "id": Random.guid(),
+      "createdTime": '2017-12-27 '+Random.time(),
+      "username": Random.cname(),
       'status': ['success', 'warning', 'danger'][0]
     }
     devices.push(newObject)

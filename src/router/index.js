@@ -15,14 +15,18 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/login',
+    },
+    {
+      path: '/index',
       component: Home,
       children:[
         {
           path: '',
-          redirect: 'live'
+          redirect: '/live'
         },
         {
-          path: 'live',
+          path: '/live',
           name: 'live',
           component: live
         },
@@ -45,12 +49,12 @@ export default new Router({
           component: search
         },
         {
-          path: 'personal/:name',
+          path: '/personal/:name',
           name: 'personal',
           component: personal
         },
         {
-          path: 'history',
+          path: '/history',
           name: 'history',
           component: history
         }

@@ -71,7 +71,7 @@ export default {
         });
       periodPeople({})
         .then(resp => {
-          this.bottomData = resp.data;
+          self.bottomData = resp.data;
         })
         .catch(function(error) {
           self.$message({

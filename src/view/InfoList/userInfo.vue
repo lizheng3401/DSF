@@ -146,7 +146,7 @@
           params: this.listQuery
         })
           .then(response => {
-            this.Data.push(response.data.results[0])
+            this.Data = response.data.results
             // this.total = response.data.total
             this.total = 1
           })
