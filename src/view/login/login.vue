@@ -62,12 +62,17 @@ export default {
             .catch(function(error) {
               console.log(error);
             }); */
-          if(this.ruleForm.username === "18482065251" && this.ruleForm.password === "123456789")
+          if(this.ruleForm.username === "admin" && this.ruleForm.password === "123456")
           {
             cookie.setCookie("name", this.ruleForm.username, 7);
             cookie.setCookie("token", "m54VWhpNEdIloac5Jab", 7);
             this.$store.dispatch("setInfo");
             this.$router.push("/index");
+          }else{
+            self.$message({
+              type: 'danger',
+              message: "账号或密码错误",
+            })
           }
         } else {
           console.log("error submit!!");
