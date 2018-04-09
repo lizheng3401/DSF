@@ -27,12 +27,12 @@
           {
             icon: 'el-icon-setting',
             index: '/live',
-            title: '实时监控'
+            title: '实时监控平台'
           },
           {
             icon: 'el-icon-menu',
             index: 'info',
-            title: '后台信息一览表',
+            title: '云端数据管理平台',
             subs: [
               {
                 index: '/userInfo',
@@ -46,19 +46,19 @@
           },
           {
             icon: 'el-icon-search',
-            index: '/personal',
+            index: '/search',
             title: '搜索'
           },
           {
             icon: 'el-icon-star-on',
             index: '/history',
-            title: '历史数据'
+            title: '历史数据分析平台'
           },
-          {
+          /* {
             icon: 'el-icon-edit-outline',
             index: '/test',
             title: 'test'
-          }
+          } */
         ]
       }
     }

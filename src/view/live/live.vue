@@ -61,19 +61,8 @@ export default {
           heart.push(parseInt(temp.HeartRate[i]))
           breath.push(parseInt(temp.BreathRate[i]))
         }
-        // self.chartData = self.fetchData(time, heart, breath)
-        self.chartData = [
-          {
-            title: '心率',
-            time: [1,2,3,4,5,6,7,8,9,0],
-            data: [1,2,3,4,5,6,7,8,9,0],
-          },
-          {
-            title: '呼吸率',
-            time: [1,2,3,4,5,6,7,8,9,0],
-            data: [1,2,3,4,5,6,7,8,9,0],
-          }
-        ]
+        self.chartData = self.fetchData(time, heart, breath)
+        
       }).catch( function (error) {
         console.log(error)
       })
@@ -120,9 +109,9 @@ export default {
   created() {
     const self = this
     this.updateData()
-    /* setInterval(function () {
+    setInterval(function () {
       self.updateData()
-    }, 10000) */
+    }, 10000)
     let people = Math.round(Math.random() * 1000)
     this.users.push(people)
     this.users.push(1000 - people)

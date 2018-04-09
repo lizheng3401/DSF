@@ -8,7 +8,7 @@ const unhealthPeople = function (opt) {
   for(let i = 0; i < 1000; i++){
     date = new Date(date.valueOf() + 60*1000*60)
     time.push(date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes())
-    data.push(Random.natural(1,1000))
+    data.push(Random.natural(1,5))
   }
   return {
     time,
@@ -23,7 +23,7 @@ const sleepPeople = function (){
     for(let i = 0; i < 100; i++){
       date = new Date(date.valueOf() + 60*1000)
       time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
-      data.push(Random.natural(1,1000))
+      data.push(Random.natural(1,20))
     }
   return {
       time,
@@ -58,15 +58,23 @@ const periodPeople = function (opt) {
 
 const newUnhealthPeople = function () {
   let users = []
-  for(let i = 0; i < Random.natural(2,10); i++){
-    users.push({
+  for(let i = 0; i < Random.natural(2,5); i++){
+    let heart = Random.natural(50, 80)
+    let breath = Random.natural(13, 20)
+    let reason = ""
+    if(heart > 70){
+      reason = "心率过高"
+    }else if(heart < 60){
+      reason = "心率过低"
+    }
+    let temp = {
       ID: Random.id,
       name: Random.cname(),
-      heart: Random.natural(60, 100),
-      breath: Random.natural(13, 30),
+
       status: ['danger', 'warning'][Random.natural(0,1)],
-      reason: Random.csentence()
-    })
+      reason: ["心率过低","心率过高","呼吸速率过低","呼吸速率过高"]
+    }
+    users.push(temp)
   }
   return users
 }
