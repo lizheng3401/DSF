@@ -66,13 +66,16 @@ const newUnhealthPeople = function () {
       reason = "心率过高"
     }else if(heart < 60){
       reason = "心率过低"
+    }else{
+      continue
     }
     let temp = {
       ID: Random.id,
       name: Random.cname(),
-
+      heart,
+      breath,
       status: ['danger', 'warning'][Random.natural(0,1)],
-      reason: ["心率过低","心率过高","呼吸速率过低","呼吸速率过高"]
+      reason,
     }
     users.push(temp)
   }
