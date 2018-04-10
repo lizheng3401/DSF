@@ -10,8 +10,8 @@
       <el-row> 
         <el-carousel height="550px" :interval="5000" @change="show" :initial-index="0" :autoplay="false">
           <el-carousel-item v-for="item in 4" :key="item">
-            <single-line :chartData="chartData[0]" height="300px" v-if="isShow == item"></single-line>
-            <single-line :chartData="chartData[1]" height="300px" v-if="isShow == item"></single-line>
+            <single-line :chartData="chartData.length != 0? chartData[item-1][0]:{}" height="280px" v-if="isShow == item"></single-line>
+            <single-line :chartData="chartData.length != 0? chartData[item-1][1]:{}" height="280px" v-if="isShow == item"></single-line>
           </el-carousel-item>
         </el-carousel>
       </el-row>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {live} from "../../api/api"
+import {live, liveNum} from "../../api/api"
 import scorllBar from "../../components/parts/bar/scrollBar.vue";
 import SingleLine from "../../components/parts/charts/SingleLine.vue";
 export default {
@@ -41,81 +41,82 @@ export default {
   },
   methods: {
     updateData(){
-      const self = this;
-      let time = []
-      let heart = []
-      let breath = []
-      this.$http({
-        url: '/api/RealTimeData?Phone=18081979297',
-        method: 'get'
-      }).then( resp => {
-        const temp = {
-          Timestamp: resp.data.Timestamp,
-          BreathRate: resp.data.BreathRate.replace('[', '').replace(']', '').split(','),
-          HeartRate: resp.data.HeartRate.replace('[', '').replace(']', '').split(','),
-        }
-        let date = new Date(temp.Timestamp*1000)
-        for(let i = 0; i < 10; i++){
-          time.push(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
-          date = new Date(date.valueOf() + 1000)
-          heart.push(parseInt(temp.HeartRate[i]))
-          breath.push(parseInt(temp.BreathRate[i]))
-        }
-        self.chartData = self.fetchData(time, heart, breath)
-        
+      const self = this
+      live({}).then( resp => {
+        self.chartData = self.fetchData(resp.data,self.chartData)
       }).catch( function (error) {
-        console.log(error)
+        self.$message({
+          type: 'warning',
+          duration: 1000,
+          message: "更新数据失败\n"+error
+        })
       })
     },
-    fetchData(time, heart, breath){
-      let H = {title: '心率'}
-      let B = {title: '呼吸率'}
-      
-      if(this.chartData.length === 0){
-        H.time = time;
-        H.data = heart;
-        B.time = time;
-        B.data = breath;
-        return [H, B]
-      } else if(this.chartData.length > 0 & this.chartData[0].data.length < 50){
-        H.time = this.chartData[0].time.concat(time);
-        H.data = this.chartData[0].data.concat(heart);
-        B.time = this.chartData[1].time.concat(time);
-        B.data = this.chartData[1].data.concat(breath);
-        return [H, B]
-      } else {
-        const temp = this.chartData
-        try {
-          for(let i = 0; i < 10; i++){
-            temp[0].time.shift();
-            temp[0].data.shift();
-            temp[1].time.shift();
-            temp[1].data.shift();
-            temp[0].time.push(time[i]);
-            temp[0].data.push(heart[i]);
-            temp[1].time.push(time[i]);
-            temp[1].data.push(breath[i]);
+    fetchData(data,oldData){
+      const self = this
+      let newData = []
+      let tempData = data
+      if(oldData.length == 0){
+        return data
+      }else if(oldData[0][0].data.length < 50){
+        for(let i = 0; i < 4; i++){
+          let temp = []
+          for(let j = 0; j < 2; j++){
+            let time = oldData[i][j].time.concat(tempData[i][j].time)
+            let data = oldData[i][j].data.concat(tempData[i][j].data)
+            temp.push({
+              title: oldData[i][j].title,
+              time,
+              data
+            })
           }
-        } catch (error) {
-          console.log(error);
+          newData.push(temp)
         }
-        return temp
+        return newData
+      }else if(oldData[0][0].data.length >= 50){
+        for(let i = 0; i < 4; i++){
+          let temp = []
+          for(let j = 0; j < 2; j++){
+            let symbol = oldData[i][j]
+            for(let k = 0; k < 5; k++){
+              symbol.time.shift()
+              symbol.time.push(data[i][j].time[k])
+              symbol.data.shift()
+              symbol.data.push(data[i][j].data[k])
+            }
+            temp.push(symbol)
+          }
+          newData.push(temp)
+        }
+        return newData
       }
     },
     show(prev,next){
       this.isShow = prev+1
     },
+    getSleepNum(){
+      const self = this
+      liveNum().then(resp =>{
+        self.users = resp.data
+        console.log(resp.data)
+      }).catch( function (error) {
+        self.$message({
+          type: 'warning',
+          duration: 1000,
+          message: "更新睡眠人数错误"+error
+        })
+      })
+    }
   },
   created() {
     const self = this
     this.updateData()
     setInterval(function () {
       self.updateData()
-    }, 10000)
-    let people = Math.round(Math.random() * 1000)
-    this.users.push(people)
-    this.users.push(1000 - people)
-    this.users.push(people/10)
+    }, 5000)
+    setInterval(function () {
+      self.getSleepNum()
+    }, 1000)
   }
 };
 </script>

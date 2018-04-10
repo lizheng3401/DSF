@@ -14,7 +14,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/index',
       component: Home,
       children:[
         {
@@ -22,7 +22,7 @@ export default new Router({
           redirect: 'live'
         },
         {
-          path: 'live',
+          path: '/live',
           name: 'live',
           component: live
         },
@@ -35,22 +35,17 @@ export default new Router({
           component: deviceInfo
         },
         {
-          path: 'test',
+          path: '/test',
           name: 'test',
           component: test
         },
         {
-          path: 'personal',
+          path: '/personal/:name',
           name: 'personal',
           component: personal
         },
         {
-          path: 'personal/:name',
-          name: 'personal',
-          component: personal
-        },
-        {
-          path: 'history',
+          path: '/history',
           name: 'history',
           component: history
         },

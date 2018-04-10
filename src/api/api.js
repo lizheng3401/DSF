@@ -40,7 +40,11 @@ export const move = params => { return axios.get(`api/yesterday/move`, params)}
 
 export const peroid = params => { return axios.get(`api/yesterday/period`, params) }
 
-//  live all 
+//  random live people heart and breath  
 
-export const live = params => { return axios.get(`api/now/live`, params) }
+export const live = params => { return axios.get(`api/now/live`, params)}
+
+// live num
+
+export const liveNum = params => { return axios.get(`api/now/livenum`,params)}
 

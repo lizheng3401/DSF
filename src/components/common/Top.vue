@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="logo">后台管理系统</div>
+    <div class="logo">智慧睡眠宝云平台</div>
     <div class="user-info">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
@@ -16,14 +16,16 @@
 
 <script>
   import cookie from '../../utils/cookie'
-
   export default {
     name: "Top",
     data: function () {
       return {
-        username: 'ABC'
+        username: ''
       }
     },
+    created(){
+      this.username = cookie.getCookie("name")
+    }
   }
 </script>
 

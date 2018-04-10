@@ -221,28 +221,39 @@ const peroid = function () {
 }
 
 var date = new Date()
+let name1 = Random.cname();
+let name2 = Random.cname();
+let name3 = Random.cname();
+let name4 = Random.cname();
+let name = [name1,name2,name3,name4]
 const liveNow = function () {
-  
-  let data = []
-  let time = []
-  let heart = []
-  let breath = []
-  let name = Random.cname();
-  for(let i = 0; i < 100; i++){
+  let ret = [
+    [{title: '心率——'+name1, time: [],data: []},{title: '呼吸率——'+name1,time:[],data: []}],
+    [{title: '心率——'+name2, time: [],data: []},{title: '呼吸率——'+name2,time:[],data: []}],
+    [{title: '心率——'+name3, time: [],data: []},{title: '呼吸率——'+name3,time:[],data: []}],
+    [{title: '心率——'+name4, time: [],data: []},{title: '呼吸率——'+name4,time:[],data: []}],
+  ]
+  for(let i = 0; i < 5; i++){ 
+    for(let j = 0; j < 4; j++){
+      ret[j][0].data.push(Random.natural(55, 75))
+      ret[j][0].time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
+      ret[j][1].data.push(Random.natural(10,20))
+      ret[j][1].time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
+      
+    }
     date = new Date(date.valueOf() + 1000)
-    time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
-    heart.push(Random.natural(30, 100))
-    breath.push(Random.natural(10,30))
   }
-  return [{
-    title: '心率——'+name,
-    time,
-    data: heart
-  },{
-    title: '呼吸率——'+name,
-    time,
-    data: breath
-  }]
+  return ret
+}
+
+let people = Random.natural(5,10)
+const livenum = function (){
+  people += Random.natural(5,10)
+  return [
+    people,
+    1000-people,
+    people/10
+  ]
 }
 
 const totalUsers = function (opt) {
@@ -346,7 +357,7 @@ Mock.mock(`api/yesterday/move`, 'get', move)
 Mock.mock(`api/yesterday/period`, 'get', peroid)
 
 Mock.mock(`api/now/live`, 'get', liveNow)
-
+Mock.mock(`api/now/livenum`, 'get', livenum)
 
 Mock.mock('api/users/lists/', 'get', totalUsers)
 Mock.mock(RegExp('api/users/list/*'), 'get', userData)
