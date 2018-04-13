@@ -47,7 +47,7 @@
           {
             icon: 'el-icon-search',
             index: '/search',
-            title: '搜索'
+            title: '特定用户监护'
           },
           {
             icon: 'el-icon-star-on',

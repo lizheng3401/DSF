@@ -83,32 +83,63 @@ const newUnhealthPeople = function () {
 }
 
 const detailPeople = function (){
+  let init = new Date("2018/4/10 22:00:00")
+  let begin = new Date(init.valueOf() +  + 60*1000*60*1*Random.float(0, 1))
+  let min = Random.natural(450,540)
+  let end = new Date(begin.valueOf() + min*60*1000)
+  let deep = 1.5+Random.float(0,1)*1.5
+  let total = (min/60).toFixed(1)
+  let heart = []
+  let breath = []
+  let date = begin
+  let time = []
+  let move = []
+
+  deep = deep.toFixed(1)
   let userInfo = {
     age: Random.natural(0,100),
     sex: ['男', '女'][Random.natural(0,1)],
     bed: Random.natural(1,100),
     person: Random.cname(),
     phone: 18482065213,
-    begin: Random.time(),
-    end: Random.time(),
-    deep: Random.natural(0,3),
-    total: Random.natural(3,8),
+    begin: begin.getHours()+":"+begin.getMinutes()+":"+begin.getSeconds(),
+    end: end.getHours()+":"+end.getMinutes()+":"+end.getSeconds(),
+    deep: deep,
+    total: total,
     avgDeep: Random.natural(0,3),
     avgShallow: Random.natural(0,3),
-    avgHeart: Random.natural(50,100),
-    avgBreath: Random.natural(10,30),
+    avgHeart: Random.natural(60,75),
+    avgBreath: Random.natural(10,20),
   }
-  let heart = []
-  let breath = []
-  let date = new Date()
-  let time = []
-  for(let i = 0; i < 480; i++){
 
+  for(let i = 0; i < min; i++){
     time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
+    let key = (i< 30 | i > min-30)? Random.natural(5,10):Random.natural(1,10)
+    heart.push((i< 30 | i > min-30)?Random.natural(60,75):Random.natural(45,65))
+    breath.push((i< 30 | i > min-30)?Random.natural(15,20):Random.natural(10,18))
+    if(key === 7){
+      move.push([
+       date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+       (i< 30 | i > min-30)? Random.natural(5,10):Random.natural(1,3)
+      ])
+    }
     date = new Date(date.valueOf() + 60*1000)
-    heart.push(Random.natural(0,100))
-    breath.push(Random.natural(0,20))
   }
+
+  let wake = Random.float(10,30).toFixed(1)
+  let shallow = min-wake-deep*60
+  let sI = (shallow*Random.float(0.3,0.6)).toFixed(1)
+  let sII = shallow - sI
+
+  let peroid = {
+    wake,
+    sI,
+    sII,
+    deep
+  }
+  let avg_Heart = (heart.map( (x, y) => x+y )/heart.length).toFixed(1)
+  let avg_Breath = (breath.map( (x, y) => x+y )/breath.length).toFixed(1)
+  let avg_move = (move.map((x,y) => x[1]+y[1])/move.length).toFixed(1)
   let data = {
     radar: {
       data: [
@@ -121,7 +152,15 @@ const detailPeople = function (){
       ],
       score: Random.natural(0,100)
     },
-    heart,
+    heart: {
+      time: time,
+      data:heart
+    },
+    breath:{
+      time:time,
+      data:breath,
+    },
+    move,
   }
 
   return {
@@ -130,60 +169,6 @@ const detailPeople = function (){
   }
 }
 
-const live = function () {
-  let date = new Date()
-  let heart = Random.natural(30, 100)
-  let breath = Random.natural(10, 30)
-  let time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-  return {
-    time,
-    heart,
-    breath
-  }
-}
-
-const heartBreath = function () {
-  let date = new Date(new Date() - 1)
-  let time = []
-  let heart = []
-  let breath = []
-  for(let i = 0; i < 480; i++){
-    time.push(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
-    date = new Date(date.valueOf() + 60*1000)
-    heart.push(Random.natural(30, 100))
-    breath.push(Random.natural(10, 30))
-  }
-  return {
-    heart: {
-      title: '心率',
-      time,
-      data: heart,
-    },
-    breath: {
-      title: '呼吸率',
-      time,
-      data: breath
-    }
-  }
-}
-
-const move = function () {
-  let date = new Date(new Date() - 1)
-  let data = []
-  for(let i = 0; i < 48; i++){
-    if(Random.boolean())
-    {
-      data.push([
-        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-        Random.natural(1, 10)
-      ])
-    }
-    date = new Date(date.valueOf() + 60*1000*10)
-  }
-  return {
-    data,
-  }
-}
 
 const peroid = function () {
   var data = [];
@@ -351,9 +336,6 @@ Mock.mock('api/history/periodPeople', 'get', periodPeople)
 // personal
 
 Mock.mock('api/detail/people', 'get', detailPeople)
-Mock.mock(`api/live/heartBreath`, 'get', live)
-Mock.mock(`api/yesterday/heartBreath`, 'get', heartBreath)
-Mock.mock(`api/yesterday/move`, 'get', move)
 Mock.mock(`api/yesterday/period`, 'get', peroid)
 
 Mock.mock(`api/now/live`, 'get', liveNow)

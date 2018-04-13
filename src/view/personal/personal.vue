@@ -4,7 +4,7 @@
       <el-col :span="18">
         <el-row :gutter="10">
           <el-col :span="10">
-            <el-input placeholder="请输入用户名"> 
+            <el-input placeholder="请输入用户名" v-model="$route.params.name" clearabled> 
               <template slot="prepend">
                 <icon name="user" :scale="3"></icon>
               </template>
@@ -59,17 +59,17 @@
                   <span slot="label">
                     <icon name="heart" scale="2"></icon>心率
                   </span>
-                  <baseline ref="heart" :chartData="yesterdayData.heart" v-if="'heart' === tabItem"></baseline>
+                  <baseline ref="heart" :chartData="ret.data.heart" v-if="'heart' === tabItem"></baseline>
                 </el-tab-pane>
                 <el-tab-pane name="breath">
                   <span slot="label">
                     <icon name="breath" scale="2"></icon>呼吸
                   </span>
-                  <baseline ref="breath" :chartData="yesterdayData.breath" v-if="'breath' === tabItem"></baseline>
+                  <baseline ref="breath" :chartData="ret.data.breath" v-if="'breath' === tabItem"></baseline>
                 </el-tab-pane>
                 <el-tab-pane name="move">
                   <span slot="label"><icon name="move" scale="2"></icon>体动</span>
-                  <scatter ref="move" :chartData="moveData.data" v-if="'move' === tabItem"></scatter>
+                  <scatter ref="move" :chartData="ret.data.move" v-if="'move' === tabItem"></scatter>
                 </el-tab-pane>
                 <el-tab-pane name="period">
                   <span slot="label"><icon name="period" scale="2"></icon>睡眠分期</span>
@@ -106,7 +106,10 @@ export default {
       tabItem: 'heart',
       live: true,
       name: '默认',
-      ret: {},
+      ret: {
+        userInfo:{},
+        data: {},
+      },
       liveData: {},
       yesterdayData: {},
       moveData: {},
@@ -130,28 +133,14 @@ export default {
       const self = this
       detailPeople({}).then( resp => {
         this.ret = resp.data
+        console.log(JSON.stringify(resp.data, null, 2))
       }).catch( function(error){
         self.$message({
           type: 'danger',
           message: error
         })
       })
-      heartBreath({}).then( resp => {
-        this.yesterdayData = resp.data
-      }).catch( function(error){
-        self.$message({
-          type: 'danger',
-          message: error
-        })
-      })
-      move({}).then( resp => {
-        this.moveData = resp.data
-      }).catch( function(error){
-        self.$message({
-          type: 'danger',
-          message: error
-        })
-      })
+      
       peroid({}).then( resp => {
         this.periodData = resp.data
       }).catch( function(error){
@@ -177,17 +166,6 @@ export default {
     const self = this
     this.name = this.$route.params.name 
     this.fectchData()
-    setInterval( function () {
-      let ti = new Date(new Date("2018/4/10 "+self.chartData[0].time[self.chartData[0].time.length - 1]).valueOf()+1000)
-      for(let i = 0; i<2; i++){
-        self.temp[i].time.shift()
-        self.temp[i].time.push(ti.getHours() + ":" + ti.getMinutes() + ":" + ti.getSeconds())
-        self.temp[i].data.shift()
-        self.temp[i].data.push(Math.round(Math.random() * 100))
-      }
-      self.chartData = self.temp
-    }, 1000)
-
     this.peroidTotal = {
       wake: [Math.round(Math.random()* 100)],
       I: [Math.round(Math.random()* 100)],
