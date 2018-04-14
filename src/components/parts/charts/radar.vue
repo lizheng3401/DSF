@@ -79,12 +79,12 @@ export default {
               }
             },
             indicator: [
-              { name: '心率', max: 100},
+              { name: '心率', max: 60},
               { name: '呼吸率', max: 20},
-              { name: '体动', max: 100},
-              { name: '深睡眠时长', max: 5},
-              { name: '入睡时间', max: 3},
-              { name: '觉醒时间', max: 2}
+              { name: '体动', max: 5},
+              { name: '深睡眠时长', max: 4},
+              { name: '觉醒时间', max: 30},
+              { name: '睡眠时间', max: 10}
             ]
         },
         series: [{

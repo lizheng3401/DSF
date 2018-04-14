@@ -81,7 +81,7 @@
         </el-row>
       </el-col>
       <el-col :span="6">
-        <pie :chartData="{}"></pie>
+        <pie :chartData="ret.data.peroid"></pie>
         <radar :chartData="ret.data.radar"></radar>
       </el-col>
     </el-row>

@@ -129,17 +129,26 @@ const detailPeople = function (){
   let wake = Random.float(10,30).toFixed(1)
   let shallow = min-wake-deep*60
   let sI = (shallow*Random.float(0.3,0.6)).toFixed(1)
-  let sII = shallow - sI
+  let sII = (shallow - sI).toFixed(1)
 
-  let peroid = {
-    wake,
-    sI,
-    sII,
-    deep
+  let peroid = [
+    { value: wake, name: "觉醒" },
+    { value: sI, name: "浅睡I" },
+    { value: sII, name: "浅睡II" },
+    { value: deep*60, name: "深睡" },
+  ];
+  function avg(array){
+    let all = 0
+    for(let i = 0; i < array.length; i++){
+
+      all += array[i][1]?array[i][1]:array[i]
+    }
+    return (all/array.length).toFixed(1)
   }
-  let avg_Heart = (heart.map( (x, y) => x+y )/heart.length).toFixed(1)
-  let avg_Breath = (breath.map( (x, y) => x+y )/breath.length).toFixed(1)
-  let avg_move = (move.map((x,y) => x[1]+y[1])/move.length).toFixed(1)
+
+  let avg_Heart = avg(heart)
+  let avg_Breath = avg(breath)
+  let avg_move = avg(move)
   let data = {
     radar: {
       data: [
@@ -147,8 +156,8 @@ const detailPeople = function (){
         avg_Breath,
         avg_move,
         deep,
-        begin,
-        end,
+        wake,
+        total,
       ],
       score: Random.natural(0,100)
     },
@@ -161,6 +170,7 @@ const detailPeople = function (){
       data:breath,
     },
     move,
+    peroid
   }
 
   return {

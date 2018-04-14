@@ -27,7 +27,7 @@ export default {
       default: true
     },
     chartData: {
-      type: Object
+      type: Array
     }
   },
   data: function() {
@@ -87,12 +87,7 @@ export default {
             type: "pie",
             radius: "55%",
             center: ["50%", "60%"],
-            data:[
-              { value: Math.round(Math.random()*100), name: "深睡" },
-              { value: Math.round(Math.random()*100), name: "觉醒" },
-              { value: Math.round(Math.random()*100), name: "浅睡I" },
-              { value: Math.round(Math.random()*100), name: "浅睡II" },
-            ],
+            data:data,
             itemStyle: {
               emphasis: {
                 shadowBlur: 10,
