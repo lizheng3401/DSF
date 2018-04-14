@@ -143,12 +143,12 @@ const detailPeople = function (){
   let data = {
     radar: {
       data: [
-        Random.natural(0, 100),
-        Random.natural(0, 20),
-        Random.natural(0, 100),
-        Random.natural(0, 5),
-        Random.natural(0, 3),
-        Random.natural(0, 2),
+        avg_Heart,
+        avg_Breath,
+        avg_move,
+        deep,
+        begin,
+        end,
       ],
       score: Random.natural(0,100)
     },

@@ -133,7 +133,7 @@ export default {
       const self = this
       detailPeople({}).then( resp => {
         this.ret = resp.data
-        console.log(JSON.stringify(resp.data, null, 2))
+        console.log(JSON.stringify(resp.data.data.radar, null, 2))
       }).catch( function(error){
         self.$message({
           type: 'danger',
