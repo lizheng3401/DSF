@@ -73,8 +73,8 @@
                 </el-tab-pane>
                 <el-tab-pane name="period">
                   <span slot="label"><icon name="period" scale="2"></icon>睡眠分期</span>
-                  <xRange ref="period" :chartData="periodData" v-if="'period' === tabItem" height="150px"></xRange>
-                  <stackBar ref="period" :chartData="peroidTotal" v-if="'period' === tabItem" height="150px"></stackBar>
+                  <xRange ref="period" :chartData="{}" v-if="'period' === tabItem" height="150px"></xRange>
+                  <stackBar ref="period" :chartData="ret.data.peroidChart" v-if="'period' === tabItem" height="150px"></stackBar>
                 </el-tab-pane>
               </el-tabs>
             </el-row>
@@ -132,21 +132,12 @@ export default {
     fectchData(){
       const self = this
       detailPeople({}).then( resp => {
-        this.ret = resp.data
-        console.log(JSON.stringify(resp.data.data.radar, null, 2))
+        self.ret = resp.data
+        console.log(JSON.stringify(resp.data.data.peroidChart, null, 2))
       }).catch( function(error){
         self.$message({
           type: 'danger',
           message: error
-        })
-      })
-      
-      peroid({}).then( resp => {
-        this.periodData = resp.data
-      }).catch( function(error){
-        self.$message({
-          type: 'danger',
-          message: "peroid: "+error
         })
       })
       live({}).then( resp => {

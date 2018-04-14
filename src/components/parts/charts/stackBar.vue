@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    setOptions: function({wake, I,II,deep} = {}) {
+    setOptions: function({wake, sI,sII,deep} = {}) {
       this.chart.setOption({
         tooltip: {
           trigger: "axis",
@@ -110,7 +110,7 @@ export default {
                 position: "insideRight"
               }
             },
-            data: I
+            data: sI
           },
           {
             name: "浅睡II期",
@@ -122,7 +122,7 @@ export default {
                 position: "insideRight"
               }
             },
-            data: II
+            data: sII
           },
           {
             name: "深睡期",

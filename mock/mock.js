@@ -128,7 +128,7 @@ const detailPeople = function (){
 
   let wake = Random.float(10,30).toFixed(1)
   let shallow = min-wake-deep*60
-  let sI = (shallow*Random.float(0.3,0.6)).toFixed(1)
+  let sI = (shallow*Random.float(0.3,0.5)).toFixed(1)
   let sII = (shallow - sI).toFixed(1)
 
   let peroid = [
@@ -159,7 +159,7 @@ const detailPeople = function (){
         wake,
         total,
       ],
-      score: Random.natural(0,100)
+      score: Random.natural(70,100)
     },
     heart: {
       time: time,
@@ -170,7 +170,13 @@ const detailPeople = function (){
       data:breath,
     },
     move,
-    peroid
+    peroid,
+    peroidChart:{
+      wake: [parseFloat(wake)],
+      sI:[parseFloat(sI)],
+      sII:[parseFloat(sII)],
+      deep: [deep*60]
+    }
   }
 
   return {
