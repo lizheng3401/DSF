@@ -35,7 +35,12 @@ export default {
   data() {
     return {
       users: [],
-      chartData: [],
+      chartData: [
+        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
+        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
+        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
+        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
+      ],
       isShow: 0,
     };
   },
@@ -105,17 +110,65 @@ export default {
           message: "更新睡眠人数错误"+error
         })
       })
+    },
+    getData(){
+      const self = this
+      live({}).then( resp => {
+        const newData = resp.data;
+        if(self.chartData[0][0].title === "" | true){ 
+          let sub = self.chartData
+          for(let k = 0; k < 5; k++){
+            for(let i = 0; i < 4; i++){
+              for(let j = 0; j < 2; j++){
+                sub[i][j].title = newData[i][j].title;
+                sub[i][j].time.push(newData[i][j].time[k]);
+                sub[i][j].data.push(newData[i][j].data[k]);
+              }
+            }
+            self.chartData = sub
+            // console.log(self.chartData[0][0].time)
+            // console.log(new Date().getSeconds())
+            window.setTimeout(() => {console.log("1 second")}, 1000)
+            // console.log(new Date().getSeconds())
+          }
+          return 
+        }else if(self.chartData[0][0].data.length < 50){
+          console.log("add")
+          let sub = self.chartData
+          for(let k = 0; k < 10; k++){
+            for(let i = 0; i < 4; i++){
+              for(let j = 0; j < 2; j++){
+                sub[i][j].title = newData[i][j].title;
+                sub[i][j].time.push(newData[i][j].time[k]);
+                sub[i][j].data.push(newData[i][j].data[k]);
+              }
+            }
+            self.chartData = sub
+           
+            setTimeout(function(){},1000)
+          }
+          return  
+        }
+      }).catch( function (error) {
+        self.$message({
+          type: 'warning',
+          message: "更新数据失败\n"+error
+        })
+      })
     }
   },
   created() {
     const self = this
-    this.updateData()
+    this.getData()
+    // this.updateData()
     setInterval(function () {
-      self.updateData()
+      // self.updateData()
+      self.getData()
+      // console.log("timeoout",self.chartData[0][0].data.length)
     }, 5000)
-    setInterval(function () {
+    /* setInterval(function () {
       self.getSleepNum()
-    }, 5000)
+    }, 50000) */
   }
 };
 </script>
