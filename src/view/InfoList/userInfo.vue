@@ -98,6 +98,7 @@
     data: function() {
       return {
         Data: [],
+        TotalData: [],
         dialogFormVisible: false,
         dialogEditVisible: false,
         dialogShowVisible: false,
@@ -200,8 +201,8 @@
         const self = this
         import('../../utils/export2excel').then( excel => {
           const tHeader = ['ID', '用户名', '电子邮件', '设备ID', '昨晚睡眠状态', '健康状态']
-          const data = self.getTotalUsers()
-          excel.export_json_to_excel(tHeader, data, 'users-list')
+          self.getTotalUsers()
+          excel.export_json_to_excel(tHeader, self.TotalData, 'users-list')
         }).catch(function (error) {
           console.log(error);
           self.$message({
@@ -334,23 +335,24 @@
         })
       },
       getTotalUsers: function () {
-        var data = []
+        const self = this
         this.$http({
           url: 'api/users/lists/',
           method: 'get'
         }).then( (resp) => {
+          let data = []
           const filterVal = ['id', 'username', 'email', 'device','sleep','status']
-          for(let i = 0; i < resp.data.results.length; i++){
+          for(let i = 0; i < self.Data.length; i++){
             let temp = []
             for(let j in filterVal){
-              temp.push(resp.data.results[i][filterVal[j]])
+              temp.push(self.Data[i][filterVal[j]])
             }
             data.push(temp)
           }
+          self.TotalData = data
         }).catch( function (error) {
           console.log(error);
         })
-        return data
       }
     },
     created: function() {

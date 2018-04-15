@@ -93,6 +93,7 @@
     data: function() {
       return {
         Data: [],
+        TotalData: [],
         dialogFormVisible: false,
         dialogEditVisible: false,
         formLabelWidth: "100px",
@@ -191,13 +192,11 @@
         this.dialogFormVisible = true;
       },
       handleExport: function () {
-        //TODO: get it finish
         const self = this
         import('../../utils/export2excel').then( excel => {
           const tHeader = ['设备ID', '所属用户', '绑定日期', '设备状态']
-          const data = self.getTotalDevices()
-          console.log(data)
-          excel.export_json_to_excel(tHeader, data, 'table-list')
+          self.getTotalDevices()
+          excel.export_json_to_excel(tHeader,self.TotalData, 'table-list')
         }).catch(function (error) {
           console.log(error);
           self.$message({
@@ -307,21 +306,21 @@
         })
       },
       getTotalDevices: function () {
-        var data = []
+        const self = this
         this.$http({
           url: 'api/devices/lists/',
           method: 'get'
         }).then( (resp) => {
+          let data = []
           const filterVal = ['id', 'username', 'createdTime', 'status']
-          for(let i = 0; i < resp.data.results.length; i++){
+          for(let i = 0; i < self.Data.length; i++){
             let temp = []
             for(let j in filterVal){
-              temp.push(resp.data.results[i][filterVal[j]]+"")
+              temp.push(self.Data[i][filterVal[j]]+"")
             }
             data.push(temp)
           }
-          console.log(data)
-          return data
+          self.TotalData = data
         }).catch( function (error) {
           console.log(error);
         })
