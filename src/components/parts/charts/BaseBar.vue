@@ -75,6 +75,7 @@
         
       },
       setOptions: function ({ time, peroid } = {}) {
+        console.log(time, peroid)
         this.chart.setOption({
           grid: {
             top: '5%',

@@ -67,6 +67,8 @@ export default {
   },
   methods: {
     setOptions: function({ startTime, data } = {}) {
+      console.log(JSON.stringify(data, null, 2))
+      console.log(JSON.stringify(startTime, null, 2))
       function renderItem(params, api) {
         var start = api.coord([api.value(1), 0]);
         var end = api.coord([api.value(2), 0]);

@@ -87,7 +87,7 @@ const detailPeople = function (){
   let begin = new Date(init.valueOf() +  + 60*1000*60*1*Random.float(0, 1))
   let min = Random.natural(450,540)
   let end = new Date(begin.valueOf() + min*60*1000)
-  let deep = 1.5+Random.float(0,1)*1.5
+  let deep = 1+Random.float(0,1)
   let total = (min/60).toFixed(1)
   let heart = []
   let breath = []
@@ -126,10 +126,11 @@ const detailPeople = function (){
     date = new Date(date.valueOf() + 60*1000)
   }
 
-  let wake = Random.float(10,30).toFixed(1)
+  let wake = Random.float(30,60).toFixed(1)
   let shallow = min-wake-deep*60
-  let sI = (shallow*Random.float(0.3,0.5)).toFixed(1)
-  let sII = (shallow - sI).toFixed(1)
+  let p = Random.float(0.3,0.5)
+  let sI = (shallow*p).toFixed(1)
+  let sII = (shallow*(1-p)).toFixed(1)
 
   let peroid = [
     { value: wake, name: "觉醒" },
@@ -176,7 +177,8 @@ const detailPeople = function (){
       sI:[parseFloat(sI)],
       sII:[parseFloat(sII)],
       deep: [deep*60]
-    }
+    },
+    peroidRecord: peroidRecord(wake, sI, sII, deep, begin, end)
   }
 
   return {
@@ -186,7 +188,7 @@ const detailPeople = function (){
 }
 
 
-const peroid = function () {
+const peroidRecord = function (wake,sI,sII,deep,begin,end) {
   var data = [];
   var startTime = new Date();
   var categories = ['AB'];
@@ -196,12 +198,51 @@ const peroid = function () {
     { name: '浅睡II期', color: '#75d874' },
     { name: '深睡期', color: '#e0bc78' },
   ];
-  var baseTime = startTime.getTime();
-  for (var i = 0; i < 8; i++) {
-    var typeItem = types[i % 4];
-    var duration = Math.round(Math.random() * 1000*60*100);
+  let temp = [];
+  let p1 = Random.float(0.4,0.6)
+  let p2 = Random.float(0.4,0.6)
+  let p3 = Random.float(0.4,0.6)
+  let p4 = Random.float(0.4,0.6)
+  temp[0] = parseInt((parseFloat(wake)*1000*p1*60))
+  temp[7] = parseInt((parseFloat(wake)*1000*(1- p1)*60))
+  temp[1] = parseInt((parseFloat(sI)*1000*p2*60))
+  temp[3] = parseInt((parseFloat(sI)*1000*(1-p2)*60))
+  temp[2] = parseInt((parseFloat(sII)*1000*p3*60))
+  temp[4] = parseInt((parseFloat(sII)*1000*(1 - p3)*60))
+  temp[5] = parseInt((parseFloat(deep)*1000*p4)*60*60)
+  temp[6] = parseInt((parseFloat(deep)*1000*(1 - p4)*60*60))
+  let typeItem = [];
+  typeItem[0] = types[0]
+  typeItem[1] = types[1]
+  typeItem[2] = types[2]
+  typeItem[3] = types[1]
+  typeItem[4] = types[2]
+  typeItem[5] = types[3]
+  typeItem[6] = types[3]
+  typeItem[7] = types[0]
+  
+  var baseTime = begin.getTime();
+  for (let i = 0; i < 8; i++) {
+    /* if(i != 0 && i != 7){
+      var typeItem = types[i % 4];
+      if(i % 4 == 3){
+        var duration = Math.round(Math.random()*1000*60*100)
+      }else{
+        var duration = i % 4 != 0?Math.round(Math.random()*1000*60*100):Math.round(Math.random()*1000*10*30);
+      }
+    }
+    else{
+      var typeItem = types[0];
+      var duration = parseInt((parseFloat(wake)*1000*Random.float(0,1)*60));
+    } */
+    /* if(i != 0 && i != 7){
+      var typeItem = types[i % 4];
+    }else{
+      var typeItem = types[0]
+    } */
+    var duration = temp[i]
     data.push({
-      name: typeItem.name,
+      name: typeItem[i].name,
       value: [
         0,
         baseTime,
@@ -210,7 +251,7 @@ const peroid = function () {
       ],
       itemStyle: {
         normal: {
-          color: typeItem.color
+          color: typeItem[i].color
         }
       }
     });
@@ -341,6 +382,7 @@ const deviceData = function (opt) {
 const token = function(opt){
   return ''
 }
+
 // scrollbar
 Mock.mock('api/newUnhealthPeople', 'get', newUnhealthPeople)
 
@@ -352,7 +394,7 @@ Mock.mock('api/history/periodPeople', 'get', periodPeople)
 // personal
 
 Mock.mock('api/detail/people', 'get', detailPeople)
-Mock.mock(`api/yesterday/period`, 'get', peroid)
+// Mock.mock(`api/yesterday/period`, 'get', peroidRecord)
 
 Mock.mock(`api/now/live`, 'get', liveNow)
 Mock.mock(`api/now/livenum`, 'get', livenum)

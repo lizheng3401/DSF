@@ -83,7 +83,7 @@ export default {
               { name: '呼吸率', max: 20},
               { name: '体动', max: 5},
               { name: '深睡眠时长', max: 4},
-              { name: '觉醒时间', max: 30},
+              { name: '觉醒时间', max: 60},
               { name: '睡眠时间', max: 10}
             ]
         },

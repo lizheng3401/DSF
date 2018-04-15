@@ -38,7 +38,10 @@ export default {
     return {
       topData: {},
       leftData: {},
-      bottomData: {}
+      bottomData: {
+        time: [],
+        peroid: {}
+      }
     };
   },
   components: {
@@ -72,6 +75,7 @@ export default {
       periodPeople({})
         .then(resp => {
           this.bottomData = resp.data;
+          console.log(JSON.stringify(resp.data, null, 2))
         })
         .catch(function(error) {
           self.$message({

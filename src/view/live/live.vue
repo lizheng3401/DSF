@@ -98,7 +98,6 @@ export default {
       const self = this
       liveNum().then(resp =>{
         self.users = resp.data
-        console.log(resp.data)
       }).catch( function (error) {
         self.$message({
           type: 'warning',
@@ -116,7 +115,7 @@ export default {
     }, 5000)
     setInterval(function () {
       self.getSleepNum()
-    }, 1000)
+    }, 5000)
   }
 };
 </script>

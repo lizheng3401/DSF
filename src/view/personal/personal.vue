@@ -73,7 +73,7 @@
                 </el-tab-pane>
                 <el-tab-pane name="period">
                   <span slot="label"><icon name="period" scale="2"></icon>睡眠分期</span>
-                  <xRange ref="period" :chartData="{}" v-if="'period' === tabItem" height="150px"></xRange>
+                  <xRange ref="period" :chartData="ret.data.peroidRecord" v-if="'period' === tabItem" height="150px"></xRange>
                   <stackBar ref="period" :chartData="ret.data.peroidChart" v-if="'period' === tabItem" height="150px"></stackBar>
                 </el-tab-pane>
               </el-tabs>
@@ -133,22 +133,10 @@ export default {
       const self = this
       detailPeople({}).then( resp => {
         self.ret = resp.data
-        console.log(JSON.stringify(resp.data.data.peroidChart, null, 2))
       }).catch( function(error){
         self.$message({
           type: 'danger',
           message: error
-        })
-      })
-      live({}).then( resp => {
-        resp.data[0].title = "心率——"+this.$route.params.name
-        resp.data[1].title = "呼吸——"+this.$route.params.name
-        self.chartData = resp.data
-        self.temp = resp.data
-      }).catch( function (error) {
-        self.$message({
-          type: 'danger',
-          message: error,
         })
       })
     }
