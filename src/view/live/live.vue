@@ -2,12 +2,15 @@
   <div>
     <el-col class="carousel" :span="20">
       <el-row>
-        <el-col :span="4"><el-tag size="small">已睡：{{users[0]}}</el-tag> <el-tag size="small">未睡：{{users[1]}}</el-tag></el-col>
+        <el-col :span="4">
+          <el-tag size="small">已睡：{{users[0]}}</el-tag>
+          <el-tag size="small">未睡：{{users[1]}}</el-tag>
+        </el-col>
         <el-col :span="16">
           <el-progress :text-inside="true" :stroke-width="18" :percentage="users[2]"></el-progress>
         </el-col>
       </el-row>
-      <el-row> 
+      <el-row>
         <el-carousel height="550px" :interval="5000" @change="show" :initial-index="0" :autoplay="false">
           <el-carousel-item v-for="item in 4" :key="item">
             <single-line :chartData="chartData.length != 0? chartData[item-1][0]:{}" height="280px" v-if="isShow == item"></single-line>
@@ -17,13 +20,13 @@
       </el-row>
     </el-col>
     <el-col :span="4">
-     <scorll-bar></scorll-bar>
+      <scorll-bar></scorll-bar>
     </el-col>
   </div>
 </template>
 
 <script>
-import {live, liveNum} from "../../api/api"
+import { live, liveNum } from "../../api/api";
 import scorllBar from "../../components/parts/bar/scrollBar.vue";
 import SingleLine from "../../components/parts/charts/SingleLine.vue";
 export default {
@@ -36,136 +39,190 @@ export default {
     return {
       users: [],
       chartData: [
-        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
-        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
-        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
-        [{title:"", time:[],data:[]},{title:"", time:[],data:[]}],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }]
       ],
-      isShow: 0,
+      temp: [],
+      isShow: 0
     };
   },
   methods: {
-    updateData(){
-      const self = this
-      live({}).then( resp => {
-        self.chartData = self.fetchData(resp.data,self.chartData)
-      }).catch( function (error) {
-        self.$message({
-          type: 'warning',
-          duration: 1000,
-          message: "更新数据失败\n"+error
+    updateData() {
+      const self = this;
+      live({})
+        .then(resp => {
+          self.chartData = self.fetchData(resp.data, self.chartData);
         })
-      })
+        .catch(function(error) {
+          self.$message({
+            type: "warning",
+            duration: 1000,
+            message: "更新数据失败\n" + error
+          });
+        });
     },
-    fetchData(data,oldData){
-      const self = this
-      let newData = []
-      let tempData = data
-      if(oldData.length == 0){
-        return data
-      }else if(oldData[0][0].data.length < 50){
-        for(let i = 0; i < 4; i++){
-          let temp = []
-          for(let j = 0; j < 2; j++){
-            let time = oldData[i][j].time.concat(tempData[i][j].time)
-            let data = oldData[i][j].data.concat(tempData[i][j].data)
+    fetchData(data, oldData) {
+      const self = this;
+      let newData = [];
+      let tempData = data;
+      if (oldData.length == 0) {
+        return data;
+      } else if (oldData[0][0].data.length < 50) {
+        for (let i = 0; i < 4; i++) {
+          let temp = [];
+          for (let j = 0; j < 2; j++) {
+            let time = oldData[i][j].time.concat(tempData[i][j].time);
+            let data = oldData[i][j].data.concat(tempData[i][j].data);
             temp.push({
               title: oldData[i][j].title,
               time,
               data
-            })
+            });
           }
-          newData.push(temp)
+          newData.push(temp);
         }
-        return newData
-      }else if(oldData[0][0].data.length >= 50){
-        for(let i = 0; i < 4; i++){
-          let temp = []
-          for(let j = 0; j < 2; j++){
-            let symbol = oldData[i][j]
-            for(let k = 0; k < 5; k++){
-              symbol.time.shift()
-              symbol.time.push(data[i][j].time[k])
-              symbol.data.shift()
-              symbol.data.push(data[i][j].data[k])
+        return newData;
+      } else if (oldData[0][0].data.length >= 50) {
+        for (let i = 0; i < 4; i++) {
+          let temp = [];
+          for (let j = 0; j < 2; j++) {
+            let symbol = oldData[i][j];
+            for (let k = 0; k < 5; k++) {
+              symbol.time.shift();
+              symbol.time.push(data[i][j].time[k]);
+              symbol.data.shift();
+              symbol.data.push(data[i][j].data[k]);
             }
-            temp.push(symbol)
+            temp.push(symbol);
           }
-          newData.push(temp)
+          newData.push(temp);
         }
-        return newData
+        return newData;
       }
     },
-    show(prev,next){
-      this.isShow = prev+1
+    show(prev, next) {
+      this.isShow = prev + 1;
     },
-    getSleepNum(){
-      const self = this
-      liveNum().then(resp =>{
-        self.users = resp.data
-      }).catch( function (error) {
-        self.$message({
-          type: 'warning',
-          duration: 1000,
-          message: "更新睡眠人数错误"+error
+    getSleepNum() {
+      const self = this;
+      liveNum()
+        .then(resp => {
+          self.users = resp.data;
         })
-      })
+        .catch(function(error) {
+          self.$message({
+            type: "warning",
+            duration: 1000,
+            message: "更新睡眠人数错误" + error
+          });
+        });
     },
-    getData(){
-      const self = this
-      live({}).then( resp => {
-        const newData = resp.data;
-        if(self.chartData[0][0].title === "" | true){ 
-          let sub = self.chartData
-          for(let k = 0; k < 5; k++){
-            for(let i = 0; i < 4; i++){
-              for(let j = 0; j < 2; j++){
-                sub[i][j].title = newData[i][j].title;
-                sub[i][j].time.push(newData[i][j].time[k]);
-                sub[i][j].data.push(newData[i][j].data[k]);
+    getData() {
+      const self = this;
+      live({})
+        .then(resp => {
+          const newData = resp.data;
+          if ((self.chartData[0][0].title === "") | true) {
+            for (let k = 0; k < 5; k++) {
+              let sub = self.chartData;
+              for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 2; j++) {
+                  sub[i][j].title = newData[i][j].title;
+                  sub[i][j].time.push(newData[i][j].time[k]);
+                  sub[i][j].data.push(newData[i][j].data[k]);
+                }
               }
+              self.chartData = sub;
+              /* let t = new Date(new Date().valueOf() + 1000);
+              while (t.getSeconds() != new Date().getSeconds()) {}
+              console.log(new Date().getTime()); */
             }
-            self.chartData = sub
-            // console.log(self.chartData[0][0].time)
-            // console.log(new Date().getSeconds())
-            window.setTimeout(() => {console.log("1 second")}, 1000)
-            // console.log(new Date().getSeconds())
-          }
-          return 
-        }else if(self.chartData[0][0].data.length < 50){
-          console.log("add")
-          let sub = self.chartData
-          for(let k = 0; k < 10; k++){
-            for(let i = 0; i < 4; i++){
-              for(let j = 0; j < 2; j++){
-                sub[i][j].title = newData[i][j].title;
-                sub[i][j].time.push(newData[i][j].time[k]);
-                sub[i][j].data.push(newData[i][j].data[k]);
+            console.log("fanhui");
+            return;
+          } else if (self.chartData[0][0].data.length < 50) {
+            console.log("add");
+            let sub = self.chartData;
+            for (let k = 0; k < 10; k++) {
+              for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 2; j++) {
+                  sub[i][j].title = newData[i][j].title;
+                  sub[i][j].time.push(newData[i][j].time[k]);
+                  sub[i][j].data.push(newData[i][j].data[k]);
+                }
               }
+              self.chartData = sub;
+
+              setTimeout(function() {}, 1000);
             }
-            self.chartData = sub
-           
-            setTimeout(function(){},1000)
+            return;
           }
-          return  
+        })
+        .catch(function(error) {
+          self.$message({
+            type: "warning",
+            message: "更新数据失败\n" + error
+          });
+        });
+    },
+    setData() {
+      const self = this;
+      live({})
+        .then(resp => {
+          self.temp = resp.data;
+        })
+        .catch(function(error) {
+          self.$message({
+            type: "warning",
+            message: "更新数据失败\n" + error
+          });
+        });
+    },
+    back() {
+      const self = this;
+      let sub = self.chartData;
+      if(sub[0][0].data.length < 50){
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 2; j++) {
+            sub[i][j].title = self.temp[i][j].title;
+            sub[i][j].time.push(self.temp[i][j].time[0]);
+            sub[i][j].data.push(self.temp[i][j].data[0]);
+            self.temp[i][j].time.shift();
+            self.temp[i][j].data.shift();
+          }
         }
-      }).catch( function (error) {
-        self.$message({
-          type: 'warning',
-          message: "更新数据失败\n"+error
-        })
-      })
+        self.chartData = sub;
+      }
+      else{
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 2; j++) {
+            sub[i][j].title = self.temp[i][j].title;
+            sub[i][j].time.shift()
+            sub[i][j].data.shift()
+            sub[i][j].time.push(self.temp[i][j].time[0]);
+            sub[i][j].data.push(self.temp[i][j].data[0]);
+            self.temp[i][j].time.shift();
+            self.temp[i][j].data.shift();
+          }
+        }
+        self.chartData = sub;
+      } 
     }
   },
   created() {
-    const self = this
-    this.getData()
+    const self = this;
+    self.setData();
+    setInterval(function() {
+      self.setData();
+    }, 5000);
+    setInterval(function() { self.back()}, 1000);
     // this.updateData()
-    setInterval(function () {
+    /* setInterval(function () {
       // self.updateData()
       self.getData()
       // console.log("timeoout",self.chartData[0][0].data.length)
-    }, 5000)
+    }, 5000) */
     /* setInterval(function () {
       self.getSleepNum()
     }, 50000) */
