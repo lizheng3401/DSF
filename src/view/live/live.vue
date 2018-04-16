@@ -49,59 +49,6 @@ export default {
     };
   },
   methods: {
-    updateData() {
-      const self = this;
-      live({})
-        .then(resp => {
-          self.chartData = self.fetchData(resp.data, self.chartData);
-        })
-        .catch(function(error) {
-          self.$message({
-            type: "warning",
-            duration: 1000,
-            message: "更新数据失败\n" + error
-          });
-        });
-    },
-    fetchData(data, oldData) {
-      const self = this;
-      let newData = [];
-      let tempData = data;
-      if (oldData.length == 0) {
-        return data;
-      } else if (oldData[0][0].data.length < 50) {
-        for (let i = 0; i < 4; i++) {
-          let temp = [];
-          for (let j = 0; j < 2; j++) {
-            let time = oldData[i][j].time.concat(tempData[i][j].time);
-            let data = oldData[i][j].data.concat(tempData[i][j].data);
-            temp.push({
-              title: oldData[i][j].title,
-              time,
-              data
-            });
-          }
-          newData.push(temp);
-        }
-        return newData;
-      } else if (oldData[0][0].data.length >= 50) {
-        for (let i = 0; i < 4; i++) {
-          let temp = [];
-          for (let j = 0; j < 2; j++) {
-            let symbol = oldData[i][j];
-            for (let k = 0; k < 5; k++) {
-              symbol.time.shift();
-              symbol.time.push(data[i][j].time[k]);
-              symbol.data.shift();
-              symbol.data.push(data[i][j].data[k]);
-            }
-            temp.push(symbol);
-          }
-          newData.push(temp);
-        }
-        return newData;
-      }
-    },
     show(prev, next) {
       this.isShow = prev + 1;
     },
@@ -116,53 +63,6 @@ export default {
             type: "warning",
             duration: 1000,
             message: "更新睡眠人数错误" + error
-          });
-        });
-    },
-    getData() {
-      const self = this;
-      live({})
-        .then(resp => {
-          const newData = resp.data;
-          if ((self.chartData[0][0].title === "") | true) {
-            for (let k = 0; k < 5; k++) {
-              let sub = self.chartData;
-              for (let i = 0; i < 4; i++) {
-                for (let j = 0; j < 2; j++) {
-                  sub[i][j].title = newData[i][j].title;
-                  sub[i][j].time.push(newData[i][j].time[k]);
-                  sub[i][j].data.push(newData[i][j].data[k]);
-                }
-              }
-              self.chartData = sub;
-              /* let t = new Date(new Date().valueOf() + 1000);
-              while (t.getSeconds() != new Date().getSeconds()) {}
-              console.log(new Date().getTime()); */
-            }
-            console.log("fanhui");
-            return;
-          } else if (self.chartData[0][0].data.length < 50) {
-            console.log("add");
-            let sub = self.chartData;
-            for (let k = 0; k < 10; k++) {
-              for (let i = 0; i < 4; i++) {
-                for (let j = 0; j < 2; j++) {
-                  sub[i][j].title = newData[i][j].title;
-                  sub[i][j].time.push(newData[i][j].time[k]);
-                  sub[i][j].data.push(newData[i][j].data[k]);
-                }
-              }
-              self.chartData = sub;
-
-              setTimeout(function() {}, 1000);
-            }
-            return;
-          }
-        })
-        .catch(function(error) {
-          self.$message({
-            type: "warning",
-            message: "更新数据失败\n" + error
           });
         });
     },
@@ -213,19 +113,14 @@ export default {
   created() {
     const self = this;
     self.setData();
+    self.getSleepNum()
     setInterval(function() {
       self.setData();
     }, 5000);
     setInterval(function() { self.back()}, 1000);
-    // this.updateData()
-    /* setInterval(function () {
-      // self.updateData()
-      self.getData()
-      // console.log("timeoout",self.chartData[0][0].data.length)
-    }, 5000) */
-    /* setInterval(function () {
+    setInterval(function(){
       self.getSleepNum()
-    }, 50000) */
+    }, 1000*60);
   }
 };
 </script>
