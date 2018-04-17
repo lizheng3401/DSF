@@ -106,8 +106,8 @@ const detailPeople = function (){
     end: end.getHours()+":"+end.getMinutes()+":"+end.getSeconds(),
     deep: deep,
     total: total,
-    avgDeep: Random.natural(0,3),
-    avgShallow: Random.natural(0,3),
+    avgDeep: Random.natural(1,3),
+    avgShallow: Random.natural(0.5,3),
     avgHeart: Random.natural(60,75),
     avgBreath: Random.natural(10,20),
   }
@@ -128,7 +128,7 @@ const detailPeople = function (){
 
   let wake = Random.float(30,60).toFixed(1)
   let shallow = min-wake-deep*60
-  let p = Random.float(0.3,0.5)
+  let p = Random.float(0.4,0.5)
   let sI = (shallow*p).toFixed(1)
   let sII = (shallow*(1-p)).toFixed(1)
 
@@ -223,23 +223,6 @@ const peroidRecord = function (wake,sI,sII,deep,begin,end) {
   
   var baseTime = begin.getTime();
   for (let i = 0; i < 8; i++) {
-    /* if(i != 0 && i != 7){
-      var typeItem = types[i % 4];
-      if(i % 4 == 3){
-        var duration = Math.round(Math.random()*1000*60*100)
-      }else{
-        var duration = i % 4 != 0?Math.round(Math.random()*1000*60*100):Math.round(Math.random()*1000*10*30);
-      }
-    }
-    else{
-      var typeItem = types[0];
-      var duration = parseInt((parseFloat(wake)*1000*Random.float(0,1)*60));
-    } */
-    /* if(i != 0 && i != 7){
-      var typeItem = types[i % 4];
-    }else{
-      var typeItem = types[0]
-    } */
     var duration = temp[i]
     data.push({
       name: typeItem[i].name,

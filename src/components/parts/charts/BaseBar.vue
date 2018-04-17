@@ -75,8 +75,15 @@
         
       },
       setOptions: function ({ time, peroid } = {}) {
-        console.log(time, peroid)
         this.chart.setOption({
+          toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+            }
+          },
           grid: {
             top: '5%',
             left: '4%',

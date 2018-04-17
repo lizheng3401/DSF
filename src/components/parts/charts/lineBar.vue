@@ -68,6 +68,14 @@ export default {
   methods: {
     setOptions: function({time, data} = {}) {
       this.chart.setOption({
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+            }
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {

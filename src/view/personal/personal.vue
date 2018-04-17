@@ -4,7 +4,7 @@
       <el-col :span="18">
         <el-row :gutter="10">
           <el-col :span="10">
-            <el-input placeholder="请输入用户名" v-model="$route.params.name" clearabled> 
+            <el-input placeholder="请输入用户名" v-model="name" clearabled> 
               <template slot="prepend">
                 <icon name="user" :scale="3"></icon>
               </template>
@@ -14,14 +14,14 @@
             <el-date-picker v-model="time" type="date" placeholder="选择日期"></el-date-picker>
           </el-col>
           <el-col :span="4" :offset="3">
-            <el-button type="primary" icon="el-icon-search">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
           </el-col>
         </el-row>
         <el-row :gutter="10">
             <el-row>
               <el-card :body-style="{ padding: '10px' }">
                 <el-row :gutter="5">
-                  <el-col :span="6">姓名：{{ name }}</el-col>
+                  <el-col :span="6">姓名：{{ $route.params.name }}</el-col>
                   <el-col :span="6">年龄：{{ret.userInfo.age}}</el-col>
                   <el-col :span="6">性别：{{ret.userInfo.sex}}</el-col>
                   <el-col :span="6">床位：{{ret.userInfo.bed}}</el-col>
@@ -51,8 +51,8 @@
                     <icon name="heart" scale="2"></icon>实时监控
                   </span>
                   <el-row>
-                    <el-col :span="12"><single-line ref="heartLive" :chartData="chartData[0]" v-if="'heartLive' === tabItem"></single-line></el-col>
-                    <el-col :span="12"><single-line ref="breathLive" :chartData="chartData[1]" v-if="'heartLive' === tabItem"></single-line></el-col>
+                    <el-col :span="12"><single-line ref="heartLive" :chartData="chartData.length != 0? chartData[0][0]:{}" v-if="'heartLive' === tabItem"></single-line></el-col>
+                    <el-col :span="12"><single-line ref="breathLive" :chartData="chartData.length != 0? chartData[0][1]:{}" v-if="'heartLive' === tabItem"></single-line></el-col>
                   </el-row>
                 </el-tab-pane>
                 <el-tab-pane name="heart">
@@ -105,18 +105,19 @@ export default {
       time: new Date() - 1,
       tabItem: 'heart',
       live: true,
-      name: '默认',
+      name: '',
       ret: {
         userInfo:{},
         data: {},
       },
-      liveData: {},
-      yesterdayData: {},
-      moveData: {},
-      chartData: {},
+      chartData: [
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }]
+      ],
       temp: {},
-      peroidTotal: {},
-      pie: []
+      t: [],
     };
   },
   components: {
@@ -139,18 +140,76 @@ export default {
           message: error
         })
       })
+    },
+    setData() {
+      const self = this;
+      live({})
+        .then(resp => {
+          self.temp = resp.data;
+        })
+        .catch(function(error) {
+          self.$message({
+            type: "warning",
+            message: "更新数据失败\n" + error
+          });
+        });
+    },
+    back() {
+      const self = this;
+      let sub = self.chartData;
+      if(sub[0][0].data.length < 50){
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 2; j++) {
+            sub[i][j].title = ((j === 0)? "心率——":"呼吸——")+self.$route.params.name;
+            sub[i][j].time.push(self.temp[i][j].time[0]);
+            sub[i][j].data.push(self.temp[i][j].data[0]);
+            self.temp[i][j].time.shift();
+            self.temp[i][j].data.shift();
+          }
+        }
+        self.chartData = sub;
+      }
+      else{
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 2; j++) {
+            sub[i][j].title = self.$route.params.name;
+            sub[i][j].time.shift()
+            sub[i][j].data.shift()
+            sub[i][j].time.push(self.temp[i][j].time[0]);
+            sub[i][j].data.push(self.temp[i][j].data[0]);
+            self.temp[i][j].time.shift();
+            self.temp[i][j].data.shift();
+          }
+        }
+        self.chartData = sub;
+      } 
+    },
+    init(){
+      const self = this
+      this.name = this.$route.params.name 
+      this.fectchData()
+      this.setData();
+      let t1 = setInterval(function() {
+        self.setData();
+      }, 5000);
+      let t2 = setInterval(function() { self.back()}, 1000);
+      return [t1,t2]
+    },
+    search(){
+      clearInterval(this.t[0])
+      clearInterval(this.t[1])
+      this.chartData =  [
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
+        [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }]
+      ],
+      this.t = this.init();
+      this.$router.push(`/personal/${this.name}`)
     }
   },
   created() {
-    const self = this
-    this.name = this.$route.params.name 
-    this.fectchData()
-    this.peroidTotal = {
-      wake: [Math.round(Math.random()* 100)],
-      I: [Math.round(Math.random()* 100)],
-      II: [Math.round(Math.random()* 100)],
-      deep: [Math.round(Math.random()* 100)],
-    }
+    this.t = this.init()
   }
 };
 </script>
