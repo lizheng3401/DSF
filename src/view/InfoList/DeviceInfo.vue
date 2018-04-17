@@ -141,7 +141,6 @@
           .then(response => {
             this.Data = response.data.results
             this.total = response.data.total
-            // this.total = 1
           })
           .catch(function(error) {
             console.log(error)

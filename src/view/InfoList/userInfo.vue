@@ -184,6 +184,9 @@
             }
           }
           else{
+            this.listQuery.page = 1
+            this.listQuery.username = undefined
+            this.listQuery.status = undefined
             this.getData()
             return 
           }
