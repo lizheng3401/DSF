@@ -59,30 +59,30 @@
                   <span slot="label">
                     <icon name="heart" scale="2"></icon>心率
                   </span>
-                  <baseline ref="heart" :chartData="ret.data.heart" v-if="'heart' === tabItem"></baseline>
+                  <baseline ref="heart" :chartData="ret.heart" v-if="'heart' === tabItem"></baseline>
                 </el-tab-pane>
                 <el-tab-pane name="breath">
                   <span slot="label">
                     <icon name="breath" scale="2"></icon>呼吸
                   </span>
-                  <baseline ref="breath" :chartData="ret.data.breath" v-if="'breath' === tabItem"></baseline>
+                  <baseline ref="breath" :chartData="ret.breath" v-if="'breath' === tabItem"></baseline>
                 </el-tab-pane>
                 <el-tab-pane name="move">
                   <span slot="label"><icon name="move" scale="2"></icon>体动</span>
-                  <scatter ref="move" :chartData="ret.data.move" v-if="'move' === tabItem"></scatter>
+                  <scatter ref="move" :chartData="ret.move" v-if="'move' === tabItem"></scatter>
                 </el-tab-pane>
                 <el-tab-pane name="period">
                   <span slot="label"><icon name="period" scale="2"></icon>睡眠分期</span>
-                  <xRange ref="period" :chartData="ret.data.peroidRecord" v-if="'period' === tabItem" height="150px"></xRange>
-                  <stackBar ref="period" :chartData="ret.data.peroidChart" v-if="'period' === tabItem" height="150px"></stackBar>
+                  <xRange ref="period" :chartData="ret.peroidRecord" v-if="'period' === tabItem" height="150px"></xRange>
+                  <stackBar ref="period" :chartData="ret.peroidChart" v-if="'period' === tabItem" height="150px"></stackBar>
                 </el-tab-pane>
               </el-tabs>
             </el-row>
         </el-row>
       </el-col>
       <el-col :span="6">
-        <pie :chartData="ret.data.peroid"></pie>
-        <radar :chartData="ret.data.radar"></radar>
+        <pie :chartData="ret.peroid"></pie>
+        <radar :chartData="ret.radar"></radar>
       </el-col>
     </el-row>
   </div>
@@ -145,7 +145,7 @@ export default {
       const self = this;
       live({})
         .then(resp => {
-          self.temp = resp.data;
+          self.temp = resp.data.data;
         })
         .catch(function(error) {
           self.$message({
@@ -194,6 +194,7 @@ export default {
       }, 5000);
       let t2 = setInterval(function() { self.back()}, 1000);
       return [t1,t2]
+      
     },
     search(){
       clearInterval(this.t[0])

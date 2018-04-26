@@ -49,6 +49,10 @@ export default {
     submitForm(formName) {
       const self = this;
       self.$refs[formName].validate(valid => {
+        cookie.setCookie("name", this.ruleForm.username, 7);
+        cookie.setCookie("token", "dsadad", 7);
+        this.$store.dispatch("setInfo");
+        this.$router.push("/live");
         if (valid) {
           login({
             Phone: this.ruleForm.username,

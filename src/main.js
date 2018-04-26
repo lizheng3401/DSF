@@ -6,7 +6,7 @@ import App from './App'
 import store from './store/index'
 import router from './router'
 import axios from 'axios'
-import mock from '../mock/mock'
+// import mock from '../mock/mock'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

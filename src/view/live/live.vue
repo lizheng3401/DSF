@@ -56,7 +56,7 @@ export default {
       const self = this;
       liveNum()
         .then(resp => {
-          self.users = resp.data;
+          self.users = resp.data.data;
         })
         .catch(function(error) {
           self.$message({
@@ -70,7 +70,7 @@ export default {
       const self = this;
       live({})
         .then(resp => {
-          self.temp = resp.data;
+          self.temp = resp.data.data;
         })
         .catch(function(error) {
           self.$message({
@@ -121,6 +121,7 @@ export default {
     setInterval(function(){
       self.getSleepNum()
     }, 1000*60);
+    
   }
 };
 </script>
