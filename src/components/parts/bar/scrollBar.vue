@@ -1,7 +1,7 @@
 <template>
   <div class="scroll-bar">
     <transition-group name="list-complete" >
-    <el-card v-for="(user,index) in users" :key="index" :body-style="{padding: '5px'}" v-if="users.length > 0" class="list-complete-item">
+    <el-card v-for="(user,index) in users" :key="index" :body-style="{padding: '5px'}" v-if="users.length != 0" class="list-complete-item">
       <el-row>
         <el-col :span="10">
           <strong style="line-height: 20px">{{ user.name }}</strong>
@@ -38,17 +38,14 @@ export default {
   data: function() {
     return {
       users: [],
-      loading: false
+      loading: false,
     };
-  },
-  components: {
-    
   },
   methods: {
     fetchData() {
       const self = this
       newUnhealthPeople({}).then( resp => {
-        self.users = resp.data
+        self.users = resp.data.Data
       }).catch( function (error) {
         self.$message({
           type: 'danger',
@@ -62,6 +59,7 @@ export default {
   },
   created: function() {
     this.fetchData();
+    
   }
 };
 </script>
