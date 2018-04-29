@@ -4,7 +4,7 @@
       <div slot="header" class="clearfix">
         <h2>登陆</h2>
       </div>
-      <el-form ref="ruleForm" :model="ruleForm" label-position="right" :rules="rules" >
+      <el-form ref="ruleForm" :model="ruleForm" label-position="right" :rules="rules">
         <el-form-item prop="username">
           <el-input v-model="ruleForm.username" placeholder="请输入账户">
             <template slot="prepend">账户</template>
@@ -28,7 +28,7 @@
 
 <script>
 import cookie from "../../utils/cookie.js";
-import { login } from '../../api/api';
+import { login } from "../../api/api";
 export default {
   name: "login",
   data() {
@@ -42,7 +42,7 @@ export default {
           { required: true, message: "请输入用户名", trigger: "blur" }
         ],
         password: [{ required: true, message: "密码为空", trigger: "blur" }]
-      }
+      },
     };
   },
   methods: {
@@ -50,30 +50,55 @@ export default {
       const self = this;
       self.$refs[formName].validate(valid => {
         if (valid) {
-          login({
-            Phone: this.ruleForm.username,
-            Password: this.ruleForm.password
-          })
-            .then(response => {
-              cookie.setCookie("name", this.ruleForm.username, 7);
-              cookie.setCookie("token", response.data.Token, 7);
-              this.$store.dispatch("setInfo");
-              this.$router.push("/live");
+          if (
+            this.ruleForm.username === "admin" &&
+            this.ruleForm.password === "123456"
+          )
+            login({
+              Phone: this.ruleForm.username,
+              Password: this.ruleForm.password
             })
-            .catch(function(error) {
-              console.log(error);
-            });
+              .then(response => {
+                cookie.setCookie("name", this.ruleForm.username, 7);
+                cookie.setCookie("token", response.data.Token, 7);
+                this.$store.dispatch("setInfo");
+                this.$router.push("/live");
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    takePic: function(){
+      this.$refs.canvas.getContext("2d").drawImage(this.$refs.video, 0, 0, 400, 300);
+      this.$refs.img.src = this.$refs.canvas.toDataURL("image/png");
+    },
+    init() {
+      const _this = this;
+      let constraints = { audio: false, video: true }
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then( function(mediaStream){
+          _this.$refs.video.srcObject = mediaStream;
+          _this.$refs.video.onloadmetaData = function(e){
+          _this.$refs.video.play();
+        }
+      }).catch( function(error){
+        _this.$message({
+            type: 'danger',
+            message: "摄像头初始化失败\n"+error
+          })
+      });
     }
   },
   created() {
-    cookie.delCookie('token');
-    cookie.delCookie('name');
-    this.$store.dispatch('setInfo')
+    this.init();
+    cookie.delCookie("token");
+    cookie.delCookie("name");
+    this.$store.dispatch("setInfo");
   }
 };
 </script>

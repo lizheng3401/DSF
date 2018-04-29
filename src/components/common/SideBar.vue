@@ -54,6 +54,11 @@
             index: '/history',
             title: '历史数据分析平台'
           },
+          {
+            icon: 'el-icon-edit-outline',
+            index: '/sm',
+            title: 'SM'
+          }
           /* {
             icon: 'el-icon-edit-outline',
             index: '/test',

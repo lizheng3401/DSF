@@ -9,6 +9,10 @@ import history from '../view/history/history'
 import userInfo from "../view/InfoList/userInfo.vue"
 import deviceInfo from "../view/InfoList/DeviceInfo.vue"
 import search from "../view/search/search.vue"
+import secret from "../view/secret/secret.vue"
+import face from "../view/face/face.vue"
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -53,6 +57,11 @@ export default new Router({
           path: '/search',
           name: 'search',
           component: search,
+        },
+        {
+          path: '/sm',
+          name: 'sm',
+          component: secret,
         }
       ]
     },
@@ -63,7 +72,13 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: login
-    }
+      component: face
+    },
+    /*
+    {
+      path: '/loginFace',
+      name: 'loginFace',
+      component: face
+    }*/
   ]
 })

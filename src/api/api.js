@@ -48,3 +48,5 @@ export const live = params => { return axios.get(`api/now/live`, params)}
 
 export const liveNum = params => { return axios.get(`api/now/livenum`,params)}
 
+export const face = params => { return axios.post(`api/upload/avator`,params)}
+

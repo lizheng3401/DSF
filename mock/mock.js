@@ -2,7 +2,7 @@ const Mock = require('mockjs')
 const Random = Mock.Random
 
 const unhealthPeople = function (opt) {
-  let date = new Date("2017/03/01")
+  let date = new Date("2018/03/01")
   let time = []
   let data = []
   for(let i = 0; i < 40; i++){
@@ -36,7 +36,7 @@ const periodPeople = function (opt) {
   let deep = []
   let total = []
   let time = []
-  let date = new Date("2017/03/01 19:00")
+  let date = new Date("2018/03/01 19:00")
     for(let i = 0; i < 40; i++){  
       time.push(date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate())
       date = new Date(date.valueOf() + 60*1000*60*24)
@@ -395,3 +395,5 @@ Mock.mock(RegExp('api/devices/update/*'), 'post', 'success')
 Mock.mock(RegExp('api/devices/delete/*'), 'get', 'success')
 
 Mock.mock('api/login', 'post', token)
+
+Mock.mock('api/upload/avator', 'post', "success")
