@@ -110,7 +110,7 @@ export default {
         .then(resp => {
           _this.$message({
             type: "success",
-            message: "认证成功,1秒后跳转至账户登陆界面"
+            message: "正在认证,大约需要3秒钟的时间"
           });
           setTimeout(function() {
             _this.isFace = false;

@@ -310,7 +310,7 @@ const userData = function (opt) {
     let newObject = {
       'id': j,
       'username': Random.cname(),
-      'email': Random.email(),
+      'email': Random.word()+["@163.com", "@foxmail.com", "@gmail.com", "@sina.com"][Random.natural(0, 4)],
       'device': Random.guid(),
       'sleep': Random.guid().split('-').join(''),
       'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
@@ -397,3 +397,21 @@ Mock.mock(RegExp('api/devices/delete/*'), 'get', 'success')
 Mock.mock('api/login', 'post', token)
 
 Mock.mock('api/upload/avator', 'post', "success")
+
+
+module.exports = {
+  func: {
+    newUnhealthPeople,
+    unhealthPeople,
+    sleepPeople,
+    periodPeople,
+    detailPeople,
+    liveNow,
+    livenum,
+    totalUsers,
+    userData,
+    totalDevices,
+    deviceData,
+    token
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="logo">智慧睡眠宝云平台</div>
+    <div class="logo">SafeSleep睡眠安全监护系统</div>
     <div class="user-info">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
