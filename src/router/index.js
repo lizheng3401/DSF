@@ -74,7 +74,6 @@ export default new Router({
       name: 'login',
       component: face
     },
-    
     {
       path: '/loginFace',
       name: 'loginFace',

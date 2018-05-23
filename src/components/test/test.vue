@@ -1,40 +1,65 @@
 <template>
-  <div>
-      <radar :chartData="chartData"></radar>
-      <stack-bar :chartData="chartData"></stack-bar>
-      <line-bar :chartData="chartData"></line-bar>
-      <x-range :chartData="chartData"></x-range>
-      <data-zone :chartData="chartData"></data-zone>
-  </div>
+    <div class="accept-container">
+      <ul>
+          <li v-for="(item,i) in webAddress" :key="i">
+            <a :href="item.link" target="showHere" @click="showIframe">{{item.name}}</a>
+          </li>
+          <a href="https://www.baidu.com" @click.native="test">click</a>
+          <button @test="shout"></button>
+      </ul>
+      <iframe v-show="iframeState" id="show-iframe"  
+              width="600px" height="400px"
+              frameborder=0 name="showHere" 
+              scrolling=no src=""></iframe>
+    </div>
 </template>
 
 <script>
-import radar from '../parts/charts/radar'
-import stackBar from '../parts/charts/stackBar'
-import lineBar from '../parts/charts/lineBar'
-import xRange from '../parts/charts/xRange'
-import dataZone from '../parts/charts/dataZone'
-
 export default {
-  name: 'test',
+  name: 'hello',
   data () {
-      return {
-        chartData: {}
-      }
+    return {
+      iframeState:false,
+      goBackState:false,
+      webAddress: [
+        {
+            name:'segmentFault',
+            link:'https://segmentfault.com/a/1190000004502619'
+        },
+        {
+          name:'博客',
+          link:'http://vuex.vuejs.org/'
+        },
+        {
+          name:'特效',
+          link:'http://www.yyyweb.com/377.html'
+        },
+        {
+          name: '验证码',
+          link: 'http://localhost:9527/static/captcha.html'
+        }
+      ]
+    }
   },
-  components: {
-      radar,
-      stackBar,
-      lineBar,
-      xRange,
-      dataZone
-  },
-  created () {
-     
+  methods:{
+    goBack(){
+      this.goBackState = false;
+      this.iframeState = false;
+    },
+    showIframe(){
+      this.goBackState = true;
+      this.iframeState = true;
+    },
+    test(){
+      console.log("OK");
+      this.$emit('test');
+    },
+    shout(){
+      console.log('我触发了它');
+    }
   }
 }
 </script>
-
-<style>
+<style scoped>
 
 </style>

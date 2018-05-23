@@ -37,7 +37,7 @@
       <el-main v-if="!isFace">
         <el-card class="Login">
           <div slot="header" class="clearfix">
-            <h2>登陆</h2>
+            <h3>登录</h3>
           </div>
           <el-form ref="ruleForm" :model="ruleForm" label-position="right" :rules="rules">
             <el-form-item prop="username">
@@ -51,15 +51,24 @@
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-checkbox>记住密码</el-checkbox>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%">登陆</el-button>
+              <div style="margin: 0px">
+                <el-checkbox>记住密码</el-checkbox>
+                <el-input v-model="sms" placeholder="请输入短信验证码"></el-input>
+                <a :href="item.link" target="showHere" @click="showIframe">{{item.name}}</a>
+              </div>
+              <iframe v-show="iframeState" id="show-iframe"
+                    width="330" height="260"
+                    frameborder=0 name="showHere" 
+                    style="margin: 0px 60px;"
+                    scrolling=auto src=""></iframe>
+              <el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%">登录</el-button>
             </el-form-item>
           </el-form>
         </el-card>
       </el-main>
     </el-container>
+    <div>
+    </div>
   </div>
 </template>
 
@@ -75,6 +84,12 @@ export default {
       showPic: false,
       pic: undefined,
       isFace: true,
+      iframeState:false,
+      sms:"",
+      item: {
+          name: '滑动验证',
+          link: 'http://localhost:9527/static/captcha.html'
+      },
       ruleForm: {
         username: "",
         password: ""
@@ -161,6 +176,18 @@ export default {
           return false;
         }
       });
+    },
+   showIframe(){
+      this.iframeState = true;
+    },
+    test(){
+      this.$emit('test');
+    },
+    shout(){
+      console.log('我触发了它');
+    },
+    teleSms(){
+      
     }
   },
   created() {
@@ -232,7 +259,7 @@ export default {
 }
 .Login {
   width: 480px;
-  margin: 10px auto;
+  margin: 0px auto;
 }
 el-form {
   margin: 0px auto;
