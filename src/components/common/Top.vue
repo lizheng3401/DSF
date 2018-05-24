@@ -2,7 +2,7 @@
   <div class="header">
     <div class="logo">SafeSleep睡眠安全监护系统</div>
     <div class="user-info">
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
           {{username}}
         </span>
@@ -21,6 +21,11 @@
     data: function () {
       return {
         username: ''
+      }
+    },
+    methods: {
+      handleCommand: function() {
+        this.$router.push("/login");
       }
     },
     created(){

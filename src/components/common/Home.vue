@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="main_bg">
     <template v-if="login">
       <Top></Top>
       <side-bar></side-bar>
@@ -30,4 +30,11 @@
 </script>
 
 <style scoped>
+.main_bg{
+  background-image: url(../../../static/images/bg_main.png);
+  background-repeat:no repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+  height: 100%;
+}
 </style>

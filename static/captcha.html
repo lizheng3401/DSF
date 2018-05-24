@@ -25,11 +25,8 @@
     },
     success : function() {
       const self = this;
-      setTimeout(() => {
-        $('#mpanel1').style.display = "none";
-        console.log(this);
-      },1000);
-    	alert('验证匹配！');
+      alert('验证成功');
+      parent.location.href="http://127.0.0.1:9527/#/live";
     },
     error : function() {
     	alert('验证码不匹配！');
