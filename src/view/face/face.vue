@@ -158,8 +158,8 @@ export default {
       self.$refs[formName].validate(valid => {
         if (valid) {
           if (
-            this.ruleForm.username === "admin" &&
-            this.ruleForm.sms === "123456"
+            this.ruleForm.username === "lizheng" &&
+            this.ruleForm.sms === "qaws"
           ) {
             this.iframeState = true;
             cookie.setCookie("name", this.ruleForm.username, 7);
