@@ -82,7 +82,7 @@ const newUnhealthPeople = function () {
   return users
 }
 
-const detailPeople = function (){
+const detailPeople = function (opt){
   let init = new Date("2018/4/10 22:00:00")
   let begin = new Date(init.valueOf() +  + 60*1000*60*1*Random.float(0, 1))
   let min = Random.natural(450,540)
@@ -94,11 +94,10 @@ const detailPeople = function (){
   let date = begin
   let time = []
   let move = []
-
   deep = deep.toFixed(1)
   let userInfo = {
-    age: Random.natural(0,100),
-    sex: ['男', '女'][Random.natural(0,1)],
+    age: Random.natural(18,22),
+    sex: ['男', '女'][0],
     bed: Random.natural(1,100),
     person: Random.cname(),
     phone: 18482065213,
@@ -305,15 +304,15 @@ const userData = function (opt) {
   page = parseInt(opt.url.split('=')[1])
   let j = page * 10 - 9
   let users = [];
-  let total = 100
+  let total = 30
   for (let i = 0; i < 10; i++) {
     let newObject = {
       'id': j,
       'username': Random.cname(),
-      'email': Random.word()+["@163.com", "@foxmail.com", "@gmail.com", "@sina.com"][Random.natural(0, 4)],
+      'email': Random.word()+["@163.com", "@foxmail.com", "@gmail.com", "@sina.com"][Random.natural(0, 3)],
       'device': Random.guid(),
       'sleep': Random.guid().split('-').join(''),
-      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+      'status': "success"
     };
     j += 1
     if (key === "status") {
@@ -323,6 +322,8 @@ const userData = function (opt) {
     }
     users.push(newObject);
   }
+  users[Random.natural(0, 5)]['status'] = 'warning'
+  users[Random.natural(5, 9)]['status'] = 'danger'
   return {
     results: users,
     total: total
@@ -351,15 +352,17 @@ const deviceData = function (opt) {
   for (let i = 0; i < 10; i++) {
     let newObject = {
       "id": Random.guid(),
-      "createdTime": Random.datetime(),
+      "createdTime": "2018-"+['01', '02', '03', '04', '05'][Random.natural(0, 2)]+"-"+Random.natural(1, 28)+" "+Random.datetime('H:m:s'),
       "username": Random.cname(),
-      'status': ['success', 'warning', 'danger'][Random.natural(0, 2)]
+      'status': "success"
     }
     devices.push(newObject)
   }
+  devices[Random.natural(0, 5)]['status'] = 'warning'
+  devices[Random.natural(5, 9)]['status'] = 'danger'
   return {
     results: devices,
-    total: 100
+    total: 30
   }
 }
 const token = function(opt){
