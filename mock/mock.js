@@ -44,7 +44,7 @@ const periodPeople = function (opt) {
       d = Random.float(0,5,2,2)
       shallow.push(s)
       deep.push(d)
-      total.push(s+d)
+      total.push((s+d).toFixed(2))
     }
   return {
       time,
@@ -58,8 +58,8 @@ const periodPeople = function (opt) {
 
 const newUnhealthPeople = function () {
   let users = []
-  for(let i = 0; i < Random.natural(2,5); i++){
-    let heart = Random.natural(50, 80)
+  for(let i = 0; i < 3; i++){
+    let heart = Random.natural(70, 80)
     let breath = Random.natural(13, 20)
     let reason = ""
     if(heart > 70){
