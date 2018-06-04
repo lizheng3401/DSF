@@ -11,7 +11,7 @@
             </el-input>
           </el-col>
           <el-col :span="4">
-            <el-date-picker v-model="time" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker v-model="time" type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"></el-date-picker>
           </el-col>
           <el-col :span="4" :offset="3">
             <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
@@ -101,8 +101,10 @@ import pie from "../../components/parts/charts/pie"
 export default {
   name: "personal",
   data() {
+    let t = new Date();
+    t.setTime(t.getTime()-24*60*60*1000);
     return {
-      time: new Date() - 1,
+      time: t,
       tabItem: 'heart',
       live: true,
       name: '',
@@ -204,12 +206,14 @@ export default {
         [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }],
         [{ title: "", time: [], data: [] }, { title: "", time: [], data: [] }]
       ],
-      this.t = this.init();
+      
       this.$router.push(`/personal/${this.name}`)
+      this.t = this.init();
     }
   },
   created() {
     this.t = this.init()
+    console.log(this.time);
   }
 };
 </script>
