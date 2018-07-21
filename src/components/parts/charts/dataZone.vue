@@ -103,7 +103,7 @@ export default {
           data: time
         },
         yAxis: {
-          name: '人数',
+          // name: '人数',
           type: 'value',
         },
         series: [

@@ -104,7 +104,7 @@ export default {
         },
         yAxis: {
             type: "value",
-            name: "人数"
+            // name: "人数"
         },
         series: [
           {
