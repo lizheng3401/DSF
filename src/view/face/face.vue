@@ -103,7 +103,7 @@ export default {
       timer: null,
       item: {
           name: '滑动验证',
-          link: 'https://www.metastudio.top/static/captcha.html'
+          link: '/static/captcha.html'
       },
       ruleForm: {
         username: "",
