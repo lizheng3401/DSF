@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import cookie from "../../utils/cookie.js";
   export default {
     name: "device-info",
     data: function() {
@@ -326,6 +327,11 @@
       }
     },
     created: function() {
+      let flag = cookie.getCookie("name");
+      if(!flag)
+      {
+        this.$router.push("/");
+      }
       this.getData();
     }
   };

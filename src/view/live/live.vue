@@ -2,11 +2,11 @@
   <div>
     <el-col class="carousel" :span="20">
       <el-row>
-        <el-col :span="4">
+        <el-col :span="5">
           <el-tag size="small">已睡：{{users[0]}}</el-tag>
           <el-tag size="small">未睡：{{users[1]}}</el-tag>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="15">
           <el-progress :text-inside="true" :stroke-width="18" :percentage="users[2]"></el-progress>
         </el-col>
       </el-row>
@@ -27,6 +27,7 @@
 
 <script>
 import { live, liveNum } from "../../api/api";
+import cookie from "../../utils/cookie.js";
 import scorllBar from "../../components/parts/bar/scrollBar.vue";
 import SingleLine from "../../components/parts/charts/SingleLine.vue";
 export default {
@@ -111,6 +112,11 @@ export default {
     }
   },
   created() {
+    let flag = cookie.getCookie("name");
+    if(!flag)
+    {
+      this.$router.push("/");
+    }
     const self = this;
     self.setData();
     self.getSleepNum()
@@ -132,6 +138,6 @@ canvas {
 .el-progress {
   position: absolute;
   height: 10px;
-  width: 83%;
+  width: 75%;
 }
 </style>

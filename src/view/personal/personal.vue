@@ -89,7 +89,7 @@
 </template>
 
 <script>
-
+import cookie from "../../utils/cookie.js";
 import {detailPeople, heartBreath, move, peroid, live} from '../../api/api'
 import Baseline from '../../components/parts/charts/Baseline'
 import radar from "../../components/parts/charts/radar"
@@ -212,6 +212,11 @@ export default {
     }
   },
   created() {
+    let flag = cookie.getCookie("name");
+    if(!flag)
+    {
+      this.$router.push("/");
+    }
     this.t = this.init()
     console.log(this.time);
   }

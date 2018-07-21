@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import cookie from "../../utils/cookie.js";
 export default {
   name: 'search',
   data () {
@@ -20,6 +21,13 @@ export default {
   methods: {
     search(username){
       this.$router.push(`/personal/${username}`)
+    }
+  },
+  created(){
+    let flag = cookie.getCookie("name");
+    if(!flag)
+    {
+      this.$router.push("/");
     }
   }
 }

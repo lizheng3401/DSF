@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import cookie from "../../utils/cookie.js";
 import { unhealthPeople, sleepPeople, periodPeople } from "../../api/api";
 import dataZone from "../../components/parts/charts/dataZone";
 import lineBar from "../../components/parts/charts/lineBar";
@@ -91,6 +92,11 @@ export default {
       spinner: "el-icon-loading",
       background: "rgba(0, 0, 0, 0.7)"
     }); */
+    let flag = cookie.getCookie("name");
+    if(!flag)
+    {
+      this.$router.push("/");
+    }
     this.fetchData();
     /* loading.close(); */
   }

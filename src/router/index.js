@@ -78,6 +78,6 @@ export default new Router({
       path: '/loginFace',
       name: 'loginFace',
       component: face
-    }
+    },
   ]
 })
