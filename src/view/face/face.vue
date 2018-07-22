@@ -173,7 +173,7 @@ export default {
             return;
           } else {
             this.$message({
-              type: "error",
+              type: "error", 
               message: "账户或密码错误"
             });
           }
