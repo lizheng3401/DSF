@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/common/Home.vue'
 import live from '../view/live/live.vue'
+import now from '../view/live/now.vue'
 import test from '../components/test/test.vue'
 import personal from '../view/personal/personal.vue'
 import login from '../view/login/login.vue'
@@ -29,6 +30,11 @@ export default new Router({
           path: '/live',
           name: 'live',
           component: live
+        },
+        {
+          path: '/now',
+          name: 'now',
+          component: now
         },
         {
           path: '/userInfo',
