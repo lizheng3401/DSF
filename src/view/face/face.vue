@@ -114,7 +114,8 @@ export default {
           { required: true, message: "请输入用户名", trigger: "blur" }
         ],
         sms: [{ required: true, message: "验证码为空", trigger: "blur" }]
-      }
+      },
+      mediaStreamTrack: {},
     };
   },
   components: {
@@ -165,6 +166,9 @@ export default {
             cookie.setCookie("name", this.ruleForm.username, 7);
             cookie.setCookie("token","3h21h3kj12h3kjh12kj3hk", 7);
             this.$store.dispatch("setInfo");
+            this.mediaStreamTrack.getTracks().forEach(function (track) {
+                track.stop();
+            });
             // this.$router.push("/live");
             return;
           } else {
@@ -226,6 +230,7 @@ export default {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(function(mediaStream) {
+        self.mediaStreamTrack = mediaStream;
         self.$refs.video.srcObject = mediaStream;
         self.$refs.video.onloadedmetadata = function(e) {
           self.$refs.video.play();
